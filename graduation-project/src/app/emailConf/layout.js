@@ -14,9 +14,3 @@ export default function Layout({ children }) {
     </body>
   );
 }
-// <html lang="en">
-//   <head>
-//     <title>Next.js</title>
-//   </head>
-//   <body style={{ backgroundColor: "#a5b4fc" }}>{children}</body>
-// </html>
