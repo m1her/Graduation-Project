@@ -1,15 +1,17 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "./page.module.css";
 import Link from "next/link";
 
-const inter = Inter({ subsets: ["latin"] });
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+  weight: '700',
+  subsets: ['latin'],
+});
 
 export default function Home() {
   return (
-    <main>
+    <main className={roboto.className} >
       <Link
-        className="text-[#2D65E4] font-bold text-center text-2xl"
+        className="text-[#2D65E4] font-bold text-center text-3xl"
         href="/login"
       >
         Login

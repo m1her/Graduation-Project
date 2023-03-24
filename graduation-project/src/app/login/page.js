@@ -10,6 +10,8 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState(false);
 
   const {
     register,
@@ -37,16 +39,23 @@ function Login() {
   }, []);
 
   useEffect(() => {
-    fetchDataHandler(); //empty data when fetched at the beggining ?? 
+    fetchDataHandler(); //empty data when fetched at the beggining ??
   }, []);
-
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
+    setEmailErrorMessage("");
+    setPasswordErrorMessage("");
     fetchDataHandler();
 
     if (email == data.email && password == data.password) {
       console.log(email + "\n" + password);
+    } else if (email !== data.email) {
+      setEmailErrorMessage("wrong email");
+      console.log("wrong email");
+    } else if (password !== data.password) {
+      console.log("wrong password");
+      setPasswordErrorMessage("wrong password");
     } else console.log("error");
   };
 
@@ -84,6 +93,7 @@ function Login() {
             placeholder="Enter your email address"
             required
           />
+          <p className="text-red-500">{emailErrorMessage}</p>
         </div>
         <div className="mb-6">
           <label
@@ -100,6 +110,7 @@ function Login() {
             placeholder="Enter your password"
             required
           />
+          <p className="text-red-500">{passwordErrorMessage}</p>
         </div>
         <button
           type="submit"
