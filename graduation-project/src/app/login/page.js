@@ -148,7 +148,7 @@ function Login() {
 
           <Link
             className="text-[#2D65E4] font-bold text-center text-sm mt-10"
-            href="/SignUp"
+            href="/"
           >
             Don&#39;t have an account? Sign up
           </Link>
