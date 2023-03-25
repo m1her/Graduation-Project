@@ -12,7 +12,7 @@ export default function Home() {
     <main className={roboto.className} >
       <Link
         className="text-[#2D65E4] font-bold text-center text-3xl"
-        href="/login"
+        href="/auth/login"
       >
         Login
       </Link>

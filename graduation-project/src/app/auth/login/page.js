@@ -121,7 +121,7 @@ function Login() {
 
         <Link
           className="text-[#2D65E4] font-semibold text-sm self-end object-right ml-52"
-          href="/forgotPassword"
+          href="/auth/forgotPassword"
         >
           Forgot password?
         </Link>
