@@ -13,40 +13,38 @@ function Login() {
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
-  const fetchDataHandler = useCallback(async () => {
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
+    setEmail(data.email);
+    setPassword(data.password);
     try {
       const response = await fetch(
-        "https://react-http-fa04a-default-rtdb.firebaseio.com/users/user1.json"
+        "https://react-http-fa04a-default-rtdb.firebaseio.com/users/user1.json",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email, password
+          }),
+        }
       );
 
       if (!response.ok) {
         throw new Error("Something went wrong!");
       }
       const data = await response.json();
-      setEmail(data.email);
-      setPassword(data.password);
+      console.log(data.email);
+
     } catch (error) {
       setError(error.message);
       console.log(error);
     }
-  }, []);
-
-  useEffect(() => {
-    fetchDataHandler(); //empty data when fetched at the beggining ??
-  }, []);
-
-  const onSubmit = async (data, e) => {
-    e.preventDefault();
     setEmailErrorMessage("");
     setPasswordErrorMessage("");
-    fetchDataHandler();
 
     if (email == data.email && password == data.password) {
       console.log(email + "\n" + password);
@@ -70,7 +68,7 @@ function Login() {
   //       //   console.log("LOGGEDIN");
 
   return (
-    <Card>
+    <Card width="430">
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-gray-700">LeapStart</h1>
@@ -87,6 +85,7 @@ function Login() {
           </label>
           <input
             {...register("email", { required: true })}
+            onChange={(event) => setEmail(event.target.value)}
             type="email"
             id="email"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block w-full p-2"
@@ -103,6 +102,7 @@ function Login() {
             Password
           </label>
           <input
+          onChange={(event) => setPassword(event.target.value)}
             {...register("password", { required: true })}
             type="password"
             id="password"

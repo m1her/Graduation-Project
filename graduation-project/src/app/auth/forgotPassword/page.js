@@ -11,7 +11,7 @@ function Login() {
   };
 
   return (
-    <Card>
+    <Card width="430">
       <form onSubmit={submitHandler}>
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-gray-700">LeapStart</h1>

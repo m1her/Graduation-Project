@@ -1,7 +1,7 @@
 export default function RootLayout({ children }) {
   return (
 
-      <body style={{ backgroundColor: "#a5b4fc" }}>
+      <body className="bg-[#a5b4fc]">
         <div
           style={{
             position: "absolute",
