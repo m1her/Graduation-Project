@@ -1,7 +1,6 @@
 import Link from "next/link";
-
 import { Roboto } from "next/font/google";
-import Card from "@/components/Card";
+import './globals.css';
 
 const roboto = Roboto({
   weight: "700",
@@ -89,5 +88,4 @@ export default function Home() {
       </main>
     </body>
   );
-
 }
