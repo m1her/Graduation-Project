@@ -1,3 +1,4 @@
+"use client"
 import { useForm, Controller } from "react-hook-form";
 import type { FieldValues, UseFormProps, FieldNames } from "./types";
 

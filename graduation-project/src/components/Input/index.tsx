@@ -1,3 +1,4 @@
+"use client";
 import { useMemo, forwardRef } from "react";
 import usePasswordInput from "./usePasswordInput";
 import type { InputProps } from "../types";
@@ -79,7 +80,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <input
             id={id}
             type={inputType}
-            className={classNames.input}
+            className={`border border-gray ${classNames.input}`}
             ref={ref}
             {...rest}
           />
