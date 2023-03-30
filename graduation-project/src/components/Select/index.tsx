@@ -57,7 +57,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         )}
         <select
           id={id}
-          className={classNames.select}
+          className={`border border-gray${classNames.select}`}
           ref={ref}
           defaultValue={defaultValue}
           {...rest}
