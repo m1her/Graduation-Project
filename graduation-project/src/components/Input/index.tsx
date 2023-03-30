@@ -19,9 +19,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       labelClassName,
       focusableLabel = false,
 
+
       ...rest
     },
     ref
+
   ) => {
     const { passwordInputType, passwordInputIcon } =
       usePasswordInput(inputSize);

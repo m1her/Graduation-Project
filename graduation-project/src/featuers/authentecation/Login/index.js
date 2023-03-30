@@ -1,5 +1,5 @@
 "use client";
-import 'src/app/globals.css';
+import "src/app/globals.css";
 import Card from "src/components/Card/index.tsx";
 import Link from "next/link";
 import Input from "src/components/Input/index.tsx";
@@ -7,7 +7,7 @@ import Button from "src/components/Button/index.tsx";
 import { EyeIconMini } from "src/lib/@heroicons/index.ts";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 function Login() {
@@ -17,28 +17,41 @@ function Login() {
   const [error, setError] = useState("");
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState(false);
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const { register, handleSubmit, watch } = useForm({
+    defaultValues: {
+      emailReg: "",
+      passwordReg: "",
+    },
+  });
 
-  const { register, handleSubmit } = useForm();
+  console.log(watch());
+
+  useEffect(() => {}, []);
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
-    setEmail(data.email);
-    setPassword(data.password);
+
     try {
       const response = await fetch(
-        "https://react-http-fa04a-default-rtdb.firebaseio.com/users/user1.json",
+        "https://leapstart.onrender.com/api/v1/users/login",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization":
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjQyMTZkY2ZkODZkYzY3OWUxMTk2ODY0Iiwicm9sZSI6InVzZXIifSwiZXhwIjoxNjgwMjcxMTA0LCJpYXQiOjE2ODAxODQ3MDR9.WT6QMks_4idgKaocSSdNLQCcr0o0uFNrB7StExJwbLU",
+            "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify({
-            email,
-            password,
+            email: watch("emailReg"),
+            password: watch("passwordReg"),
           }),
+          //  redirect: 'follow',
         }
       );
-
+      console.log(response);
       if (!response.ok) {
         throw new Error("Something went wrong!");
       }
@@ -62,8 +75,10 @@ function Login() {
     } else console.log("error");
   };
 
-  const onError = () => {
-    console.log("error");
+  const onError = (errors, e) => {
+    console.log(errors, e);
+    console.log(emailRef.current.value);
+    console.log(passwordRef.current.value);
   };
 
   //       console.log(data);
@@ -90,8 +105,9 @@ function Login() {
           className="mb-5"
           labelClassName="block mb-2 text-sm font-semibold text-gray-900"
           inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
-          {...register("email", { required: true })}
-          onChange={(event) => setEmail(event.target.value)}
+          {...register("emailReg", { required: true })}
+          // onChange={(event) => setEmail(event.target.value)}
+          // ref={emailRef}
         />
 
         <Input
@@ -102,8 +118,9 @@ function Login() {
           className="mb-5"
           labelClassName="block mb-2 text-sm font-semibold text-gray-900"
           inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
-          {...register("password", { required: true })}
-          onChange={(event) => setEmail(event.target.value)}
+          {...register("passwordReg", { required: true })}
+          // onChange={(event) => setEmail(event.target.value)}
+          // ref={passwordRef}
         />
         <Button
           className="text-white dark:bg-indigo-500 bg-indigo-500 w-full hover:bg-indigo-700 focus:outline-none font-bold px-3 py-1 text-sm text-center"
