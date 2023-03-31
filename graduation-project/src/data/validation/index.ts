@@ -77,13 +77,13 @@ export const FORM_VALIDATION = {
     pattern: {
       value: /^\d+(\.0+)?$/,
       message: "Invalid Amount (without . ceit) ",
-    }
-  },
-amountWithDecimal: {
-      required: "Amount  is required ",
-      pattern: {
-        value: VALIDATION_RULES.isNumberDecimal,
-        message: " Amount should be number (int or decimal) like (xx.yy) ",
-      },
     },
+  },
+  amountWithDecimal: {
+    required: "Amount  is required ",
+    pattern: {
+      value: VALIDATION_RULES.isNumberDecimal,
+      message: " Amount should be number (int or decimal) like (xx.yy) ",
+    },
+  },
 } as const;
