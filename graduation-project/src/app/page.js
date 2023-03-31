@@ -9,7 +9,7 @@ const roboto = Roboto({
 //"text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
 export default function Home() {
   return (
-    <body className="bg-[#a5b4fc]">
+    <body className="bg-blue-200">
       <main className={roboto.className}>
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] grid rounded shadow-sm md:grid-cols-2">
           <figure className="flex flex-col bg-white  border-gray-200 dark:border-gray-700 rounded-l">
@@ -72,13 +72,13 @@ export default function Home() {
             <div className="flex -mr-2 -mb-2 pt-10">
               <Link
                 className="text-center bg-indigo-500 ml-2 text-white w-1/2 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-500 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-blue-800"
-                href="/auth/login"
+                href="/authentication/login"
               >
                 Login
               </Link>
               <Link
                 className="text-center bg-indigo-500 ml-2 text-white w-1/2 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-500 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-blue-800"
-                href="/auth/login"
+                href="/authentication/sign-up"
               >
                 Signup
               </Link>

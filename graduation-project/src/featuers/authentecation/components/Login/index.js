@@ -1,21 +1,20 @@
 "use client";
 import { countriesList, FORM_VALIDATION } from "data";
-import "src/app/globals.css";
-import Card from "src/components/Card/index.tsx";
+import "app/globals.css";
+import Card from "components/Card/index.tsx";
 import Link from "next/link";
-import Input from "src/components/Input/index.tsx";
-import Button from "src/components/Button/index.tsx";
+import Input from "components/Input/index.tsx";
+import Button from "components/Button/index.tsx";
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 function Login() {
   const router = useRouter();
-
   const [error, setError] = useState("");
   const [isEmailError, setIsEmailError] = useState(false);
-  const [isPasswordError, setIsPasswordErrorMessage] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
 
   const {
     register,
@@ -24,16 +23,11 @@ function Login() {
     clearErrors,
     formState: { errors },
   } = useForm({
-    mode: "onSubmit", // breaking change, refactor of `mode`
+    mode: "onSubmit",
     reValidateMode: "onChange" | "onBlur",
-    defaultValues: {
-      emailReg: "",
-      passwordReg: "",
-    },
   });
 
   const onSubmit = async (data, e) => {
-    e.preventDefault();
 
     try {
       const response = await fetch(
@@ -54,26 +48,28 @@ function Login() {
         throw new Error("Wrong email or password.");
       }
       const data = await response.json();
-
-      localStorage.setItem("Token", data.accessToken);
-      if (response.statusCode >= 400) setError("user not found");
-      else if (response.statusCode < 400) {
+      localStorage.setItem("Token", data.data.accessToken);
+      if (data.statusCode >= 400) setError("user not found");
+      else if (data.statusCode < 400) {
         console.log("LOGGEDIN");
       }
 
       router.push("/");
     } catch (error) {
       setError(error.message);
+      setIsEmailError(true);
+      setIsPasswordError(true);
       console.log(error);
     }
   };
 
   const onError = (errors, e) => {
-    // clearErrors("emailReg");
-    // setError("emailReg", { type: "custom", message: "Enter a valid email" });
     console.log(errors, e);
     if (errors.emailReg) {
       setIsEmailError(true);
+    }
+    if (errors.passwordReg) {
+      setIsPasswordError(true);
     }
   };
 
@@ -86,36 +82,58 @@ function Login() {
             Log in to your account
           </h1>
         </div>
-        <p>{error}</p>
+
         <Input
           label="Email address"
           id="email"
           type="text"
+          placeholder="example@example.com"
           helperText={errors.emailReg?.message}
+          error={isEmailError}
           labelClassName="block mb-2 text-sm font-semibold text-gray-900"
           inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
-          {...register("emailReg", { ...FORM_VALIDATION.email })}
-          onChange={(event) => {
-            clearErrors("emailReg");
-            setIsEmailError(false);
-          }}
+          {...register("emailReg", {
+            ...FORM_VALIDATION.email,
+            onChange: () => {
+              clearErrors("emailReg");
+              setIsEmailError(false);
+            },
+            onBlur: () => {
+              setIsEmailError(false);
+            },
+          })}
         />
 
         <Input
           label="Password"
           id="password"
-          type="Password"
-          helperText="Enter your password"
-          labelClassName="block mb-2 text-sm font-semibold text-gray-900 -mt-5"
+          type="password"
+          placeholder="●●●●●●●●"
+          helperText={errors.passwordReg?.message}
+          labelClassName="block mb-2 text-sm font-semibold text-gray-900 -mt-3"
           inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
           error={isPasswordError}
-          {...register("passwordReg", { required: true })}
-          // onChange={(event) => setEmail(event.target.value)}
-          // ref={passwordRef}
+          inputSize="small"
+          {...register("passwordReg", {
+            required: "Passsword is required",
+            onChange: () => {
+              clearErrors("passwordReg");
+              setIsPasswordError(false);
+            },
+            onBlur: () => {
+              setIsPasswordError(false);
+            },
+          })}
         />
+
+        {error !== "" && (
+          <p className="text-sm text-red-400 mb-3 -mt-7">{error}</p>
+        )}
+
         <Button
-          className="text-white dark:bg-indigo-500 bg-indigo-500 w-full hover:bg-indigo-700 focus:outline-none font-bold px-3 py-1 text-sm text-center"
+          className="text-white dark:bg-indigo-500 bg-indigo-500 w-full hover:bg-indigo-700 focus:outline-none font-bold -mt-1 px-3 text-sm text-center"
           fullWidth="true"
+          buttonSize="small"
           type="submit"
         >
           Log in
@@ -123,7 +141,7 @@ function Login() {
 
         <Link
           className="text-[#2D65E4] font-semibold text-sm self-end object-right ml-52"
-          href="/auth/forgotPassword"
+          href="/authentication/forgotPassword"
         >
           Forgot password?
         </Link>
@@ -137,7 +155,8 @@ function Login() {
         <Button
           className="text-white dark:bg-indigo-500 bg-indigo-500 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded text-sm w-full px-20 py-2.5 text-center content-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
           fullWidth="true"
-          type="submit"
+          type="button"
+          buttonSize="small"
         >
           <svg
             className="w-4 h-4 mr-2 -ml-1"
@@ -162,7 +181,7 @@ function Login() {
 
           <Link
             className="text-[#2D65E4] font-bold text-center text-sm mt-10"
-            href="/"
+            href="/authentication/sign-up"
           >
             Don&#39;t have an account? Sign up
           </Link>

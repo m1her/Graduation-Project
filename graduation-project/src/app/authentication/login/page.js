@@ -1,4 +1,5 @@
-import Login from "src/featuers/authentecation/Login/index.js";
+import Login from "featuers/authentecation/components/Login";
+
 function login() {
   return <Login />;
 }

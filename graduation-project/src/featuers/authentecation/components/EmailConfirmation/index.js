@@ -1,15 +1,15 @@
 "use client";
-import "src/app/globals.css";
-import Card from "src/components/Card/index.tsx";
-import Input from "src/components/Input/index.tsx";
-import Button from "src/components/Button/index.tsx";
+import "app/globals.css";
+import Card from "components/Card/index.tsx";
+import Input from "components/Input/index.tsx";
+import Button from "components/Button/index.tsx";
 import { useRouter } from "next/navigation";
 
 function EmailConf() {
   const router = useRouter();
   const submitHandler = (e) => {
     e.preventDefault();
-    router.push("/auth/login");
+    router.push("/authentication/login");
   };
 
   return (

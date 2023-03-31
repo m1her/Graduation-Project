@@ -20,7 +20,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       }`;
 
       if (fullWidth) {
-        buttonClassName += " w-full";
+        buttonClassName += "w-full";
       }
 
       if (buttonSize === "large") {

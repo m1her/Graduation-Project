@@ -1,13 +1,5 @@
 "use client";
-import {
-  Button,
-  Card,
-  HelperText,
-  Input,
-  PhoneInput,
-  Loading,
-  Select,
-} from "components";
+import { Button, HelperText, Input, PhoneInput, Select } from "components";
 import { countriesList, FORM_VALIDATION } from "data";
 import {
   SignUpFormInputsType,
@@ -18,7 +10,6 @@ import { ErrorIconMini } from "lib";
 import useForm, { Controller } from "lib/react-hook-form";
 import { useRouter } from "next/navigation";
 import { getFieldHelperText, getFullName } from "utils";
-import RegistrationCard from "../../RegistrationCard";
 
 export const SignUpForm = () => {
   const router = useRouter();
