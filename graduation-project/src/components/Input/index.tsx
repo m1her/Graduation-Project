@@ -37,7 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         input: `block w-full border-gray focus:ring-0 focus:border-blue rounded-md ${
           inputClassName || ""
         }`,
-        helperText: "inline-flex min-h-[20px] text-xs mt-1",
+        helperText: "inline-flex min-h-[20px] text-red-400 text-xs mb-5 mt-1",
       };
 
       if (inputSize === "large") {

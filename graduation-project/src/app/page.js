@@ -69,7 +69,7 @@ export default function Home() {
                 </p>
               </div>
             </blockquote>
-            <view className="flex -mr-2 -mb-2 pt-10">
+            <div className="flex -mr-2 -mb-2 pt-10">
               <Link
                 className="text-center bg-indigo-500 ml-2 text-white w-1/2 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-500 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-blue-800"
                 href="/auth/login"
@@ -82,7 +82,7 @@ export default function Home() {
               >
                 Signup
               </Link>
-            </view>
+            </div>
           </figure>
         </div>
       </main>

@@ -1,34 +1,36 @@
 "use client";
+import { countriesList, FORM_VALIDATION } from "data";
 import "src/app/globals.css";
 import Card from "src/components/Card/index.tsx";
 import Link from "next/link";
 import Input from "src/components/Input/index.tsx";
 import Button from "src/components/Button/index.tsx";
-import { EyeIconMini } from "src/lib/@heroicons/index.ts";
 
 import { useRouter } from "next/navigation";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
   const [error, setError] = useState("");
-  const [emailErrorMessage, setEmailErrorMessage] = useState("");
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState(false);
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const { register, handleSubmit, watch } = useForm({
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [isPasswordError, setIsPasswordErrorMessage] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
+    mode: "onSubmit", // breaking change, refactor of `mode`
+    reValidateMode: "onChange" | "onBlur",
     defaultValues: {
       emailReg: "",
       passwordReg: "",
     },
   });
-
-  console.log(watch());
-
-  useEffect(() => {}, []);
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
@@ -40,52 +42,40 @@ function Login() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization":
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjQyMTZkY2ZkODZkYzY3OWUxMTk2ODY0Iiwicm9sZSI6InVzZXIifSwiZXhwIjoxNjgwMjcxMTA0LCJpYXQiOjE2ODAxODQ3MDR9.WT6QMks_4idgKaocSSdNLQCcr0o0uFNrB7StExJwbLU",
-            "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify({
             email: watch("emailReg"),
             password: watch("passwordReg"),
           }),
-          //  redirect: 'follow',
         }
       );
-      console.log(response);
+
       if (!response.ok) {
-        throw new Error("Something went wrong!");
+        throw new Error("Wrong email or password.");
       }
       const data = await response.json();
-      console.log(data.email);
+
+      localStorage.setItem("Token", data.accessToken);
+      if (response.statusCode >= 400) setError("user not found");
+      else if (response.statusCode < 400) {
+        console.log("LOGGEDIN");
+      }
+
+      router.push("/");
     } catch (error) {
       setError(error.message);
       console.log(error);
     }
-    setEmailErrorMessage("");
-    setPasswordErrorMessage("");
-
-    if (email == data.email && password == data.password) {
-      console.log(email + "\n" + password);
-    } else if (email !== data.email) {
-      setEmailErrorMessage("wrong email");
-      console.log("wrong email");
-    } else if (password !== data.password) {
-      console.log("wrong password");
-      setPasswordErrorMessage("wrong password");
-    } else console.log("error");
   };
 
   const onError = (errors, e) => {
+    // clearErrors("emailReg");
+    // setError("emailReg", { type: "custom", message: "Enter a valid email" });
     console.log(errors, e);
-    console.log(emailRef.current.value);
-    console.log(passwordRef.current.value);
+    if (errors.emailReg) {
+      setIsEmailError(true);
+    }
   };
-
-  //       console.log(data);
-  //       // localStorage.setItem("Token", res.data.accessToken);
-  //       // if (res.statusCode >= 400) setError("user not found");
-  //       // else if (res.statusCode < 400) {
-  //       //   console.log("LOGGEDIN");
 
   return (
     <Card className="w-[430px] px-12 py-8">
@@ -96,18 +86,19 @@ function Login() {
             Log in to your account
           </h1>
         </div>
-
+        <p>{error}</p>
         <Input
           label="Email address"
           id="email"
-          type="Email"
-          helperText="Enter your email"
-          className="mb-5"
+          type="text"
+          helperText={errors.emailReg?.message}
           labelClassName="block mb-2 text-sm font-semibold text-gray-900"
           inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
-          {...register("emailReg", { required: true })}
-          // onChange={(event) => setEmail(event.target.value)}
-          // ref={emailRef}
+          {...register("emailReg", { ...FORM_VALIDATION.email })}
+          onChange={(event) => {
+            clearErrors("emailReg");
+            setIsEmailError(false);
+          }}
         />
 
         <Input
@@ -115,9 +106,9 @@ function Login() {
           id="password"
           type="Password"
           helperText="Enter your password"
-          className="mb-5"
-          labelClassName="block mb-2 text-sm font-semibold text-gray-900"
+          labelClassName="block mb-2 text-sm font-semibold text-gray-900 -mt-5"
           inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
+          error={isPasswordError}
           {...register("passwordReg", { required: true })}
           // onChange={(event) => setEmail(event.target.value)}
           // ref={passwordRef}
