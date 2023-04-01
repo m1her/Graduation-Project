@@ -12,7 +12,7 @@ export const RegistrationCard: RegistrationCardType = ({
   ...rest
 }) => {
   // const router = useRouter();
-  const cardClassName = `w-full max-w-[400px] relative py-8 px-6 min-[440px]:px-12 ${
+  const cardClassName = `rounded-sm w-full max-w-[410px] relative py-8 px-12 min-[440px]:px-12 ${
     className || ""
   }`;
 
@@ -32,6 +32,7 @@ export const RegistrationCard: RegistrationCardType = ({
           LeapStart
         </h1>
       </div>
+    
       <div>
         {formTitle && <h6 className="text-xl my-4">{formTitle}</h6>}
         {children}

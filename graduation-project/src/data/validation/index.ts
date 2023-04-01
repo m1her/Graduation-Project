@@ -26,7 +26,7 @@ export const FORM_VALIDATION = {
     },
     pattern: {
       value: VALIDATION_RULES.password,
-      message: "uppercase, lowercase, number and special",
+      message: "Uppercase, Lowercase, Number and Special ( #?!@$%^&*- )",
     },
   },
   mobile: {

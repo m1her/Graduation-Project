@@ -21,9 +21,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ) => {
     const classNames = useMemo(() => {
       const classes = {
+          
         selectContainer: `mb-1 relative text-gray-dark ${className ?? ""}`,
-        label: "block mb-1",
-        select: `block w-full px-4 border-gray focus:ring-0 focus:border-blue rounded-md ${
+        label: "block mb-2 text-sm font-bold text-gray-900 -mt-1",
+        select: `block w-full px-4 border-gray focus:ring-0 focus:border-gray-700 rounded-md ${
           selectClassName || ""
         }`,
         helperText: "inline-flex min-h-[20px] text-xs mt-1",

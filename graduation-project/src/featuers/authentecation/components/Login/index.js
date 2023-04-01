@@ -1,5 +1,5 @@
 "use client";
-import { countriesList, FORM_VALIDATION } from "data";
+import { FORM_VALIDATION } from "data";
 import "app/globals.css";
 import Card from "components/Card/index.tsx";
 import Link from "next/link";
@@ -28,7 +28,6 @@ function Login() {
   });
 
   const onSubmit = async (data, e) => {
-
     try {
       const response = await fetch(
         "https://leapstart.onrender.com/api/v1/users/login",
@@ -74,24 +73,26 @@ function Login() {
   };
 
   return (
-    <Card className="w-[430px] px-12 py-8">
+    <Card className="w-[410px] px-12 py-8 rounded-sm">
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-700">LeapStart</h1>
-          <h1 className="text-2xl font-semibold mt-5 mb-4 text-gray-700">
+          <h1 className="text-2xl font-semibold text-gray-700 mt-4">
+            LeapStart
+          </h1>
+          <h1 className="text-2xl font-semibold mt-8 mb-5 text-gray-700">
             Log in to your account
           </h1>
         </div>
 
         <Input
-          label="Email address"
+          label="Email*"
           id="email"
           type="text"
-          placeholder="example@example.com"
+          placeholder="Example@example.com"
           helperText={errors.emailReg?.message}
           error={isEmailError}
-          labelClassName="block mb-2 text-sm font-semibold text-gray-900"
-          inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
+          labelClassName="block mb-2 text-sm font-bold text-gray-900"
+          inputClassName="-mb-[4px] h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
           {...register("emailReg", {
             ...FORM_VALIDATION.email,
             onChange: () => {
@@ -103,50 +104,51 @@ function Login() {
             },
           })}
         />
-
-        <Input
-          label="Password"
-          id="password"
-          type="password"
-          placeholder="●●●●●●●●"
-          helperText={errors.passwordReg?.message}
-          labelClassName="block mb-2 text-sm font-semibold text-gray-900 -mt-3"
-          inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
-          error={isPasswordError}
-          inputSize="small"
-          {...register("passwordReg", {
-            required: "Passsword is required",
-            onChange: () => {
-              clearErrors("passwordReg");
-              setIsPasswordError(false);
-            },
-            onBlur: () => {
-              setIsPasswordError(false);
-            },
-          })}
-        />
-
-        {error !== "" && (
-          <p className="text-sm text-red-400 mb-3 -mt-7">{error}</p>
-        )}
+        <div className="h-[105px] pb-3">
+          <Input
+            label="Password*"
+            id="password"
+            type="password"
+            placeholder="●●●●●●●●"
+            helperText={errors.passwordReg?.message}
+            labelClassName="block mb-2 text-sm font-bold text-gray-900 -mt-3"
+            inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
+            error={isPasswordError}
+            inputSize="small"
+            {...register("passwordReg", {
+              required: "Passsword is required",
+              onChange: () => {
+                clearErrors("passwordReg");
+                setIsPasswordError(false);
+              },
+              onBlur: () => {
+                setIsPasswordError(false);
+              },
+            })}
+          />
+          {error !== "" && (
+            <p className="text-sm text-red-400 -mt-5">{error}</p>
+          )}
+        </div>
 
         <Button
-          className="text-white dark:bg-indigo-500 bg-indigo-500 w-full hover:bg-indigo-700 focus:outline-none font-bold -mt-1 px-3 text-sm text-center"
-          fullWidth="true"
+          className="text-white dark:bg-indigo-500 bg-indigo-500 w-full hover:bg-indigo-700 focus:outline-none font-bold px-3 text-sm text-center"
+          fullWidth
           buttonSize="small"
           type="submit"
         >
-          Log in
+          Log In
+          {/* {loading ? "Loading..." : "Log In"} */}
         </Button>
 
         <Link
-          className="text-[#2D65E4] font-semibold text-sm self-end object-right ml-52"
+          className="text-[#2D65E4] font-bold text-sm self-end object-right ml-[184px]"
           href="/authentication/forgotPassword"
         >
           Forgot password?
         </Link>
 
-        <div className="inline-flex items-center justify-center w-full">
+        <div className="inline-flex items-center justify-center w-full mb-2">
           <hr className="w-80 h-px my-4 bg-gray-200 border-0 dark:bg-gray-400" />
           <span className="absolute px-1 text-xs font-bold text-gray-400 -translate-x-1/2 bg-white left-1/2">
             OR
@@ -177,7 +179,7 @@ function Login() {
         </Button>
 
         <div className="text-center">
-          <hr className="h-px mt-2 mb-3 -mx-14 bg-gray-200 border-0 dark:bg-gray-300" />
+          <hr className="h-px mt-4 mb-3 -mx-12 bg-gray-200 border-0 dark:bg-gray-300" />
 
           <Link
             className="text-[#2D65E4] font-bold text-center text-sm mt-10"
