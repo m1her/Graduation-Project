@@ -17,10 +17,9 @@ export type SignInFormInputsType = {
 export type SignUpFormInputsType = {
   firstName: string;
   lastName: string;
-  name: string;
   email: string;
   password: string;
-  mobile: string;
+  phone: string;
   country: string;
 };
 

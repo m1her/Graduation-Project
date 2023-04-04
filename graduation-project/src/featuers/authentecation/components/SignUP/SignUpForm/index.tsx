@@ -11,6 +11,7 @@ import useForm, { Controller } from "lib/react-hook-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getFieldHelperText, getFullName } from "utils";
+import { setCookie } from "lib/js-cookie";
 
 export const SignUpForm = () => {
   const router = useRouter();
@@ -33,8 +34,9 @@ export const SignUpForm = () => {
     options: {
       manual: true,
     },
-    onSuccess: () => {
-      router.push("/");
+    onSuccess: (data) => {
+      setCookie("currentUser", data.data);
+      router.push("/authentication/emailConf");
       console.log("sucess");
     },
   });
@@ -43,9 +45,7 @@ export const SignUpForm = () => {
     if (loading) return;
     const signUpData = {
       name: getFullName(data.firstName, data.lastName),
-      firstName: data.firstName,
-      lastName: data.lastName,
-      mobile: data.mobile,
+      phone: data.phone,
       country: data.country,
       password: data.password,
       email: data.email,
@@ -129,10 +129,10 @@ export const SignUpForm = () => {
       />
       <Controller
         control={control}
-        name="mobile"
+        name="phone"
         rules={{
           ...FORM_VALIDATION.mobile,
-          onChange: () => clearErrorOnChange("mobile"),
+          onChange: () => clearErrorOnChange("phone"),
         }}
         render={({ field: { ref, onChange, ...field } }) => (
           <PhoneInput
@@ -144,8 +144,8 @@ export const SignUpForm = () => {
             inputProps={{
               ref,
             }}
-            error={!!errors.mobile}
-            helperText={getFieldHelperText("error", errors.mobile?.message)}
+            error={!!errors.phone}
+            helperText={getFieldHelperText("error", errors.phone?.message)}
             onChange={(_, __, ___, value) => onChange(value)}
             {...field}
           />

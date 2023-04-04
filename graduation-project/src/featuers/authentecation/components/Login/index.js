@@ -9,6 +9,8 @@ import Button from "components/Button/index.tsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { HelperText } from "components";
+import { ErrorIconMini } from "lib";
 
 function Login() {
   const router = useRouter();
@@ -27,7 +29,7 @@ function Login() {
     reValidateMode: "onChange" | "onBlur",
   });
 
-  const onSubmit = async (data, e) => {
+  const onSubmit = async () => {
     try {
       const response = await fetch(
         "https://leapstart.onrender.com/api/v1/users/login",
@@ -89,20 +91,29 @@ function Login() {
           id="email"
           type="text"
           placeholder="Example@example.com"
-          helperText={errors.emailReg?.message}
           error={isEmailError}
           labelClassName="block mb-2 text-sm font-bold text-gray-900"
-          inputClassName="-mb-[4px] h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
+          inputClassName=" h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
+          withoutHelperText
           {...register("emailReg", {
             ...FORM_VALIDATION.email,
             onChange: () => {
               clearErrors("emailReg");
               setIsEmailError(false);
+              setError("");
             },
             onBlur: () => {
+              clearErrors("emailReg");
               setIsEmailError(false);
+              setError("");
             },
           })}
+        />
+        <HelperText
+          showContent={!!errors.emailReg}
+          className="text-red w-full text-xs min-h-[20px]"
+          startIcon={<ErrorIconMini className="w-5 h-5" />}
+          text={errors.emailReg?.message}
         />
         <div className="h-[105px] pb-3">
           <Input
@@ -110,8 +121,8 @@ function Login() {
             id="password"
             type="password"
             placeholder="●●●●●●●●"
-            helperText={errors.passwordReg?.message}
-            labelClassName="block mb-2 text-sm font-bold text-gray-900 -mt-3"
+            withoutHelperText
+            labelClassName="block mb-2 text-sm font-bold text-gray-900 -mt-2"
             inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
             error={isPasswordError}
             inputSize="small"
@@ -120,14 +131,26 @@ function Login() {
               onChange: () => {
                 clearErrors("passwordReg");
                 setIsPasswordError(false);
+                setError("");
               },
               onBlur: () => {
                 setIsPasswordError(false);
+                clearErrors("passwordReg");
+                setError("");
               },
             })}
           />
+          <HelperText
+            showContent={!!errors.passwordReg}
+            className="text-red w-full text-xs min-h-[20px]"
+            startIcon={<ErrorIconMini className="w-5 h-5" />}
+            text={errors.passwordReg?.message}
+          />
           {error !== "" && (
-            <p className="text-sm text-red-400 -mt-5">{error}</p>
+            <div className="-mt-5 text-red-400">
+              <ErrorIconMini className="w-5 h-5" />
+              <p className="ml-6 text-sm -mt-5">{error}</p>
+            </div>
           )}
         </div>
 

@@ -86,4 +86,15 @@ export const FORM_VALIDATION = {
       message: " Amount should be number (int or decimal) like (xx.yy) ",
     },
   },
+  confirmationCode: {
+    required: "Confirmation code is required",
+    maxLength: {
+      value: 6,
+      message: "Confirmation code should be 6 characters",
+    },
+    minLength: {
+      value: 6,
+      message: "Confirmation code should be 6 characters",
+    }
+  }
 } as const;
