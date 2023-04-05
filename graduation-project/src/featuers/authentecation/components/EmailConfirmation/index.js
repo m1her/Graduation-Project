@@ -74,6 +74,12 @@ function EmailConf() {
       console.log("verified");
       router.push("/");
     },
+    onError: () => {
+      setError("confCodeReg", {
+        type: "wrong code",
+        message: "Invalid code",
+      });
+    },
   });
 
   const onSubmit = (data) => {

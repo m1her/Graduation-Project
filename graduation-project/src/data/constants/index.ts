@@ -32,6 +32,8 @@ export const API_SERVICES_URLS = {
 
 export const COOKIES_KEYS = {
   currentUser: "currentUser",
+  resetPassword_id: "resetPassword_id",
+  recoverToken: "recoverToken",
 } as const;
 
 export const LOCAL_STORAGE_KEYS = {} as const;
