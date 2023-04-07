@@ -11,12 +11,12 @@ import { useForm } from "react-hook-form";
 function EmailConf() {
   const router = useRouter();
   const [showConf, setShowConf] = useState(false);
-  const [isInputError, setIsInpuError] = useState(false);
+  const [isInputError, setIsInpuError] = useState(false); // remove
   const [counter, setCounter] = useState();
   const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000); //remove
     if(counter == 0){
       setIsDisabled(false);
       setCounter(null);
@@ -26,8 +26,8 @@ function EmailConf() {
   const {
     register,
     handleSubmit,
-    watch,
     clearErrors,
+    setError,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
@@ -90,7 +90,7 @@ function EmailConf() {
     verifyCode(sentData);
   };
 
-  const onError = (errors) => {
+  const onError = (errors) => { /// remove
     if (errors.confCodeReg) {
       setIsInpuError(true);
     }

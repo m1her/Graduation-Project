@@ -23,6 +23,12 @@ export type SignUpFormInputsType = {
   country: string;
 };
 
+export type ForgotPasswordFormInputsType = {
+  emailReg: string;
+  codeReg: string;
+};
+
+
 export type AuthResponseType = {
   accessToken: string;
   refreshToken: string;

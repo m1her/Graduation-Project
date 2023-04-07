@@ -3,19 +3,21 @@
 import "app/globals.css";
 import { useAxios } from "Hooks";
 import { FORM_VALIDATION } from "data";
-import { Card, Input, Button, HelperText } from "components";
+import { Card, Input, Button } from "components";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { getFieldHelperText } from "utils";
 import { getCookie, setCookie } from "lib/js-cookie";
 import { COOKIES_KEYS } from "data";
+import {
+  ForgotPasswordFormInputsType,
+} from "featuers/authentecation/types";
 
 function ForgotPassword() {
   const router = useRouter();
-  const [email, setemail] = useState();
   const [toggleUI, setToggleUI] = useState(false);
-  const [counter, setCounter] = useState();
+  const [counter, setCounter] = useState<any>();
   const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
@@ -33,9 +35,9 @@ function ForgotPassword() {
     setError,
     watch,
     formState: { errors },
-  } = useForm({
+  } =useForm<ForgotPasswordFormInputsType>({
     mode: "onSubmit",
-    reValidateMode: "onChange" | "onBlur",
+    reValidateMode: "onChange" || "onBlur",
   });
 
   const {
@@ -93,20 +95,16 @@ function ForgotPassword() {
   });
 
   const onSubmit = (data) => {
-    if (toggleUI == true) {
+    if (toggleUI) {
       VerifyCode({
         code: data.codeReg,
         _id: getCookie(COOKIES_KEYS.resetPassword_id),
       });
     } else {
+      console.log(emailError.message);
+      
       sendCodeToEmail({ email: data.emailReg });
     }
-  };
-
-  const onError = (errors, e) => {
-    //  if (errors.emailReg) {
-    //   setIsCodeInpuError(true);
-    //  }
   };
 
   const submitVerificationCode = () => {
@@ -116,7 +114,7 @@ function ForgotPassword() {
 
   return (
     <Card className="w-[410px] px-12 py-8">
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-gray-700">LeapStart</h1>
           <h1 className="text-2xl font-semibold my-7 text-gray-700">
@@ -147,7 +145,7 @@ function ForgotPassword() {
 
             <Button
               className="text-white dark:bg-indigo-500 bg-indigo-500 w-full hover:bg-indigo-700 focus:outline-none font-bold px-3 py-1 text-sm text-center"
-              fullWidth="true"
+              fullWidth = {true}
               type="submit"
             >
               {emailLoading ? "Loading..." : "Continue"}
@@ -193,10 +191,10 @@ function ForgotPassword() {
         {toggleUI && (
           <Button
             className="text-white  dark:bg-indigo-500 w-full hover:bg-indigo-700 dark:hover:bg-indigo-700 focus:outline-none font-bold px-3 py-1 text-sm text-center"
-            fullWidth="true"
+            fullWidth={true}
             type="submit"
           >
-            {verifyLoading ? "Loading..." : "Send code"}
+            {verifyLoading ? "Loading..." : "Confirm code"}
           </Button>
         )}
       </form>
