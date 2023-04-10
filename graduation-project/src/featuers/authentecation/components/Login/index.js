@@ -1,22 +1,16 @@
 "use client";
-import { FORM_VALIDATION } from "data";
 import "app/globals.css";
-import Card from "components/Card/index.tsx";
+import { FORM_VALIDATION } from "data";
+import { Card, Input, Button, HelperText } from "components";
 import Link from "next/link";
-import Input from "components/Input/index.tsx";
-import Button from "components/Button/index.tsx";
-
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { HelperText } from "components";
 import { ErrorIconMini } from "lib";
 
 function Login() {
   const router = useRouter();
-  const [error, setError] = useState("");
-  const [isEmailError, setIsEmailError] = useState(false);
-  const [isPasswordError, setIsPasswordError] = useState(false);
+  const [error, setError] = useState("");//manage error messages
 
   const {
     register,
@@ -27,7 +21,7 @@ function Login() {
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange" | "onBlur",
-  });
+  });//form hook
 
   const onSubmit = async () => {
     try {
@@ -54,44 +48,30 @@ function Login() {
       else if (data.statusCode < 400) {
         console.log("LOGGEDIN");
       }
-
       router.push("/");
     } catch (error) {
       setError(error.message);
-      setIsEmailError(true);
-      setIsPasswordError(true);
-      console.log(error);
     }
-  };
-
-  const onError = (errors, e) => {
-    console.log(errors, e);
-    if (errors.emailReg) {
-      setIsEmailError(true);
-    }
-    if (errors.passwordReg) {
-      setIsPasswordError(true);
-    }
-  };
+  };//form on submit function it sends a request with entered user data to the api 
 
   return (
     <Card className="w-[410px] px-12 py-8 rounded-sm">
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-gray-700 mt-4">
             LeapStart
           </h1>
+         
           <h1 className="text-2xl font-semibold mt-8 mb-5 text-gray-700">
             Log in to your account
           </h1>
         </div>
-
         <Input
           label="Email*"
           id="email"
           type="text"
           placeholder="Example@example.com"
-          error={isEmailError}
+          error={!!errors.emailReg}
           labelClassName="block mb-2 text-sm font-bold text-gray-900"
           inputClassName=" h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
           withoutHelperText
@@ -99,12 +79,11 @@ function Login() {
             ...FORM_VALIDATION.email,
             onChange: () => {
               clearErrors("emailReg");
-              setIsEmailError(false);
+
               setError("");
             },
             onBlur: () => {
               clearErrors("emailReg");
-              setIsEmailError(false);
               setError("");
             },
           })}
@@ -124,19 +103,15 @@ function Login() {
             withoutHelperText
             labelClassName="block mb-2 text-sm font-bold text-gray-900 -mt-2"
             inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
-            error={isPasswordError}
+            error={!!errors.passwordReg}
             inputSize="small"
             {...register("passwordReg", {
               required: "Passsword is required",
               onChange: () => {
                 clearErrors("passwordReg");
-                setIsPasswordError(false);
-                setError("");
               },
               onBlur: () => {
-                setIsPasswordError(false);
                 clearErrors("passwordReg");
-                setError("");
               },
             })}
           />
@@ -161,7 +136,6 @@ function Login() {
           type="submit"
         >
           Log In
-          {/* {loading ? "Loading..." : "Log In"} */}
         </Button>
 
         <Link

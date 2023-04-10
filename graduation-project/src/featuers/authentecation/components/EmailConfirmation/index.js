@@ -7,21 +7,12 @@ import { HelperText, Card, Input, Button } from "components";
 import { ErrorIconMini } from "lib";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import useCounter from "featuers/authentecation/Hooks/useCounter";
 
 function EmailConf() {
   const router = useRouter();
-  const [showConf, setShowConf] = useState(false);
-  const [isInputError, setIsInpuError] = useState(false); // remove
-  const [counter, setCounter] = useState();
-  const [isDisabled, setIsDisabled] = useState(true);
-
-  useEffect(() => {
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000); //remove
-    if(counter == 0){
-      setIsDisabled(false);
-      setCounter(null);
-    }
-  }, [counter]);
+  const [showConf, setShowConf] = useState(false); //show confirmation message and components
+  const { counter, setCounter, isDisabled, setIsDisabled } = useCounter(); //disable resend button for 15 sec
 
   const {
     register,
@@ -34,12 +25,7 @@ function EmailConf() {
     reValidateMode: "onChange" | "onBlur",
   });
 
-  const {
-    fetchData: sendCodeToEmail,
-    data: emailData,
-    error: emailError,
-    loading: emailLoading,
-  } = useAxios({
+  const { fetchData: sendCodeToEmail, loading: emailLoading } = useAxios({
     config: {
       url: "https://leapstart.onrender.com/api/v1/users/send-code-email",
       method: "POST",
@@ -54,14 +40,9 @@ function EmailConf() {
       setShowConf(true);
       setIsDisabled(true);
     },
-  });
+  }); // send verification code to users email
 
-  const {
-    fetchData: verifyCode,
-    data: verificationData,
-    error: verificationError,
-    loading: verificationLoading,
-  } = useAxios({
+  const { fetchData: verifyCode, loading: verificationLoading } = useAxios({
     config: {
       url: "https://leapstart.onrender.com/api/v1/users/verify/email",
       method: "POST",
@@ -80,7 +61,7 @@ function EmailConf() {
         message: "Invalid code",
       });
     },
-  });
+  });//send entered code with access token to api to confirm the registered account
 
   const onSubmit = (data) => {
     if (verificationLoading) return;
@@ -88,22 +69,17 @@ function EmailConf() {
       code: data.confCodeReg,
     };
     verifyCode(sentData);
-  };
-
-  const onError = (errors) => { /// remove
-    if (errors.confCodeReg) {
-      setIsInpuError(true);
-    }
-  };
+  };//form submitting
 
   const sendVerificationCode = () => {
     if (emailLoading) return;
+    setIsDisabled(true);
     sendCodeToEmail();
-  };
+  };//resend code onClick function
 
   return (
     <Card className="w-[410px] px-12 py-8">
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="text-center">
           <h1 className="text-2xl mb-11 font-semibold text-gray-700">
             LeapStart
@@ -119,7 +95,7 @@ function EmailConf() {
           id="confCode"
           placeholder="123456"
           withoutHelperText
-          error={isInputError}
+          error={!!errors.confCodeReg}
           labelClassName="block mb-2 text-sm font-bold text-gray-900"
           inputClassName="disabled:bg-gray-300 disabled:border-gray-400 h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:outline-none focus:border-gray-700 block"
           disabled={!showConf}
@@ -127,10 +103,8 @@ function EmailConf() {
             ...FORM_VALIDATION.confirmationCode,
             onChange: () => {
               clearErrors("confCodeReg");
-              setIsInpuError(false);
             },
             onBlur: () => {
-              setIsInpuError(false);
               clearErrors("confCodeReg");
             },
           })}
@@ -150,7 +124,11 @@ function EmailConf() {
               disabled={isDisabled}
               onClick={sendVerificationCode}
             >
-              {counter}  Resend code
+              {emailLoading
+                ? "Loading..."
+                : counter == null
+                ? "Resend code"
+                : `${counter} Resend code`}
             </button>
           </div>
         )}
@@ -164,6 +142,7 @@ function EmailConf() {
             Confirm
           </Button>
         )}
+        {/* switch between buttons <<showConf>> */}
         {!showConf && (
           <Button
             className="text-white  dark:bg-indigo-500 w-full hover:bg-indigo-700 dark:hover:bg-indigo-700 focus:outline-none font-bold px-3 py-1 text-sm text-center"

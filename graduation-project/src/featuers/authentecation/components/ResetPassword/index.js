@@ -1,15 +1,12 @@
 "use client";
 import "app/globals.css";
-import { FORM_VALIDATION, VALIDATION_RULES } from "data";
+import { FORM_VALIDATION, VALIDATION_RULES, COOKIES_KEYS } from "data";
 import { getFieldHelperText } from "utils";
-import Card from "components/Card";
-import Input from "components/Input";
-import Button from "components/Button";
+import {Card, Input, Button} from "components";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useAxios } from "Hooks";
 import { getCookie } from "lib/js-cookie";
-import { COOKIES_KEYS } from "data";
 
 function ResetPassword() {
   const router = useRouter();
@@ -23,12 +20,10 @@ function ResetPassword() {
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange" | "onBlur",
-  });
+  });//form hook
 
   const {
     fetchData: resetPassword,
-    data,
-    error,
     loading,
   } = useAxios({
     config: {
@@ -48,19 +43,20 @@ function ResetPassword() {
         message: "Invalid code",
       });
     },
-  });
+  });//sends the new password to the api to change the previous one
+     //after confirming that the two entered passwords are the same
+     //the request contains new password and recover token 
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    if(data.newPasswordReg === data.confirmPasswordReg){
+    if(data.newPasswordReg === data.confirmPasswordReg){//if entered passwords are the same
       resetPassword({
         password: data.newPasswordReg,
         recoverToken: getCookie(COOKIES_KEYS.recoverToken),
-
-      })
+      });
       console.log("yes it does");
     }
-    else{
+    else{//if entered passwords are NOT the same
       setError('confirmPasswordReg', { 
         type: 'noo matching passwords',
         message: "Passwords doesn't match"
@@ -69,16 +65,9 @@ function ResetPassword() {
     }
   };
 
-  const onError = (errors, e) => {
-    console.log(errors, e);
-    //  if (errors.emailReg) {
-    //   setIsCodeInpuError(true);
-    //  }
-  };
-
   return (
     <Card className="w-[410px] px-12 py-8">
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-gray-700">LeapStart</h1>
           <h1 className="text-2xl font-semibold mt-5 mb-4 text-gray-700">
@@ -122,7 +111,6 @@ function ResetPassword() {
               value: VALIDATION_RULES.password,
               message: "Invalid password ",
             },
-
             onChange: () => {
               clearErrors("confirmPasswordReg");
             },

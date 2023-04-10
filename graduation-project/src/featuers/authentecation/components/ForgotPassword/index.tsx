@@ -1,32 +1,24 @@
 "use client";
-
 import "app/globals.css";
 import { useAxios } from "Hooks";
 import { FORM_VALIDATION } from "data";
 import { Card, Input, Button } from "components";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getFieldHelperText } from "utils";
 import { getCookie, setCookie } from "lib/js-cookie";
 import { COOKIES_KEYS } from "data";
 import {
-  ForgotPasswordFormInputsType,
+  ForgotPasswordFormInputType,
+  ForgotPasswordResponseType,
 } from "featuers/authentecation/types";
+import useCounter from "featuers/authentecation/Hooks/useCounter";
 
 function ForgotPassword() {
   const router = useRouter();
-  const [toggleUI, setToggleUI] = useState(false);
-  const [counter, setCounter] = useState<any>();
-  const [isDisabled, setIsDisabled] = useState(true);
-
-  useEffect(() => {
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
-    if (counter == 0) {
-      setIsDisabled(false);
-      setCounter(null);
-    }
-  }, [counter]);
+  const [toggleUI, setToggleUI] = useState(false);//toggle components after and before sending confirmation code
+  const { counter, setCounter, isDisabled, setIsDisabled } = useCounter();//disable resend button for 15 sec
 
   const {
     register,
@@ -35,17 +27,15 @@ function ForgotPassword() {
     setError,
     watch,
     formState: { errors },
-  } =useForm<ForgotPasswordFormInputsType>({
+  } = useForm<ForgotPasswordFormInputType>({
     mode: "onSubmit",
-    reValidateMode: "onChange" || "onBlur",
-  });
+    reValidateMode: "onSubmit",
+  });//form hook
 
-  const {
-    fetchData: sendCodeToEmail,
-    data: emailData,
-    error: emailError,
-    loading: emailLoading,
-  } = useAxios({
+  const { fetchData: sendCodeToEmail, loading: emailLoading } = useAxios<
+    ForgotPasswordResponseType,
+    ForgotPasswordFormInputType
+  >({
     config: {
       url: "https://leapstart.onrender.com/api/v1/users/password/forgot",
       method: "POST",
@@ -65,14 +55,9 @@ function ForgotPassword() {
         message: "User not found",
       });
     },
-  });
+  });//sends verification code to entered email
 
-  const {
-    fetchData: VerifyCode,
-    data: verifyData,
-    error: verifyError,
-    loading: verifyLoading,
-  } = useAxios({
+  const { fetchData: VerifyCode, loading: verifyLoading } = useAxios({
     config: {
       url: "https://leapstart.onrender.com/api/v1/users/password/verify-code",
       method: "POST",
@@ -84,7 +69,7 @@ function ForgotPassword() {
       setCookie("recoverToken", data.data.recoverToken);
       router.push("/authentication/resetPassword");
 
-      console.log("sucess");
+      console.log(data);
     },
     onError: () => {
       setError("codeReg", {
@@ -92,24 +77,30 @@ function ForgotPassword() {
         message: "Invalid code",
       });
     },
-  });
+  });//send verification code with the id cookie to api to check and confirm
 
   const onSubmit = (data) => {
     if (toggleUI) {
-      VerifyCode({
+      VerifyCode({//send request to api
         code: data.codeReg,
         _id: getCookie(COOKIES_KEYS.resetPassword_id),
       });
     } else {
-      console.log(emailError.message);
-      
-      sendCodeToEmail({ email: data.emailReg });
+      sendCodeToEmail({//send request to users email
+        email: data.emailReg,
+        emailReg: "",
+        codeReg: "",
+      });
     }
-  };
+  };//form submitting with conditions
 
   const submitVerificationCode = () => {
     setIsDisabled(true);
-    sendCodeToEmail({email: watch("emailReg")});
+    sendCodeToEmail({
+      email: watch("emailReg"),
+      emailReg: "",
+      codeReg: "",
+    });//send request to users email
   };
 
   return (
@@ -145,14 +136,16 @@ function ForgotPassword() {
 
             <Button
               className="text-white dark:bg-indigo-500 bg-indigo-500 w-full hover:bg-indigo-700 focus:outline-none font-bold px-3 py-1 text-sm text-center"
-              fullWidth = {true}
+              fullWidth={true}
               type="submit"
             >
               {emailLoading ? "Loading..." : "Continue"}
             </Button>
           </div>
         )}
-        {/* ///////////////////////////////////////////////////////////////////////////////// */}
+        {/* first step ui */}
+        {/* ////////////////////////////////////////////////////////////////////////////// */}
+        {/* second step ui */}
         {toggleUI && (
           <Input
             label="Confirmation code*"
@@ -165,7 +158,7 @@ function ForgotPassword() {
               ...FORM_VALIDATION.confirmationCode,
               onChange: () => {
                 clearErrors("codeReg");
-                //     setIsEmailError(false);
+                //setIsEmailError(false);
               },
               onBlur: () => {
                 clearErrors("codeReg");
@@ -184,7 +177,12 @@ function ForgotPassword() {
               disabled={isDisabled}
               onClick={submitVerificationCode}
             >
-              {counter} Resend code
+          
+            {emailLoading
+                ? "Loading..."
+                : counter == null
+                ? "Resend code"
+                : `${counter} Resend code`}
             </button>
           </div>
         )}

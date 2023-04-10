@@ -23,12 +23,6 @@ export type SignUpFormInputsType = {
   country: string;
 };
 
-export type ForgotPasswordFormInputsType = {
-  emailReg: string;
-  codeReg: string;
-};
-
-
 export type AuthResponseType = {
   accessToken: string;
   refreshToken: string;
@@ -40,10 +34,14 @@ export type SignInResponseType = APIResponseType<AuthResponseType>;
 export type SignUpResponseType = APIResponseType<AuthResponseType>;
 
 export type ForgotPasswordFormInputType = {
-  email: string;
+  emailReg: string;
+  codeReg: string;
+  email: any;
 };
 
-export type ForgotPasswordResponseType = APIResponseType<{ _id: string }>;
+export type ForgotPasswordResponseType = APIResponseType<{
+  _id: string;
+}>;
 
 export type VerifyCodeFormPayloadType = {
   _id: string;

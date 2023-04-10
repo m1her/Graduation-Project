@@ -22,3 +22,5 @@ export interface UseAxiosProps<DType = any> {
   onSuccess?: (data: DType) => void;
   onError?: (data: ErrorType) => void;
 }
+
+
