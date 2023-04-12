@@ -30,7 +30,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/app/authentication/page.tsx"
+    "src/app/authentication/page.tsx", "src/featuers/authentecation/components/ResetPassword/index.js", "src/featuers/authentecation/components/ForgotPassword/index.js",
   ],
   "exclude": ["node_modules"]
 }

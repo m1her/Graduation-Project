@@ -24,8 +24,8 @@ export const PhoneInput: PhoneInputType = ({
   const classNames = useMemo(() => {
     const classes = {
       inputContainer: `mb-1 relative text-gray-dark ${className ?? ""}`,
-      label: "block mb-1",
-      input: `!block !w-full !h-auto !px-4 !pl-16 !border !border-gray focus:!ring-0 focus:!border-blue !rounded-md ${
+      label: "block mb-2 text-sm font-bold text-gray-900 -mt-1",
+      input: `!block !w-full !h-9 !px-4 !pl-16 !bg-gray-50 !border !border-gray-300 focus:!ring-0 focus:!border-gray-700 !rounded-md ${
         inputClassName || ""
       }`,
       button:

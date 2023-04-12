@@ -20,9 +20,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       labelClassName,
       focusableLabel = false,
 
+
       ...rest
     },
     ref
+
   ) => {
     const { passwordInputType, passwordInputIcon } =
       usePasswordInput(inputSize);
@@ -36,7 +38,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         input: `block w-full border-gray focus:ring-0 focus:border-blue rounded-md ${
           inputClassName || ""
         }`,
-        helperText: "inline-flex min-h-[20px] text-xs mt-1",
+        helperText: "inline-flex min-h-[20px] text-red-400 text-xs mb-2",
       };
 
       if (inputSize === "large") {
@@ -51,7 +53,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       }
 
       if (error) {
-        classes.input += " border-red focus:border-red";
+        classes.input += " border-red focus:border-red bg-red-100";
       }
 
       return classes;

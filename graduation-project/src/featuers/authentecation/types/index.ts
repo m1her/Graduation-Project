@@ -19,7 +19,7 @@ export type SignUpFormInputsType = {
   lastName: string;
   email: string;
   password: string;
-  mobile: string;
+  phone: string;
   country: string;
 };
 
@@ -34,10 +34,14 @@ export type SignInResponseType = APIResponseType<AuthResponseType>;
 export type SignUpResponseType = APIResponseType<AuthResponseType>;
 
 export type ForgotPasswordFormInputType = {
-  email: string;
+  emailReg: string;
+  codeReg: string;
+  email: any;
 };
 
-export type ForgotPasswordResponseType = APIResponseType<{ _id: string }>;
+export type ForgotPasswordResponseType = APIResponseType<{
+  _id: string;
+}>;
 
 export type VerifyCodeFormPayloadType = {
   _id: string;

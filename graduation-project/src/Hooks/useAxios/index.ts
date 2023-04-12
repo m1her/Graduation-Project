@@ -46,6 +46,7 @@ export const useAxios = <DataType = any, BodyType = any>({
           ...restParams,
         });
         const data = response.data;
+
         _options.withState && setData(data);
         onSuccess && onSuccess(data);
         return data;
