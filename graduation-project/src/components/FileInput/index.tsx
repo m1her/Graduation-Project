@@ -55,7 +55,7 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
         }
         labelClassName={classNames.labelClassName}
         focusableLabel
-        inputClassName="hidden"
+        inputClassName=""
         ref={ref}
         {...rest}
         key={fileInputKey}

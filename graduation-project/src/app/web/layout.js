@@ -1,13 +1,12 @@
-import Navigation from "@/components/Navigation";
-import Sidebar from "@/components/Sidebar";
+import Navigation from "components/Navigation.js";
+import Sidebar from "components/Sidebar.js";
 
 export default function Layout({ children }) {
   return (
-    <html lang="en">
+    
       <body className="bg-[#a5b4fc]">
-        <Navigation />
-        <Sidebar />
-        {children}</body>
-    </html>
+        {children}
+      </body>
+    
   );
 }
