@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorIconMini } from "lib";
+import { setStorageItem } from "utils";
 
 function Login() {
   const router = useRouter();
@@ -42,13 +43,17 @@ function Login() {
       if (!response.ok) {
         throw new Error("Wrong email or password.");
       }
+      
       const data = await response.json();
       localStorage.setItem("Token", data.data.accessToken);
+      console.log(data.data.user);
+      setStorageItem("User", data.data.user);
+      
       if (data.statusCode >= 400) setError("user not found");
       else if (data.statusCode < 400) {
         console.log("LOGGEDIN");
       }
-      router.push("/");
+      router.push("/web/feeds");
     } catch (error) {
       setError(error.message);
     }
@@ -66,6 +71,7 @@ function Login() {
             Log in to your account
           </h1>
         </div>
+        
         <Input
           label="Email*"
           id="email"
@@ -88,9 +94,10 @@ function Login() {
             },
           })}
         />
+
         <HelperText
           showContent={!!errors.emailReg}
-          className="text-red w-full text-xs min-h-[20px]"
+          className="text-red w-full text-xs min-h-[20px] "
           startIcon={<ErrorIconMini className="w-5 h-5" />}
           text={errors.emailReg?.message}
         />
@@ -117,7 +124,7 @@ function Login() {
           />
           <HelperText
             showContent={!!errors.passwordReg}
-            className="text-red w-full text-xs min-h-[20px]"
+            className="text-red w-full text-xs min-h-[20px] -mt-4"
             startIcon={<ErrorIconMini className="w-5 h-5" />}
             text={errors.passwordReg?.message}
           />
