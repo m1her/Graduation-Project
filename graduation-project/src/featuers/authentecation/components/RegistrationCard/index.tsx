@@ -19,10 +19,7 @@ export const RegistrationCard: RegistrationCardType = ({
   return (
     <Card {...rest} className={cardClassName}>
       {withBackButton && (
-        <IconButton
-          // onClick={() => router.back()}
-          className="absolute top-10 sm:left-9"
-        >
+        <IconButton className="absolute top-10 sm:left-9">
           <ChevronLeftIconMini />
         </IconButton>
       )}
@@ -32,7 +29,7 @@ export const RegistrationCard: RegistrationCardType = ({
           LeapStart
         </h1>
       </div>
-    
+
       <div>
         {formTitle && <h6 className="text-xl my-4">{formTitle}</h6>}
         {children}

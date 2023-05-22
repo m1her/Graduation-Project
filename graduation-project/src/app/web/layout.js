@@ -1,12 +1,5 @@
-import Navigation from "components/Navigation.js";
-import Sidebar from "components/Sidebar.js";
-
+import HomeLayout from "../../featuers/layout/HomeLayout";
 export default function Layout({ children }) {
-  return (
-    
-      <body className="bg-[#a5b4fc]">
-        {children}
-      </body>
-    
-  );
+  return <HomeLayout>{children}</HomeLayout>;
 }
+6;
