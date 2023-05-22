@@ -2,7 +2,14 @@
 import React, { useState } from "react";
 import CatagoryCard from "components/CatagoryCard";
 import Calendar from "react-calendar";
-import { Card, HomeCalender, Input, Select } from "components";
+import {
+  Card,
+  Featuers,
+  HomeCalender,
+  Input,
+  Review,
+  Select,
+} from "components";
 import { Datepicker } from "@mobiscroll/react";
 
 import { CalendarComponent } from "@syncfusion/ej2-react-calendars";
@@ -13,6 +20,10 @@ const Home = () => {
 
   return (
     <div className="w-[80%] flex-col px-4 py-2">
+      <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">
+        {" "}
+        Categories
+      </p>
       <div className="grid gap-2 grid-cols-3 grid-rows-2 w-fit">
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/Investment.jpg')]"}
@@ -43,8 +54,19 @@ const Home = () => {
         </Card>
       </div>
 
-      <div className="w-[20%]">
-        <HomeCalender />
+      <HomeCalender />
+
+      <div>
+        <p className="font-semibold text-2xl leading-6 text-gray-900 my-6 ">
+          Featuers
+        </p>
+        <Featuers />
+      </div>
+      <div>
+        <p className="font-semibold text-2xl leading-6 text-gray-900 my-6 ">
+          Top Rated Experts
+        </p>
+        <Review />
       </div>
     </div>
   );
