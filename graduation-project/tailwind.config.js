@@ -22,7 +22,7 @@ module.exports = {
         },
         red: {
           DEFAULT: "#EE404C",
-        },        
+        },
       },
     },
   },

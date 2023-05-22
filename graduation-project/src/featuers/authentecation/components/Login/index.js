@@ -11,7 +11,7 @@ import { setStorageItem } from "utils";
 
 function Login() {
   const router = useRouter();
-  const [error, setError] = useState("");//manage error messages
+  const [error, setError] = useState(""); //manage error messages
 
   const {
     register,
@@ -22,7 +22,7 @@ function Login() {
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange" | "onBlur",
-  });//form hook
+  }); //form hook
 
   const onSubmit = async () => {
     try {
@@ -43,21 +43,21 @@ function Login() {
       if (!response.ok) {
         throw new Error("Wrong email or password.");
       }
-      
+
       const data = await response.json();
       localStorage.setItem("Token", data.data.accessToken);
       console.log(data.data.user);
       setStorageItem("User", data.data.user);
-      
+
       if (data.statusCode >= 400) setError("user not found");
       else if (data.statusCode < 400) {
         console.log("LOGGEDIN");
       }
-      router.push("/web/feeds");
+      router.push("/web/Home");
     } catch (error) {
       setError(error.message);
     }
-  };//form on submit function it sends a request with entered user data to the api 
+  }; //form on submit function it sends a request with entered user data to the api
 
   return (
     <Card className="w-[410px] px-12 py-8 rounded-sm">
@@ -66,12 +66,12 @@ function Login() {
           <h1 className="text-2xl font-semibold text-gray-700 mt-4">
             LeapStart
           </h1>
-         
+
           <h1 className="text-2xl font-semibold mt-8 mb-5 text-gray-700">
             Log in to your account
           </h1>
         </div>
-        
+
         <Input
           label="Email*"
           id="email"
