@@ -2,10 +2,9 @@
 import React, { useEffect, useState, useRef } from "react";
 //import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import ProfileHeader from "featuers/pages/Profile/ProfileHeader";
-import About from "featuers/pages/Profile/About";
 import { Card, Input, Select } from "components";
 import FullCalendarComponent from "components/FullCalendarComponent";
+
 import CatagoryCard from "components/CatagoryCard";
 import Image from "next/image";
 
@@ -17,12 +16,11 @@ const Feeds = () => {
   };
 
   return (
-    <>
+    <div>
       <br></br>
       <br></br>
 
-      <ProfileHeader />
-      <About />
+
       {/* <FullCalendarComponent /> */}
 
       {/*      payment popups screens
@@ -419,7 +417,7 @@ const Feeds = () => {
 				onChange={onChange}
 				value={value}
 			/> */}
-    </>
+    </div>
   );
 };
 export default Feeds;

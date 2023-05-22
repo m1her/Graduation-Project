@@ -33,9 +33,21 @@ import {
   ArrowsUpDownIcon as ArrowsUpDownIcon,
   UserCircleIcon as User,
   PaperAirplaneIcon as Send,
+  EnvelopeIcon,
+  PhoneIcon,
+  CalendarIcon,
+  UserIcon,
+  MapPinIcon,
+  TagIcon,
 } from "@heroicons/react/24/outline";
 
 export {
+  TagIcon,
+  CalendarIcon,
+  UserIcon,
+  MapPinIcon,
+  PhoneIcon,
+  EnvelopeIcon,
   ErrorIconMini,
   CheckCircleIconMini,
   EyeIconMini,
