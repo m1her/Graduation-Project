@@ -20,24 +20,18 @@ const Profile = () => {
   };
 
   return (
-    <>
+    <div className="w-[80%] flex-col mt-2 px-4 py-2">
+      <ProfileHeader handleProfileSection={handleProfileSection} />
+      <div className="flex">
+        {profileSection === "resume" && <Resume />}
+        {profileSection === "posts" && <Posts />}
+        {profileSection === "reviwes" && <Reviwes />}
 
-
-      <br></br>
-      <br></br>
-      <div className="">
-        <ProfileHeader handleProfileSection={handleProfileSection} />
-        <div className="flex">
-          {profileSection === "resume" && <Resume />}
-          {profileSection === "posts" && <Posts />}
-          {profileSection === "reviwes" && <Reviwes />}
-
-          <About handlePops={setPops} />
-        </div>
+        <About handlePops={setPops} />
       </div>
-      
-      {pops && <SendUpdatedDataPopupNormal handlePops={setPops}/>}
-    </>
+
+      {pops && <SendUpdatedDataPopupNormal handlePops={setPops} />}
+    </div>
   );
 };
 export default Profile;

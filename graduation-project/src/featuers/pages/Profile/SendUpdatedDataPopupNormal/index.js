@@ -147,7 +147,7 @@ const SendUpdatedDataPopupNormal = (props) => {
                         <CalendarIcon className="text-gray-500 w-5 h-5" />
                       </Button>
                     </PopoverHandler>
-                    <PopoverContent className="text-black -p-4 rounded w-[250px] h-fit">
+                    <PopoverContent className="text-black -p-4 rounded w-[250px] h-fit z-10">
                       <Calendar
                         onChange={onDateChange}
                         value={date}

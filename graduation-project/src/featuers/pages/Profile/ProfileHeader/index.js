@@ -3,6 +3,10 @@ import { Card, Button, Image, Input } from "components";
 import { useState } from "react";
 import { PencilIcon, CheckIconMini } from "lib";
 import { getStorageItem } from "utils";
+import { useAxios } from "Hooks";
+import Cookies from "js-cookie";
+import { getCookie } from "lib/js-cookie";
+import { COOKIES_KEYS } from "data";
 
 const ProfileHeader = (props) => {
   const [edit, setEdit] = useState(false);
@@ -10,19 +14,72 @@ const ProfileHeader = (props) => {
   const user = getStorageItem("User");
   const [userName, setUserName] = useState({
     name: user.name,
-    about: "Here you write your about",
+    bio: "Here you write your about",
   });
+
+  const { fetchData: updateProfile, loading } = useAxios({
+    config: {
+      url: "https://leapstart.onrender.com/api/v1/users/profile/",
+      method: "PUT",
+    },
+    options: {
+      withAuthHeader: true,
+      manual: true,
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      console.log("sucess");
+    },
+    onError: () => {
+      console.log("error");
+    },
+  });
+
+  const onSubmit = async () => {
+    const currentUser = Cookies.get("currentUser");
+    try {
+      const response = await fetch(
+        "https://leapstart.onrender.com/api/v1/users/profile/",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${currentUser}`,
+          },
+          body: JSON.stringify({
+            name: "ss",
+            bio: "Here you write your abouggggt",
+          }),
+        }
+      );
+
+      // if (!response.ok) {
+      //   throw new Error("Wrong email or password.");
+      // }
+
+      const data = await response.json();
+      console.log(data);
+
+      // if (data.statusCode >= 400) setError("user not found");
+      // else if (data.statusCode < 400) {
+      //   console.log("LOGGEDIN");
+      // }
+    } 
+    catch (error) {
+      console.log(error);
+    }
+  };
 
   const nameHandler = (e) => {
     setUserName({
       name: e.target.value,
-      about: userName.about
+      bio: userName.bio,
     });
   };
   const aboutHandler = (e) => {
     setUserName({
       name: userName.name,
-      about: e.target.value,
+      bio: e.target.value,
     });
   };
 
@@ -32,6 +89,8 @@ const ProfileHeader = (props) => {
 
   const saveHandler = () => {
     setEdit(false);
+   // updateProfile(userName);
+    onSubmit();
     console.log(userName);
   };
 
@@ -61,13 +120,14 @@ const ProfileHeader = (props) => {
   };
 
   return (
-    <Card className="ml-10 relative w-[890px] rounded-sm">
+    <Card className=" relative w-[850px] rounded-sm">
       <div>
         <div className="w-6 h-6 p-1 flex content-center items-center absolute right-5 top-5 bg-[#ffffffd1] rounded-full">
           <PencilIcon className="w-6 h-6 text-blue font-bold" />
         </div>
         <Image
-          src={user.photo}
+          // src={user.photo}
+          src="https://drive.google.com/"
           height={100}
           width={100}
           alt="Banner"
@@ -78,7 +138,8 @@ const ProfileHeader = (props) => {
       <div className="w-full mb-4">
         <div className="flex w-full h-36 mb-8 relative">
           <Image
-            src={user.photo}
+            // src={user.photo}
+            src="https://drive.google.com/"
             height={100}
             width={100}
             alt="profile"
@@ -100,14 +161,14 @@ const ProfileHeader = (props) => {
             )}
             {!edit ? (
               <p className="text-lg font-medium text-gray-700">
-                {userName.about}
+                {userName.bio}
               </p>
             ) : (
               <Input
                 inputSize="small"
                 inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
                 className="mb-2 w-64"
-                value={userName.about}
+                value={userName.bio}
                 withoutHelperText
                 onChange={aboutHandler}
               />

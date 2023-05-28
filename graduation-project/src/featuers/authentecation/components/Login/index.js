@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorIconMini } from "lib";
 import { setStorageItem } from "utils";
+import { setCookie } from "lib/js-cookie";
+import Cookies from "js-cookie";
 
 function Login() {
   const router = useRouter();
@@ -45,6 +47,7 @@ function Login() {
       }
 
       const data = await response.json();
+      Cookies.set("currentUser", data.data.accessToken);
       localStorage.setItem("Token", data.data.accessToken);
       console.log(data.data.user);
       setStorageItem("User", data.data.user);
