@@ -1,97 +1,74 @@
 "use client";
-import { Card, Button, Image, Input } from "components";
-import { useState } from "react";
-import { PencilIcon, CheckIconMini } from "lib";
+import { Card, Image, Input } from "components";
+import { useEffect, useState } from "react";
+import { PencilIcon, CheckIconMini, XMarkIcon } from "lib";
 import { getStorageItem } from "utils";
-import { useAxios } from "Hooks";
 import Cookies from "js-cookie";
-import { getCookie } from "lib/js-cookie";
-import { COOKIES_KEYS } from "data";
+import { setStorageItem } from "utils";
 
 const ProfileHeader = (props) => {
   const [edit, setEdit] = useState(false);
   const [active, setActive] = useState("posts");
   const user = getStorageItem("User");
-  const [userName, setUserName] = useState({
-    name: user.name,
-    bio: "Here you write your about",
-  });
-
-  const { fetchData: updateProfile, loading } = useAxios({
-    config: {
-      url: "https://leapstart.onrender.com/api/v1/users/profile/",
-      method: "PUT",
-    },
-    options: {
-      withAuthHeader: true,
-      manual: true,
-    },
-    onSuccess: (data) => {
-      console.log(data);
-      console.log("sucess");
-    },
-    onError: () => {
-      console.log("error");
-    },
-  });
+  const [userName, setUserName] = useState(user.name);
+  const [userBio, setUserBio] = useState(
+    user.bio === "undefined" ? "" : user.bio
+  );
 
   const onSubmit = async () => {
-    const currentUser = Cookies.get("currentUser");
+    const formData = new FormData();
+    formData.append("name", userName);
+    formData.append("bio", userBio);
+    const Token = JSON.parse(Cookies.get("currentUser"));
+
     try {
       const response = await fetch(
         "https://leapstart.onrender.com/api/v1/users/profile/",
         {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${currentUser}`,
+            Authorization: `Bearer ${Token.accessToken}`,
           },
-          body: JSON.stringify({
-            name: "ss",
-            bio: "Here you write your abouggggt",
-          }),
+          body: formData,
         }
       );
 
-      // if (!response.ok) {
-      //   throw new Error("Wrong email or password.");
-      // }
+      if (!response.ok) {
+        throw new Error("Wrong email or password.");
+      }
 
       const data = await response.json();
       console.log(data);
-
-      // if (data.statusCode >= 400) setError("user not found");
-      // else if (data.statusCode < 400) {
-      //   console.log("LOGGEDIN");
-      // }
-    } 
-    catch (error) {
+      setStorageItem("User", data.data.user);
+      setUserName(data.data.user.name);
+      setUserBio(data.data.user.bio === "undefined" ? "" : data.data.user.bio);
+    } catch (error) {
       console.log(error);
     }
   };
 
   const nameHandler = (e) => {
-    setUserName({
-      name: e.target.value,
-      bio: userName.bio,
-    });
+    setUserName(e.target.value);
   };
   const aboutHandler = (e) => {
-    setUserName({
-      name: userName.name,
-      bio: e.target.value,
-    });
+    setUserBio(e.target.value);
   };
 
   const editHandler = () => {
     setEdit(true);
   };
 
-  const saveHandler = () => {
+  const cancelHandler = () => {
     setEdit(false);
-   // updateProfile(userName);
-    onSubmit();
-    console.log(userName);
+  };
+
+  const saveHandler = () => {
+    if (userName === "") {
+      console.log("empty");
+    } else {
+      setEdit(false);
+      onSubmit();
+    }
   };
 
   const handleClickDrawer = (e) => {
@@ -148,50 +125,55 @@ const ProfileHeader = (props) => {
 
           <div className="w-full px-6 mt-4 relative">
             {!edit ? (
-              <p className="text-3xl font-semibold ">{userName.name}</p>
+              <p className="text-3xl font-semibold ">{userName}</p>
             ) : (
               <Input
                 inputSize="medium"
                 inputClassName="h-9 font-semibold text.lg bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
                 className="mb-2 w-64"
-                value={userName.name}
+                value={userName}
                 withoutHelperText
                 onChange={nameHandler}
               />
             )}
             {!edit ? (
-              <p className="text-lg font-medium text-gray-700">
-                {userName.bio}
-              </p>
+              <p className="text-lg font-medium text-gray-700">{userBio}</p>
             ) : (
               <Input
                 inputSize="small"
                 inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
                 className="mb-2 w-64"
-                value={userName.bio}
+                value={userBio}
                 withoutHelperText
                 onChange={aboutHandler}
               />
             )}
-            <div
-              className="absolute top-0 right-0 rounded-full p-2 border border-gray-200 drop-shadow-lg text-black hover:bg-indigo-700 hover:border-indigo-800 hover:text-white cursor-pointer"
-              onClick={!edit ? editHandler : saveHandler}
-            >
-              {!edit ? (
-                <PencilIcon className=" w-5 h-5" />
-              ) : (
-                <CheckIconMini className=" w-5 h-5" />
-              )}
 
-              {/* <Button
-                buttonSize="small"
-                className="text-white h-8 flex float-right  justify-center items-center m-2 dark:bg-indigo-700 bg-indigo-700 w-16 hover:bg-indigo-700 focus:outline-none font-bold px-3 text-sm text-center"
+            {!edit ? (
+              <div
+                className="absolute top-0 right-0 rounded-full p-2 border border-gray-200 drop-shadow-lg text-black hover:bg-indigo-700 hover:border-indigo-800 hover:text-white cursor-pointer"
                 onClick={!edit ? editHandler : saveHandler}
               >
-                {!edit ? "Edit" : "Save"}
-              </Button> */}
-            </div>
+                <PencilIcon className=" w-5 h-5" />
+              </div>
+            ) : (
+              <>
+                <div
+                  className="absolute top-0 right-10 rounded-full p-2 border border-gray-200 drop-shadow-lg text-black hover:bg-indigo-700 hover:border-indigo-800 hover:text-white cursor-pointer"
+                  onClick={!edit ? editHandler : saveHandler}
+                >
+                  <CheckIconMini className=" w-5 h-5" />
+                </div>
+                <div
+                  className="absolute top-0 right-0 rounded-full p-2 border border-gray-200 drop-shadow-lg text-black hover:bg-indigo-700 hover:border-indigo-800 hover:text-white cursor-pointer"
+                  onClick={!edit ? editHandler : cancelHandler}
+                >
+                  <XMarkIcon className=" w-5 h-5" />
+                </div>
+              </>
+            )}
           </div>
+
           <div className="w-fit absolute bottom-0 text-center ml-14">
             <p className="text-gray-700 right-0 text-lg font-semibold">
               $25 USD / Hour

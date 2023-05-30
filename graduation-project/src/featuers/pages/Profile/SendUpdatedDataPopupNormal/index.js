@@ -8,6 +8,8 @@ import { FORM_VALIDATION, countriesList, specialityList } from "data";
 import { getFieldHelperText } from "utils";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import Cookies from "js-cookie";
+import { setStorageItem } from "utils";
 import {
   Popover,
   PopoverHandler,
@@ -30,14 +32,54 @@ const SendUpdatedDataPopupNormal = (props) => {
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange" | "onBlur",
+    defaultValues: {
+      fullName: user.name,
+      dateOfBirth: user.Dob,
+      country: user.country,
+      phone: user.phone,
+      //speciality: user.Specialty,
+    }
   }); //form hook
 
   const onSubmit = handleSubmit((data, e) => {
     console.log(data.fullName);
     console.log(data.phone);
     console.log(data.country);
-    console.log(date);
+    console.log(typeof date);
     console.log(data.speciality);
+    const noVerification = async () => {
+      const formData = new FormData();
+      formData.append("name", data.fullName);
+      formData.append("phone", data.phone);
+      formData.append("country", data.country);
+      formData.append("Dob", date);
+     // formData.append("name", userName);
+      const Token = JSON.parse(Cookies.get("currentUser"));
+  
+      try {
+        const response = await fetch(
+          "https://leapstart.onrender.com/api/v1/users/profile/",
+          {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${Token.accessToken}`,
+            },
+            body: formData,
+          }
+        );
+  
+        if (!response.ok) {
+          throw new Error("Wrong email or password.");
+        }
+  
+        const data = await response.json();
+        console.log(data);
+        setStorageItem("User", data.data.user);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    noVerification();
   });
 
   const onVerificationSubmit = handleSubmit((data, e) => {
@@ -91,6 +133,7 @@ const SendUpdatedDataPopupNormal = (props) => {
                 inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
                 placeholder="Enter full name"
                 withoutHelperText
+                value={user.name}
                 {...register("fullName")}
               />
               {/*  */}
@@ -168,6 +211,7 @@ const SendUpdatedDataPopupNormal = (props) => {
                 selectSize="small"
                 {...register("speciality")}
                 withoutHelperText
+                //defaultValue={user.Specialty}
               />
 
               {/* GRiddddddd */}
