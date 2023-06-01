@@ -19,7 +19,7 @@ import {
 const SendUpdatedDataPopupNormal = (props) => {
   const user = getStorageItem("User");
   const [error, setError] = useState(""); //manage error messages
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(user.dob? new Date(user.dob).toLocaleDateString() : "");
 
   const {
     register,
@@ -34,26 +34,26 @@ const SendUpdatedDataPopupNormal = (props) => {
     reValidateMode: "onChange" | "onBlur",
     defaultValues: {
       fullName: user.name,
-      dateOfBirth: user.Dob,
+      dateOfBirth: user.dob? new Date(user.dob).toLocaleDateString() : "",
       country: user.country,
       phone: user.phone,
-      //speciality: user.Specialty,
+    //  speciality: user.Specialty,
     }
   }); //form hook
 
-  const onSubmit = handleSubmit((data, e) => {
-    console.log(data.fullName);
+  const onSubmit = (data, e) => {
+    e.preventDefault();
+    console.log( watch("fullName"));
     console.log(data.phone);
     console.log(data.country);
-    console.log(typeof date);
-    console.log(data.speciality);
+    console.log(data.dateOfBirth);
     const noVerification = async () => {
       const formData = new FormData();
       formData.append("name", data.fullName);
       formData.append("phone", data.phone);
       formData.append("country", data.country);
-      formData.append("Dob", date);
-     // formData.append("name", userName);
+      formData.append("dob", date || "");
+      //formData.append("Specialty", data.speciality);
       const Token = JSON.parse(Cookies.get("currentUser"));
   
       try {
@@ -68,10 +68,6 @@ const SendUpdatedDataPopupNormal = (props) => {
           }
         );
   
-        if (!response.ok) {
-          throw new Error("Wrong email or password.");
-        }
-  
         const data = await response.json();
         console.log(data);
         setStorageItem("User", data.data.user);
@@ -80,7 +76,7 @@ const SendUpdatedDataPopupNormal = (props) => {
       }
     };
     noVerification();
-  });
+  };
 
   const onVerificationSubmit = handleSubmit((data, e) => {
     console.log("verify");
@@ -133,8 +129,11 @@ const SendUpdatedDataPopupNormal = (props) => {
                 inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
                 placeholder="Enter full name"
                 withoutHelperText
-                value={user.name}
-                {...register("fullName")}
+                {...register("fullName",{
+                  ...FORM_VALIDATION.name,
+                  onChange: () => clearErrorOnChange("fullName"),
+                })}
+                error={!!errors.fullName}
               />
               {/*  */}
               <div className="text-gray-800 flex items-center">
@@ -143,6 +142,10 @@ const SendUpdatedDataPopupNormal = (props) => {
               <Controller
                 control={control}
                 name="phone"
+                rules={{
+                  ...FORM_VALIDATION.mobile,
+                  onChange: () => clearErrorOnChange("phone"),
+                }}
                 render={({ field: { ref, onChange, ...field } }) => (
                   <PhoneInput
                     id="phone-input"
@@ -152,6 +155,7 @@ const SendUpdatedDataPopupNormal = (props) => {
                     inputProps={{
                       ref,
                     }}
+                    error={!!errors.phone}
                     withoutHelperText
                     onChange={(_, __, ___, value) => onChange(value)}
                     {...field}
@@ -167,7 +171,11 @@ const SendUpdatedDataPopupNormal = (props) => {
                 id="country-select"
                 placeholder="Enter Country"
                 selectSize="small"
-                {...register("country")}
+                {...register("country", {
+                  ...FORM_VALIDATION.country,
+                  onChange: () => clearErrorOnChange("country"),
+                })}
+                error={!!errors.country}
                 withoutHelperText
               />
 
@@ -190,9 +198,10 @@ const SendUpdatedDataPopupNormal = (props) => {
                         <CalendarIcon className="text-gray-500 w-5 h-5" />
                       </Button>
                     </PopoverHandler>
-                    <PopoverContent className="text-black -p-4 rounded w-[250px] h-fit z-10">
+                    <PopoverContent className="text-black -p-4 rounded w-[300px] h-fit z-10 mt-20">
                       <Calendar
                         onChange={onDateChange}
+                        defaultValue={user.dob || ""}
                         value={date}
                         showNeighboringMonth={false}
                         locale={"en-US"}
@@ -202,7 +211,7 @@ const SendUpdatedDataPopupNormal = (props) => {
                 }
               />
               {/*  */}
-              <div className="text-gray-800 flex items-center">Specialty:</div>
+              {/* <div className="text-gray-800 flex items-center">Specialty:</div>
 
               <Select
                 options={specialityList}
@@ -212,7 +221,7 @@ const SendUpdatedDataPopupNormal = (props) => {
                 {...register("speciality")}
                 withoutHelperText
                 //defaultValue={user.Specialty}
-              />
+              /> */}
 
               {/* GRiddddddd */}
             </div>

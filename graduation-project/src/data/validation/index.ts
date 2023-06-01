@@ -8,6 +8,9 @@ export const VALIDATION_RULES = {
 } as const;
 
 export const FORM_VALIDATION = {
+  name: {
+    required: "Name is required",
+  },
   fullName: {
     required: "First and last Name are required",
   },

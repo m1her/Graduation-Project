@@ -1,7 +1,7 @@
 "use client";
 import { Card, Image, Input } from "components";
 import { useEffect, useState } from "react";
-import { PencilIcon, CheckIconMini, XMarkIcon } from "lib";
+import { PencilIcon, CheckIconMini, XMarkIcon, CameraIcon } from "lib";
 import { getStorageItem } from "utils";
 import Cookies from "js-cookie";
 import { setStorageItem } from "utils";
@@ -15,10 +15,8 @@ const ProfileHeader = (props) => {
     user.bio === "undefined" ? "" : user.bio
   );
 
-  const onSubmit = async () => {
-    const formData = new FormData();
-    formData.append("name", userName);
-    formData.append("bio", userBio);
+  const onSubmit = async (formData) => {
+    console.log(formData);
     const Token = JSON.parse(Cookies.get("currentUser"));
 
     try {
@@ -66,9 +64,26 @@ const ProfileHeader = (props) => {
     if (userName === "") {
       console.log("empty");
     } else {
+      const formData = new FormData();
+      formData.append("name", userName);
+      formData.append("bio", userBio);
       setEdit(false);
-      onSubmit();
+      onSubmit(formData);
     }
+  };
+
+  const handleBannerChange = (e) => {
+    const formData = new FormData();
+    formData.append("name", userName);
+    formData.append("profileBanner", e.target.files[0]);
+    onSubmit(formData);
+  };
+
+  const handlePfpChange = (e) => {
+    const formData = new FormData();
+    formData.append("name", userName);
+    formData.append("profileImage", e.target.files[0]);
+    onSubmit(formData);
   };
 
   const handleClickDrawer = (e) => {
@@ -99,9 +114,21 @@ const ProfileHeader = (props) => {
   return (
     <Card className=" relative w-[850px] rounded-sm">
       <div>
-        <div className="w-6 h-6 p-1 flex content-center items-center absolute right-5 top-5 bg-[#ffffffd1] rounded-full">
-          <PencilIcon className="w-6 h-6 text-blue font-bold" />
+        <div className="w-6 h-6 p-1 flex content-center items-center absolute right-8 top-5 bg-[#ffffffd1] rounded-full">
+          <label
+            htmlFor="file-input"
+            className="flex items-center rounded-full px-2 py-2 bg-gray-100 text-gray-700 cursor-pointer hover:bg-gray-200"
+          >
+            <PencilIcon className="w-6 h-6 text-blue font-bold" />
+            <input
+              id="file-input"
+              type="file"
+              className="hidden"
+              onChange={handleBannerChange}
+            />
+          </label>
         </div>
+
         <Image
           // src={user.photo}
           src="https://drive.google.com/"
@@ -114,15 +141,23 @@ const ProfileHeader = (props) => {
 
       <div className="w-full mb-4">
         <div className="flex w-full h-36 mb-8 relative">
-          <Image
-            // src={user.photo}
-            src="https://drive.google.com/"
-            height={100}
-            width={100}
-            alt="profile"
-            className="-mt-28 ml-7 rounded-md w-48 h-48 bg-cover"
-          ></Image>
-
+          <div className="relative inline-block">
+            <Image
+              // src={user.photo}
+              src="https://drive.google.com/"
+              height={100}
+              width={100}
+              alt="profile"
+              className="-mt-28 ml-7 rounded-md w-48 h-48 bg-cover"
+            ></Image>
+            <label
+              htmlFor="file-input"
+              className="grid place-items-center absolute ml-7 -mt-48 rounded-md w-48 h-48 px-2 py-2 bg-gray-100 text-gray-700 cursor-pointer opacity-0 hover:opacity-50"
+            >
+              <CameraIcon className="w-10 h-10 text-gray-500 font-bold" />
+              <input type="file" className="hidden" onChange={handlePfpChange} />
+            </label>
+          </div>
           <div className="w-full px-6 mt-4 relative">
             {!edit ? (
               <p className="text-3xl font-semibold ">{userName}</p>

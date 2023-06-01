@@ -14,6 +14,7 @@ import {
 } from "@heroicons/react/20/solid";
 
 import {
+  CameraIcon,
   InformationCircleIcon,
   PlusIcon,
   ChevronDownIcon,
@@ -42,6 +43,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 export {
+  CameraIcon,
   TagIcon,
   CalendarIcon,
   UserIcon,
