@@ -1,10 +1,11 @@
 "use client";
 import { Card, Image, Input } from "components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { PencilIcon, CheckIconMini, XMarkIcon, CameraIcon } from "lib";
 import { getStorageItem } from "utils";
 import Cookies from "js-cookie";
 import { setStorageItem } from "utils";
+import CropImage from "./CropImage";
 
 const ProfileHeader = (props) => {
   const [edit, setEdit] = useState(false);
@@ -14,8 +15,11 @@ const ProfileHeader = (props) => {
   const [userBio, setUserBio] = useState(
     user.bio === "undefined" ? "" : user.bio
   );
+  const [image, setImage] = useState();
+  const [imageType, setImageType] = useState("");
 
   const onSubmit = async (formData) => {
+    formData.append("name", userName);
     console.log(formData);
     const Token = JSON.parse(Cookies.get("currentUser"));
 
@@ -65,7 +69,7 @@ const ProfileHeader = (props) => {
       console.log("empty");
     } else {
       const formData = new FormData();
-      formData.append("name", userName);
+     
       formData.append("bio", userBio);
       setEdit(false);
       onSubmit(formData);
@@ -73,17 +77,13 @@ const ProfileHeader = (props) => {
   };
 
   const handleBannerChange = (e) => {
-    const formData = new FormData();
-    formData.append("name", userName);
-    formData.append("profileBanner", e.target.files[0]);
-    onSubmit(formData);
+    setImage(e.target.files[0]);
+    setImageType("profileBanner");
   };
 
   const handlePfpChange = (e) => {
-    const formData = new FormData();
-    formData.append("name", userName);
-    formData.append("profileImage", e.target.files[0]);
-    onSubmit(formData);
+      setImage(e.target.files[0]);
+      setImageType("profileImage");
   };
 
   const handleClickDrawer = (e) => {
@@ -113,6 +113,14 @@ const ProfileHeader = (props) => {
 
   return (
     <Card className=" relative w-[850px] rounded-sm">
+      {image && (
+        <CropImage
+          Image={image}
+          onConfirm={onSubmit}
+          imageType={imageType}
+        />
+      )}
+
       <div>
         <div className="w-6 h-6 p-1 flex content-center items-center absolute right-8 top-5 bg-[#ffffffd1] rounded-full">
           <label
@@ -151,11 +159,16 @@ const ProfileHeader = (props) => {
               className="-mt-28 ml-7 rounded-md w-48 h-48 bg-cover"
             ></Image>
             <label
-              htmlFor="file-input"
+              htmlFor="pfpinput"
               className="grid place-items-center absolute ml-7 -mt-48 rounded-md w-48 h-48 px-2 py-2 bg-gray-100 text-gray-700 cursor-pointer opacity-0 hover:opacity-50"
             >
               <CameraIcon className="w-10 h-10 text-gray-500 font-bold" />
-              <input type="file" className="hidden" onChange={handlePfpChange} />
+              <input
+                id="pfpinput"
+                type="file"
+                className="hidden"
+                onChange={handlePfpChange}
+              />
             </label>
           </div>
           <div className="w-full px-6 mt-4 relative">
