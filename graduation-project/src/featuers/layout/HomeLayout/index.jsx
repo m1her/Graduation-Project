@@ -7,7 +7,7 @@ export const HomeLayout = ({ children }) => {
   return (
     <div className="w-full h-full">
       <Navbar />
-      <div className="flex justify-between ">
+      <div className="flex justify-between gap-4">
         <Sidebar />
         {children}
       </div>

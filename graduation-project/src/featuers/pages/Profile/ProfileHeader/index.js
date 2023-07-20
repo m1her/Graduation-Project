@@ -152,11 +152,11 @@ const ProfileHeader = (props) => {
           <div className="relative inline-block w-[350px]">
             <Image
               // src={user.photo}
-              src="https://drive.google.com/"
-              height={100}
-              width={100}
+              src="/CattegoryPageImages/FinanceInspirational.jpeg"
+              height={1000}
+              width={1000}
               alt="profile"
-              className="-mt-28 ml-7 rounded-md w-48 h-48 bg-cover"
+              className="-mt-28 ml-7 rounded-md w-48 h-48 object-cover"
             ></Image>
             <label
               htmlFor="pfpinput"

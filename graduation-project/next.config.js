@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
+  swcMinify: true,
   experimental: {
-    appDir: true,
+    appDir: true
   },
-  images: {
-    domains: ['drive.google.com', 'images.unsplash.com'],
+ // images: {
+ //   domains: ["drive.google.com", ]
     // remotePatterns: [
     //   {
     //     protocol: 'https',
@@ -13,7 +15,25 @@ const nextConfig = {
     //    // pathname: '/web/**',
     //   },
     // ],
-  },
+  //}
 };
 
-module.exports = nextConfig;
+module.exports = {
+  generateEtags: false,
+  ...nextConfig,
+  typescript: {
+    ignoreBuildErrors: true
+  },
+
+  images: {
+    //formats: ["image/avif", "image/webp"],
+    domains: ["firebasestorage.googleapis.com", "drive.google.com", "images.unsplash.com"],
+    // remotePatterns: [
+    //   {
+    //     protocol: "https",
+    //     hostname: "firebasestorage.googleapis.com",
+    //     pathname: "/image/upload/**"
+    //   }
+    // ]
+  }
+};

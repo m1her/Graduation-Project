@@ -1,3 +1,5 @@
+"use client";
+import { useState, useEffect } from "react";
 import {
   DocumentDuplicateIcon,
   HomeIcon,
@@ -8,12 +10,14 @@ import {
   Cog8ToothIcon,
   ClipboardDocumentIcon,
 } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const navigation = [
-  { name: "Feeds", href: "#", icon: HomeIcon, current: true },
+  { name: "Feeds", href: "#", icon: HomeIcon, current: false },
   { name: "Messages", href: "#", icon: EnvelopeIcon, current: false },
   { name: "Meetings", href: "#", icon: VideoCameraIcon, current: false },
-  { name: "Browse", href: "#", icon: GlobeAltIcon, current: false },
+  { name: "Browse", href: "Browse", icon: GlobeAltIcon, current: false },
 
   {
     name: "Schedule",
@@ -35,6 +39,18 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export const Sidebar = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [active, setActive] = useState(navigation);
+  useEffect(() => {
+    active.map((item) => {
+      if (pathname.includes(item.name)) {
+        setActive([...active, { ...item, current: true }]);
+      }
+    });
+    console.log(active);
+  }, [pathname]);
+
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
       <nav className="flex flex-1 flex-col mt-4">
