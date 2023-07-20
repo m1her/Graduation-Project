@@ -10,7 +10,7 @@ import {
   Review,
   Select,
 } from "components";
-import { Datepicker } from "@mobiscroll/react";
+// import { Datepicker } from "@mobiscroll/react";
 
 import { CalendarComponent } from "@syncfusion/ej2-react-calendars";
 const Home = () => {
