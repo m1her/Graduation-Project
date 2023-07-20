@@ -4,6 +4,7 @@ import About from "featuers/pages/Profile/About";
 import Resume from "featuers/pages/Profile/Resume";
 import Posts from "featuers/pages/Profile/Posts";
 import Reviwes from "featuers/pages/Profile/Reviwes";
+import Callender from "featuers/pages/Profile/Callender";
 import SendUpdatedDataPopupNormal from "featuers/pages/Profile/SendUpdatedDataPopupNormal";
 import React, { useState } from "react";
 
@@ -26,8 +27,9 @@ const Profile = () => {
         {profileSection === "resume" && <Resume />}
         {profileSection === "posts" && <Posts />}
         {profileSection === "reviwes" && <Reviwes />}
+        {profileSection === "callender" && <Callender />}
 
-        <About handlePops={setPops} />
+        {profileSection != "callender" && <About handlePops={setPops} />}
       </div>
 
       {pops && <SendUpdatedDataPopupNormal handlePops={setPops} />}

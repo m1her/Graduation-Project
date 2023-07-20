@@ -37,7 +37,7 @@ function ForgotPassword() {
     ForgotPasswordFormInputType
   >({
     config: {
-      url: "https://leapstart.onrender.com/api/v1/users/password/forgot",
+      url: "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/password/forgot",
       method: "POST",
     },
     options: {
@@ -59,7 +59,7 @@ function ForgotPassword() {
 
   const { fetchData: VerifyCode, loading: verifyLoading } = useAxios({
     config: {
-      url: "https://leapstart.onrender.com/api/v1/users/password/verify-code",
+      url: "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/password/verify-code",
       method: "POST",
     },
     options: {

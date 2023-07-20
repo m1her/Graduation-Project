@@ -1,9 +1,12 @@
+
 export const setStorageItem = (key: string, value: any) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
 export const getStorageItem = (key: string) => {
+  if (typeof localStorage !== 'undefined') {
   return JSON.parse(localStorage.getItem(key)!);
+  }
 };
 
 export const removeStorageItem = (key: string) => localStorage.removeItem(key);

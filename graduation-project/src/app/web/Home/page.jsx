@@ -13,6 +13,7 @@ import {
 import { Datepicker } from "@mobiscroll/react";
 
 import { CalendarComponent } from "@syncfusion/ej2-react-calendars";
+import PostCard from "featuers/pages/Profile/Posts/PostCard";
 const Home = () => {
   const invest = () => {
     console.log("invest");
@@ -53,7 +54,6 @@ const Home = () => {
           <p>○ ○ ○</p>
         </Card>
       </div>
-
       <HomeCalender />
 
       <div>

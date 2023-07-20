@@ -28,7 +28,7 @@ export const SignUpForm = () => {
     loading,
   } = useAxios<SignUpResponseType, SignUpFormInputsType>({
     config: {
-      url: "https://leapstart.onrender.com/api/v1/users",
+      url: "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users",
       method: "POST",
     },
     options: {

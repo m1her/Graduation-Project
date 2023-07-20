@@ -27,7 +27,7 @@ function EmailConf() {
 
   const { fetchData: sendCodeToEmail, loading: emailLoading } = useAxios({
     config: {
-      url: "https://leapstart.onrender.com/api/v1/users/send-code-email",
+      url: "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/send-code-email",
       method: "POST",
     },
     options: {
@@ -44,7 +44,7 @@ function EmailConf() {
 
   const { fetchData: verifyCode, loading: verificationLoading } = useAxios({
     config: {
-      url: "https://leapstart.onrender.com/api/v1/users/verify/email",
+      url: "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/verify/email",
       method: "POST",
     },
     options: {

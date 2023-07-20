@@ -27,7 +27,7 @@ function ResetPassword() {
     loading,
   } = useAxios({
     config: {
-      url: "https://leapstart.onrender.com/api/v1/users/password/reset",
+      url: "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/password/reset",
       method: "POST",
     },
     options: {

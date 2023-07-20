@@ -1,6 +1,6 @@
 "use client";
 import { Card, Image, Input } from "components";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useSyncExternalStore } from "react";
 import { PencilIcon, CheckIconMini, XMarkIcon, CameraIcon } from "lib";
 import { getStorageItem } from "utils";
 import Cookies from "js-cookie";
@@ -10,13 +10,17 @@ import CropImage from "./CropImage";
 const ProfileHeader = (props) => {
   const [edit, setEdit] = useState(false);
   const [active, setActive] = useState("posts");
-  const user = getStorageItem("User");
-  const [userName, setUserName] = useState(user.name);
-  const [userBio, setUserBio] = useState(
-    user.bio === "undefined" ? "" : user.bio
-  );
+
+  const [userName, setUserName] = useState("");
+  const [userBio, setUserBio] = useState("");
   const [image, setImage] = useState();
   const [imageType, setImageType] = useState("");
+  const user = getStorageItem("User");
+
+  useEffect(() => {
+    setUserName(user.name);
+    setUserBio(user.bio);
+  }, [user]);
 
   const onSubmit = async (formData) => {
     formData.append("name", userName);
@@ -25,7 +29,7 @@ const ProfileHeader = (props) => {
 
     try {
       const response = await fetch(
-        "https://leapstart.onrender.com/api/v1/users/profile/",
+        "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/profile/644c2caee836fcbba051edee",
         {
           method: "PUT",
           headers: {
@@ -69,7 +73,7 @@ const ProfileHeader = (props) => {
       console.log("empty");
     } else {
       const formData = new FormData();
-     
+
       formData.append("bio", userBio);
       setEdit(false);
       onSubmit(formData);
@@ -82,8 +86,8 @@ const ProfileHeader = (props) => {
   };
 
   const handlePfpChange = (e) => {
-      setImage(e.target.files[0]);
-      setImageType("profileImage");
+    setImage(e.target.files[0]);
+    setImageType("profileImage");
   };
 
   const handleClickDrawer = (e) => {
@@ -98,8 +102,8 @@ const ProfileHeader = (props) => {
         setActive("resume");
         break;
       }
-      case "schedule": {
-        setActive("schedule");
+      case "callender": {
+        setActive("callender");
         break;
       }
       case "reviwes": {
@@ -114,11 +118,7 @@ const ProfileHeader = (props) => {
   return (
     <Card className=" relative w-[850px] rounded-sm">
       {image && (
-        <CropImage
-          Image={image}
-          onConfirm={onSubmit}
-          imageType={imageType}
-        />
+        <CropImage Image={image} onConfirm={onSubmit} imageType={imageType} />
       )}
 
       <div>
@@ -149,7 +149,7 @@ const ProfileHeader = (props) => {
 
       <div className="w-full mb-4">
         <div className="flex w-full h-36 mb-8 relative">
-          <div className="relative inline-block">
+          <div className="relative inline-block w-[350px]">
             <Image
               // src={user.photo}
               src="https://drive.google.com/"
@@ -173,7 +173,13 @@ const ProfileHeader = (props) => {
           </div>
           <div className="w-full px-6 mt-4 relative">
             {!edit ? (
-              <p className="text-3xl font-semibold ">{userName}</p>
+              <div className="text-3xl font-semibold ">
+                {userName ? (
+                  userName
+                ) : (
+                  <div className="w-44 h-5 mt-4 rounded-xl bg-gray-400 animate-pulse"></div>
+                )}
+              </div>
             ) : (
               <Input
                 inputSize="medium"
@@ -185,7 +191,13 @@ const ProfileHeader = (props) => {
               />
             )}
             {!edit ? (
-              <p className="text-lg font-medium text-gray-700">{userBio}</p>
+              <div className="text-lg font-medium text-gray-700">
+                {userBio ? (
+                  userBio
+                ) : (
+                  <div className="w-80 h-4 mt-2 rounded-xl bg-gray-300 animate-pulse"></div>
+                )}
+              </div>
             ) : (
               <Input
                 inputSize="small"
@@ -223,10 +235,10 @@ const ProfileHeader = (props) => {
           </div>
 
           <div className="w-fit absolute bottom-0 text-center ml-14">
-            <p className="text-gray-700 right-0 text-lg font-semibold">
-              $25 USD / Hour
-            </p>
-            <p className="text-gray-800 text-lg font-medium">Investment</p>
+            <div className="text-gray-700 right-0 text-lg font-semibold">
+              ${user.expert.hourlyRate} USD / Hour
+            </div>
+            <p className="text-gray-800 text-lg font-medium">{user.expert.catagories[1]} specialist</p>
           </div>
         </div>
       </div>
@@ -275,15 +287,15 @@ const ProfileHeader = (props) => {
         <button
           className={`text-lg ml-14
           ${
-            active === "schedule"
+            active === "callender"
               ? "font-semibold text-[#394cac] underline"
               : "text-gray-500"
           }
           `}
-          data-value="schedule"
+          data-value="callender"
           onClick={handleClickDrawer}
         >
-          Schedule
+          Callender
         </button>
       </div>
     </Card>

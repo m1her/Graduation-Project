@@ -5,7 +5,6 @@ import { getStorageItem } from "utils";
 import useForm, { Controller } from "lib/react-hook-form";
 import { useState } from "react";
 import { FORM_VALIDATION, countriesList, specialityList } from "data";
-import { getFieldHelperText } from "utils";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Cookies from "js-cookie";
@@ -15,11 +14,16 @@ import {
   PopoverHandler,
   PopoverContent,
 } from "@material-tailwind/react";
+import { useRouter } from "next/navigation";
 
 const SendUpdatedDataPopupNormal = (props) => {
+  const router = useRouter();
   const user = getStorageItem("User");
+  const [normalDataLoading, setNormalDataLoading] = useState(false);
   const [error, setError] = useState(""); //manage error messages
-  const [date, setDate] = useState(user.dob? new Date(user.dob).toLocaleDateString() : "");
+  const [date, setDate] = useState(
+    user.dob ? new Date(user.dob).toLocaleDateString() : ""
+  );
 
   const {
     register,
@@ -34,16 +38,17 @@ const SendUpdatedDataPopupNormal = (props) => {
     reValidateMode: "onChange" | "onBlur",
     defaultValues: {
       fullName: user.name,
-      dateOfBirth: user.dob? new Date(user.dob).toLocaleDateString() : "",
+      dateOfBirth: user.dob ? new Date(user.dob).toLocaleDateString() : "",
       country: user.country,
       phone: user.phone,
-    //  speciality: user.Specialty,
-    }
+      //  speciality: user.Specialty,
+    },
   }); //form hook
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    console.log( watch("fullName"));
+    setNormalDataLoading(true);
+    console.log(watch("fullName"));
     console.log(data.phone);
     console.log(data.country);
     console.log(data.dateOfBirth);
@@ -55,10 +60,10 @@ const SendUpdatedDataPopupNormal = (props) => {
       formData.append("dob", date || "");
       //formData.append("Specialty", data.speciality);
       const Token = JSON.parse(Cookies.get("currentUser"));
-  
+
       try {
         const response = await fetch(
-          "https://leapstart.onrender.com/api/v1/users/profile/",
+          "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/profile/",
           {
             method: "PUT",
             headers: {
@@ -67,13 +72,14 @@ const SendUpdatedDataPopupNormal = (props) => {
             body: formData,
           }
         );
-  
+
         const data = await response.json();
         console.log(data);
         setStorageItem("User", data.data.user);
       } catch (error) {
         console.log(error);
       }
+      setNormalDataLoading(false);
     };
     noVerification();
   };
@@ -97,6 +103,12 @@ const SendUpdatedDataPopupNormal = (props) => {
   const onDateChange = (newDate) => {
     setDate(newDate.toLocaleDateString()); //save the selected date into data state
   };
+
+  //reset password ///////////
+  const resetPassHandler = () => {
+    router.push("/authentication/forgotPassword");
+  };
+
   return (
     <div
       className="fixed top-0 left-0 min-h-screen h-full w-full bg-[#000000b7] grid place-items-center"
@@ -129,7 +141,7 @@ const SendUpdatedDataPopupNormal = (props) => {
                 inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
                 placeholder="Enter full name"
                 withoutHelperText
-                {...register("fullName",{
+                {...register("fullName", {
                   ...FORM_VALIDATION.name,
                   onChange: () => clearErrorOnChange("fullName"),
                 })}
@@ -232,17 +244,39 @@ const SendUpdatedDataPopupNormal = (props) => {
                 buttonSize="small"
                 type="submit"
               >
-                Save
+                {normalDataLoading ? (
+                  <div role="status">
+                    <svg
+                      aria-hidden="true"
+                      className="inline w-5 h-5 mx-1.5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                ) : (
+                  "Save"
+                )}
               </Button>
             </div>
             <hr className="-mx-4 h-px my-2 bottom-0 bg-gray-800 border-0 dark:bg-gray-800" />
           </form>
           {/* formmm 22222222 */}
-          <form onSubmit={handleSubmit(onVerificationSubmit)}>
+          {/* <form onSubmit={handleSubmit(onVerificationSubmit)}>
             <div className="text-xs float-right mb-4">
               Verification by email is required .
             </div>
-            <div className="grid gap-y-4 mt-8 mb-2 grid-cols-2 w-full">
+             <div className="grid gap-y-4 mt-8 mb-2 grid-cols-2 w-full">
               <div className="text-gray-800 flex items-center">Email:</div>
               <Input
                 id="email-input"
@@ -261,30 +295,40 @@ const SendUpdatedDataPopupNormal = (props) => {
                 {...register("password")}
                 withoutHelperText
               />
-            </div>
+            </div> 
             <div className="w-full relative h-10">
               <Button
                 className="text-white absolute right-2 top-0 mr-2 dark:bg-indigo-500 bg-indigo-500 hover:bg-indigo-700 focus:outline-none font-bold px-3 text-sm text-center"
                 fullWidth
                 buttonSize="small"
                 type="submit"
+                onClick={resetPassHandler}
               >
-                Save
+                Reset Passsword
               </Button>
             </div>
             <hr className="-mx-4 h-px my-2 bottom-0 bg-gray-800 border-0 dark:bg-gray-800" />
-          </form>
+          </form> */}
           {/* formmmm 33333 */}
           <div className="relative h-52">
-          <Button
+            {user.isExpert ? (
+              ""
+            ) : (
+              <Button
                 className="z-10 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mr-2 dark:bg-indigo-500 bg-indigo-500 hover:bg-indigo-700 focus:outline-none font-bold px-3 text-sm text-center"
                 fullWidth
                 buttonSize="small"
               >
-                Apply To Become An Expert 
+                Apply To Become An Expert
               </Button>
-            <div className="absolute top-0 left-0 w-full blur grid place-items-center pointer-events-none">
-           
+            )}
+            <div
+              className={`${
+                user.isExpert
+                  ? ""
+                  : " absolute top-0 left-0 w-full blur grid place-items-center pointer-events-none"
+              }`}
+            >
               <form onSubmit={handleSubmit(onExpertSubmit)}>
                 <div className="text-xs float-right mb-4">
                   Needs to be verified by an admin.
@@ -325,9 +369,7 @@ const SendUpdatedDataPopupNormal = (props) => {
                 </div>
               </form>
             </div>
-            
           </div>
-        
         </div>
       </Card>
     </div>

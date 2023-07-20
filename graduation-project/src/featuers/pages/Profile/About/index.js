@@ -9,18 +9,23 @@ import {
   MapPinIcon,
   TagIcon,
 } from "lib";
+import { useEffect, useState } from "react";
 
 const About = (props) => {
-  const user = getStorageItem("User");
+  const [user, setUser] = useState();
 
- 
+  useEffect(() => {
+    const user = getStorageItem("User");
+    setUser(user);
+  }, []);
+
   const handlePop = () => {
     props.handlePops(true);
     document.body.style.overflow = "hidden";
   };
 
   return (
-    <Card className="ml-4 my-4 w-[254px] rounded-sm relative">
+    <Card className="ml-4 my-4 w-[254px] h-fit rounded-sm relative">
       <div className="w-full -mt-2">
         <p className="text-xl font-semibold">About</p>
         <PencilIcon
@@ -30,21 +35,46 @@ const About = (props) => {
         <hr className=" h-px -mx-4 my-3 bg-gray-800 border-0 dark:bg-gray-300" />
       </div>
       <div className=" w-fit font-semibold right-0">
-        <div className="flex items-center align-middle mb-2">
+        <div className={`flex items-center align-middle ${user? "mb-2" : "mb-[10px] mt-[14px]"}`}>
           <EnvelopeIcon className="text-white fill-black w-5 h-5" />
-          <p className="ml-2">{user.email}</p>
+          <div className="ml-2">
+            {user ? (
+              user.email
+            ) : (
+              <div className="w-48 rounded-xl h-4 bg-gray-300 animate-pulse"></div>
+            )}
+          </div>
         </div>
-        <div className="flex items-center align-middle mb-2">
+        <div className={`flex items-center align-middle ${user? "mb-2" : "mb-[12px] mt-3"}`}>
           <PhoneIcon className="fill-black w-5 h-5" />
-          <p className="ml-2">{user.phone}</p>
+          <div className="ml-2">
+            {user ? (
+              user.phone
+            ) : (
+              <div className="w-36 rounded-xl h-4 bg-gray-300 animate-pulse"></div>
+            )}
+          </div>
         </div>
-        <div className="flex items-center align-middle mb-2">
+        <div className={`flex items-center align-middle ${user? "mb-2" : "mb-[12px]"}`}>
           <CalendarIcon className="text-white fill-black w-5 h-5" />
-          <p className="ml-2">{user.dob? new Date(user.dob).toLocaleDateString() : ""}</p>
+          <div className="ml-2">
+            {user ? (
+              new Date(user.dob).toLocaleDateString()
+            ) : (
+              <div className="w-24 rounded-xl h-4 bg-gray-300 animate-pulse"></div>
+            )}
+          </div>
         </div>
-        <div className="flex items-center align-middle mb-2">
+        <div className={`flex items-center align-middle ${user? "mb-2" : "mb-[13px]"}`}>
           <MapPinIcon className="text-white fill-black w-5 h-5" />
-          <p className="ml-2">{user.country}</p>
+          <div className="ml-2">
+            {" "}
+            {user ? (
+              user.country
+            ) : (
+              <div className="w-24 rounded-xl h-4 bg-gray-300 animate-pulse"></div>
+            )}
+          </div>
         </div>
         {/* <div className="flex items-center align-middle mb-2">
           <TagIcon className=" fill-black w-5 h-5" />
