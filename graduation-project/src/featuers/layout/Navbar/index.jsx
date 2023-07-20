@@ -3,12 +3,20 @@ import React from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { PlusIcon } from "@heroicons/react/20/solid";
+
+import { Button, Modal, NoSsr, ExpertDilog } from "components";
+import { useLogout, useToggle } from "Hooks";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export const Navbar = () => {
+  const {
+    isOpen: isOpen,
+    close: closeButton,
+    open: OpenButton,
+  } = useToggle(false);
+  const logout = useLogout();
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
@@ -28,16 +36,6 @@ export const Navbar = () => {
                   </Disclosure.Button>
                 </div>
                 <div className="flex flex-shrink-0 justify-between items-center !text-indigo-500">
-                  {/* <img
-                    className="block h-8 w-auto lg:hidden"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="Your Company"
-                  />
-                  <img
-                    className="hidden h-8 w-auto lg:block"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="Your Company"
-                  /> */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -83,15 +81,8 @@ export const Navbar = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <button
-                    type="button"
-                    className="relative inline-flex items-center gap-x-1.5 rounded-md !bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    <PlusIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
-                    New Job
-                  </button>
-                </div>
+                <ExpertDilog />
+
                 <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
                   <button
                     type="button"
@@ -157,6 +148,7 @@ export const Navbar = () => {
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
+                              onClick={logout}
                             >
                               Sign out
                             </a>

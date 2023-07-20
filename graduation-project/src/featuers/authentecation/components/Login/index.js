@@ -27,7 +27,7 @@ function Login() {
   const onSubmit = async () => {
     try {
       const response = await fetch(
-        "https://leapstart.onrender.com/api/v1/users/login",
+        "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/login",
         {
           method: "POST",
           headers: {

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 // import navigation from "../data/footer";
 const navigation = {
