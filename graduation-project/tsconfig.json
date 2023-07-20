@@ -4,7 +4,8 @@
     "paths": {
       "components": ["components"],
       "featuers": ["featuers"],
-      "data": ["data"]
+      "data": ["data"],
+      "lib": ["lib"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
