@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { SignUpForm } from "featuers/authentecation/components/SignUP/SignUpForm";
 import RegistrationCard from "featuers/authentecation/components/RegistrationCard";

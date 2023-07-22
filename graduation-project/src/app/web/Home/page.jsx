@@ -15,7 +15,10 @@ import {
 } from "components";
 // import { Datepicker } from "@mobiscroll/react";
 
+import { CalendarComponent } from "@syncfusion/ej2-react-calendars";
+import PostCard from "featuers/pages/Profile/Posts/PostCard";
 import { useToggle } from "Hooks";
+
 const Home = () => {
   // const {
   //   isOpen: isOpen,

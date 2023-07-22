@@ -1,0 +1,22 @@
+[
+  {
+    "value": "Finance",
+    "label": "Finance"
+  },
+  {
+    "value": "Technology",
+    "label": "Technology"
+  },
+  {
+    "value": "SocialMedia",
+    "label": "Social Media"
+  },
+  {
+    "value": "Realestate",
+    "label": "Realestate"
+  },
+  {
+    "value": "Investment",
+    "label": "Investment"
+  }
+]

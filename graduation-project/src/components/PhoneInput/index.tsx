@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-// import ReactPhoneInput from "react-phone-input-2"; 
+// import ReactPhoneInput from "react-phone-input-2";
 import ReactPhoneInput from "lib/PhoneInput-2";
 import "react-phone-input-2/lib/high-res.css";
 import usePhoneInputMutation from "./usePhoneInputMutation";
@@ -45,7 +45,7 @@ export const PhoneInput: PhoneInputType = ({
     }
 
     if (error) {
-      classes.input += " !border-red focus:!border-red";
+      classes.input += "bg-red-100 !border-red focus:!border-red";
     }
 
     return classes;
