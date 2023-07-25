@@ -3,7 +3,6 @@ import NoSsr from "./NoSsr";
 
 export * from "./Card";
 export * from "./Input";
-export * from "./Logo";
 export * from "./Button";
 export * from "./Select";
 export * from "./HelperText";
@@ -33,3 +32,4 @@ export * from "./SelectField";
 export * from "./SelectDay";
 export * from "./TimePicker";
 export * from "./SnackBar";
+export * from "./ExpertCard";

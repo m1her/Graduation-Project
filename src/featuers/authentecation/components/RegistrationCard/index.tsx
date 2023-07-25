@@ -1,5 +1,5 @@
 // import { useRouter } from "next/router";
-import { Card, Logo, IconButton } from "components";
+import { Card, IconButton } from "components";
 import { ChevronLeftIconMini } from "lib/@heroicons";
 import type { RegistrationCardType } from "../../types";
 
@@ -23,12 +23,12 @@ export const RegistrationCard: RegistrationCardType = ({
           <ChevronLeftIconMini />
         </IconButton>
       )}
-      <div className="flex items-center gap-4  justify-center">
+      {/* <div className="flex items-center gap-4  justify-center">
         <Logo />
         <h1 className="text-base font-medium tracking-wider text-center">
           LeapStart
         </h1>
-      </div>
+      </div> */}
 
       <div>
         {formTitle && <h6 className="text-xl my-4">{formTitle}</h6>}

@@ -5,14 +5,13 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import React, { useState, useRef, useEffect } from "react";
 
-
-import {
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
+// import {
+//   Button,
+//   Dialog,
+//   DialogHeader,
+//   DialogBody,
+//   DialogFooter,
+// } from "@material-tailwind/react";
 
 const FullCalendarComponent = () => {
   const calendarRef = useRef();
@@ -95,7 +94,6 @@ const FullCalendarComponent = () => {
         eventBorderColor="red"
         eventClick={eventClickHandler}
       />
-
     </div>
   );
 };
