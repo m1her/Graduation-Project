@@ -33,3 +33,4 @@ export * from "./SelectField";
 export * from "./SelectDay";
 export * from "./TimePicker";
 export * from "./SnackBar";
+export * from "./ExpertCard";

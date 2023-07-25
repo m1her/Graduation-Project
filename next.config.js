@@ -3,18 +3,18 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   experimental: {
-    appDir: true
+    appDir: true,
   },
- // images: {
- //   domains: ["drive.google.com", ]
-    // remotePatterns: [
-    //   {
-    //     protocol: 'https',
-    //     hostname: 'drive.google.com',
-    //    // port: '3000',
-    //    // pathname: '/web/**',
-    //   },
-    // ],
+  // images: {
+  //   domains: ["drive.google.com", ]
+  // remotePatterns: [
+  //   {
+  //     protocol: 'https',
+  //     hostname: 'drive.google.com',
+  //    // port: '3000',
+  //    // pathname: '/web/**',
+  //   },
+  // ],
   //}
 };
 
@@ -22,12 +22,17 @@ module.exports = {
   generateEtags: false,
   ...nextConfig,
   typescript: {
-    ignoreBuildErrors: true
+    ignoreBuildErrors: true,
   },
 
   images: {
     //formats: ["image/avif", "image/webp"],
-    domains: ["firebasestorage.googleapis.com", "drive.google.com", "images.unsplash.com"],
+    domains: [
+      "firebasestorage.googleapis.com",
+      "drive.google.com",
+      "images.unsplash.com",
+      "randomuser.me",
+    ],
     // remotePatterns: [
     //   {
     //     protocol: "https",
@@ -35,5 +40,5 @@ module.exports = {
     //     pathname: "/image/upload/**"
     //   }
     // ]
-  }
+  },
 };

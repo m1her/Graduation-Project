@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -35,8 +35,14 @@ export function ExpertDilog() {
     close: closeSnack,
     open: openSnack,
   } = useToggle();
+  const {
+    isOpen: isOpenErrorSnack,
+    close: closeErrorSnack,
+    open: openErrorSnack,
+  } = useToggle();
   const formData = new FormData();
 
+  const [errorMeesage, setErrorMeesage] = useState("");
   const {
     fetchData: uploadExpert,
     error,
@@ -54,6 +60,11 @@ export function ExpertDilog() {
       console.log(data);
       close();
       openSnack();
+    },
+    onError: (data) => {
+      setErrorMeesage(data.message);
+      close();
+      openErrorSnack();
     },
   });
 
@@ -81,6 +92,15 @@ export function ExpertDilog() {
         isOpen={isOpenSnack}
         type="success"
         sucessMessage="Your Expert Request has sent Successfully"
+        className="absolute"
+      />
+      <SnackBar
+        withButton={false}
+        open={openErrorSnack}
+        close={closeErrorSnack}
+        isOpen={isOpenErrorSnack}
+        type="error"
+        sucessMessage={errorMeesage + "..Please Verify Your Email"}
         className="absolute"
       />
 
