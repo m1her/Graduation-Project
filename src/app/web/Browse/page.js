@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { ExpertCard, Skeleton } from "components";
 
 const Browse = () => {
-  const [users, setUsers] = useState([]);
   const [experts, setExperts] = useState([]);
+  const [users, setUsers] = useState([]);
+
   const {
     fetchData: getUsers,
     error,
@@ -45,15 +46,6 @@ const Browse = () => {
     getUsers();
     getExperts();
   }, [getUsers, getExperts]);
-
-  // we need to construct <ExpertList />
-  // ExpertList should make The request of get all experts
-  // or passed on search params
-  // we need to construct <Expert expertData={obj} />
-  // and mapp over returned values   ==> render the Expert components list
-  // Make The Expert component reusable as much as posiable
-  //
-  //
 
   console.log(experts, "experts");
   return (

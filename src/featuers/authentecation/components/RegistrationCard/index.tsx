@@ -1,5 +1,5 @@
 // import { useRouter } from "next/router";
-import { Card, Logo, IconButton } from "components";
+import { Card, IconButton } from "components";
 import { ChevronLeftIconMini } from "lib/@heroicons";
 import type { RegistrationCardType } from "../../types";
 
