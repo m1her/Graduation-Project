@@ -1,3 +1,4 @@
+"use client";
 import "./globals.css";
 
 export const metadata = {
@@ -8,8 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      {/* <ThemeProvider> */}
       <head />
-      <body>{children}</body>
+      <body className="min-h-[800px] ">{children}</body>
+      {/* </ThemeProvider> */}
     </html>
   );
 }

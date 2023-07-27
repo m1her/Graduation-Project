@@ -93,13 +93,13 @@ const navigation = {
 
 export const Footer = () => {
   return (
-    <footer className="bg-white" aria-labelledby="footer-heading">
-      <h2 id="footer-heading" className="sr-only">
+    <footer className="mt-8" aria-labelledby="footer-heading">
+      <h2 id="footer-heading" className="sr-only text-red">
         Footer
       </h2>
-      <div className="mx-auto max-w-7xl   pt-4 sm:pt-8 lg:10 lg:pt-12">
+      <div className="w-full  bg-indigo-600  pt-4 sm:pt-8 lg:10 lg:pt-12">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          <div className="space-y-8 !text-indigo-600">
+          <div className="space-y-8 !text-white mx-8">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
@@ -115,9 +115,9 @@ export const Footer = () => {
               />
             </svg>
 
-            <p className="text-sm leading-6 text-gray-600">
-              Making the world a better place through constructing elegant
-              hierarchies.
+            <p className="text-sm leading-6 text-white">
+              Making the world a better place through constructing Expert
+              <strong> Entrepruner</strong>
             </p>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (
@@ -135,7 +135,7 @@ export const Footer = () => {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold leading-6 text-gray-900">
+                <h3 className="text-lg text-white  font-semibold leading-6 ">
                   Solutions
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
@@ -143,7 +143,7 @@ export const Footer = () => {
                     <li key={item.name}>
                       <a
                         href={item.href}
-                        className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+                        className="text-sm leading-6 text-white hover:text-gray-900"
                       >
                         {item.name}
                       </a>
@@ -152,7 +152,7 @@ export const Footer = () => {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold leading-6 text-gray-900">
+                <h3 className="text-lg text-white  font-semibold leading-6 ">
                   Support
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
@@ -160,7 +160,7 @@ export const Footer = () => {
                     <li key={item.name}>
                       <a
                         href={item.href}
-                        className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+                        className="text-lg text-white  leading-6  "
                       >
                         {item.name}
                       </a>
@@ -171,7 +171,7 @@ export const Footer = () => {
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold leading-6 text-gray-900">
+                <h3 className="text-lg text-white  font-semibold leading-6 ">
                   Company
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
@@ -179,7 +179,7 @@ export const Footer = () => {
                     <li key={item.name}>
                       <a
                         href={item.href}
-                        className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+                        className="text-sm leading-6 text-white hover:text-gray-900"
                       >
                         {item.name}
                       </a>
@@ -188,7 +188,7 @@ export const Footer = () => {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold leading-6 text-gray-900">
+                <h3 className="text-lg text-simebold  font-semibold leading-6 text-white">
                   Legal
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
@@ -196,7 +196,7 @@ export const Footer = () => {
                     <li key={item.name}>
                       <a
                         href={item.href}
-                        className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+                        className="text-sm leading-6 text-white hover:text-gray-900"
                       >
                         {item.name}
                       </a>
@@ -207,8 +207,8 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-gray-900/10 py-2  sm:mt-4 lg:mt-6">
-          <p className="text-xs leading-5 text-gray-500">
+        <div className="mt-16 border-t border-gray-900/10 py-2 flex justify-center  sm:mt-4 lg:mt-6">
+          <p className="text-xs leading-5 text-white">
             &copy; 2023 Leap Start, Inc. All rights reserved.
           </p>
         </div>

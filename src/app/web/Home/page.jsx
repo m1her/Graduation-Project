@@ -29,31 +29,37 @@ const Home = () => {
   return (
     <div className="w-[80%] flex-col px-4 py-2">
       <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">
-        {" "}
         Categories
       </p>
       <div className="grid gap-8 grid-cols-3 grid-rows-2 w-full">
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/Investment.jpg')]"}
+          catagory="Investment"
         >
           Investment
         </CatagoryCard>
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/Realestate1.jpg')]"}
+          catagory="Realstate"
         >
           Realestate
         </CatagoryCard>
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/SocialMedia.jpeg')]"}
+          catagory="Social Media"
         >
           Social Media
         </CatagoryCard>
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/Technology1.jpg')]"}
+          catagory="Technology"
         >
           Technology
         </CatagoryCard>
-        <CatagoryCard bgUrl={"bg-[url('/assets/img/Catagories/Finance.png')]"}>
+        <CatagoryCard
+          bgUrl={"bg-[url('/assets/img/Catagories/Finance.png')]"}
+          catagory="Finance"
+        >
           Finance
         </CatagoryCard>
         <Card className="cursor-pointer select-none w-full h-36 justify-center items-center flex opacity-40 hover:bg-gray-800 hover:bg-opacity-50">

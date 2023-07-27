@@ -5,3 +5,4 @@ export * from "./useDeepCompareMemoize";
 export * from "./useToggle";
 export * from "./useLoading";
 export * from "./useLogout";
+export * from "./useCurrentUser";

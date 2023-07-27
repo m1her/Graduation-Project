@@ -3,13 +3,18 @@ import CategoryBarCard from "featuers/pages/Categories/CategoryBarCard";
 import ArticleCard from "featuers/pages/Categories/ArticleCard";
 import CategoryExpertList from "featuers/pages/Categories/CategoryExpertList";
 import PostCard from "featuers/pages/Profile/Posts/PostCard";
+import { useSearchParams } from "next/navigation";
 import { Card } from "components";
 import Image from "next/image";
 const Category = () => {
+  const searchParams = useSearchParams();
+  // const { type } = router.query;
+  const type = searchParams.get("type");
+
   return (
     <div className="w-[80%] flex-col mt-2 px-4 py-2">
       <div className="text-2xl font-semibold leading-6 text-gray-900 my-6">
-        Category Name
+        {type.toUpperCase()}
       </div>
       <CategoryBarCard />
       <div className="w-full flex justify-between items-start mt-4">
@@ -17,7 +22,7 @@ const Category = () => {
         <CategoryExpertList />
       </div>
       <div className="text-2xl font-light leading-6 text-gray-900 my-6">
-        Finance Posts
+        {type} Posts
       </div>
       <div className="flex items-start justify-between">
         <div className=" w-[60%]">

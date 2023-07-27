@@ -15,12 +15,14 @@ export function SnackBar({
   withButton = false,
   ButtonData = "open SnackBar",
   type = "success",
-  sucessMessage,
-  errorMessage,
-  warningMessage,
-  infoMessage,
+  sucessMessage = "",
+  errorMessage = "",
+  warningMessage = "",
+  infoMessage = "",
   open,
   close,
+  TransitionComponent,
+  anchorOrigin,
   isOpen,
 }) {
   // const [open, setOpen] = React.useState(false);
@@ -40,19 +42,6 @@ export function SnackBar({
     close();
   };
 
-  // switch (type) {
-  //   case "success":
-  //     return <Alert severity="success">{sucessMessage}</Alert>;
-  //   case "error":
-  //     return <Alert severity="error">{errorMessage}</Alert>;
-  //   case "info":
-  //     return <Alert severity="info">{infoMessage}</Alert>;
-  //   case "warning":
-  //     return <Alert severity="warning">{warningMessage}</Alert>;
-  //   default :
-  //     return null;
-  // }
-
   return (
     <>
       {withButton && (
@@ -61,7 +50,13 @@ export function SnackBar({
         </Button>
       )}
       {isOpen && (
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ ...anchorOrigin }}
+          TransitionComponent={TransitionComponent}
+        >
           {
             <Alert onClose={handleClose} severity={type} sx={{ width: "100%" }}>
               {sucessMessage || errorMessage || warningMessage || infoMessage}
