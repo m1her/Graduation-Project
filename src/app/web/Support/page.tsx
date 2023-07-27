@@ -1,42 +1,78 @@
+"use client";
+import { useToggle } from "Hooks";
+import { Button, CustomizedAccordions, Input, SnackBar } from "components";
+import { MagnifyingGlassIcon } from "lib/@heroicons";
+import { useState } from "react";
 const Support = () => {
+  const [question, setQuestion] = useState("");
+  const {
+    isOpen: isOpenSnack,
+    close: closeSnack,
+    open: openSnack,
+  } = useToggle();
+
+  const {
+    isOpen: isWarningSnack,
+    close: closeWarningSnack,
+    open: openWarningSnack,
+  } = useToggle();
+
+  const handleSendClick = () => {
+    setQuestion("");
+    question.split(" ").length >= 4 ? openSnack() : openWarningSnack();
+  };
   return (
-    <div className="w-[80%] ">
-      <div className=" top-0 left-0 w-full bg-gray-50 py-28">
+    <div className="w-[80%] mx-8 h-[900px]  ">
+      {/* <div className=" top-0 left-0 w-full bg-gray-50 py-28">
         <div className="text-5xl font-thin text-gray-600 ml-16">
           Leap Start Support
         </div>
-      </div>
-
-      <div className="flex items-center justify-between p-16">
-        <div className="text-xl text-center h-[140px] w-[280px] flex justify-center items-center bg-white shadow rounded-lg hover:shadow-gray-500 cursor-pointer">
-          I want to learn...
+      </div> */}
+      <SnackBar
+        withButton={false}
+        open={openWarningSnack}
+        close={closeWarningSnack}
+        isOpen={isWarningSnack}
+        type="warning"
+        sucessMessage="Your Question Must Be more than 4 words ,  Try Again!"
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        TransitionComponent="top"
+      />
+      <SnackBar
+        withButton={false}
+        open={openSnack}
+        close={closeSnack}
+        isOpen={isOpenSnack}
+        type="success"
+        sucessMessage="Your Question has been sent  Successfully"
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        TransitionComponent="top"
+      />
+      <div className="flex-col items-center justify-center">
+        <div className="text-4xl font-thin m-6  text-gray-600 text-center ">
+          How Can We Help You ?
         </div>
-        <div className="text-xl text-center h-[140px] w-[280px] flex justify-center items-center bg-white shadow rounded-lg hover:shadow-gray-500 cursor-pointer">
-          I&apos;m having trouble with...
-        </div>
-        <div className="text-xl text-center h-[140px] w-[280px] flex justify-center items-center bg-white shadow rounded-lg hover:shadow-gray-500 cursor-pointer">
-          I have a question...
-        </div>
-      </div>
-
-      <div className="text-4xl font-thin text-gray-600 text-center ">
-        Contact Us
-      </div>
-
-      <div className="flex justify-center items-center my-10 ">
-        <div className="md:w-[565px] w-[400px] md:h-12 h-10 rounded-lg p-1 flex justify-between items-center bg-white">
-          <input
-            type="email"
-            placeholder="Enter message"
-            className="h-full md:w-[405px] w-[267px] focus:outline-none md:text-lg text-sm font-sofia font-light pl-6 placeholder:font-sofia placeholder:font-thin placeholder:text-base"
+        <div className="flex justify-center gap-4">
+          <Input
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            placeholder="Ask for Help To Get Out The Most  of Our Website "
+            inputSize="large"
+            inputClassName="!w-[600px]"
+            className="flex items-end justify-center w-[600px]"
+            startIcon={<MagnifyingGlassIcon />}
           />
-          <button
-            className="flex justify-center items-center md:text-base text-xs text-white font-sofia font-normal bg-indigo-600 hover:bg-indigo-700 rounded-[5px] md:w-32 w-24 md:h-10 h-8"
+          <Button
+            className="!bg-indigo-500 w-[200px]  !text-2xl"
+            fullWidth={false}
+            onClick={handleSendClick}
           >
             Send
-          </button>
+          </Button>
         </div>
       </div>
+
+      <CustomizedAccordions />
     </div>
   );
 };

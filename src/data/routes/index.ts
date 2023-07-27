@@ -1,7 +1,7 @@
 export const URL_PATHS = {
   HOME: "/",
   AUTH: {
-    SIGN_IN: "authentication/login",
+    SIGN_IN: "/authentication/login",
     SIGN_UP: "/sign-up",
     FORGOT_PASSWORD: "/forgot-password",
     VERIFY_CODE: "/forgot-password/verify-code",
