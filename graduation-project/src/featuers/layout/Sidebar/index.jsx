@@ -8,32 +8,53 @@ import {
   GlobeAltIcon,
   CalendarDaysIcon,
   Cog8ToothIcon,
-  ClipboardDocumentIcon,
+  ClipboardDocumentIcon
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const navigation = [
-  { name: "Feeds", href: "#", icon: HomeIcon, current: false },
-  { name: "Messages", href: "#", icon: EnvelopeIcon, current: false },
-  { name: "Meetings", href: "#", icon: VideoCameraIcon, current: false },
-  { name: "Browse", href: "Browse", icon: GlobeAltIcon, current: false },
+  { name: "Home", href: "/web/Home", icon: HomeIcon, current: false },
+  {
+    name: "Messages",
+    href: "/web/Messages",
+    icon: EnvelopeIcon,
+    current: false
+  },
+  {
+    name: "Meetings",
+    href: "/web/Meetings",
+    icon: VideoCameraIcon,
+    current: false
+  },
+  { name: "Browse", href: "/web/Browse", icon: GlobeAltIcon, current: false },
 
   {
     name: "Schedule",
     href: "#",
     icon: CalendarDaysIcon,
     count: "20+",
-    current: false,
+    current: false
   },
-  { name: "Settings", href: "#", icon: Cog8ToothIcon, current: false },
-  { name: "Support", href: "#", icon: ClipboardDocumentIcon, current: false },
+  {
+    name: "Settings",
+    href: "/web/Settings",
+    icon: Cog8ToothIcon,
+    current: false
+  },
+  {
+    name: "Support",
+    href: "/web/Support",
+    icon: ClipboardDocumentIcon,
+    current: false
+  }
 ];
-const teams = [
-  { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
-  { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
-  { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
-];
+// const teams = [
+//   { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
+//   { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
+//   { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
+// ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -43,12 +64,15 @@ export const Sidebar = () => {
   const pathname = usePathname();
   const [active, setActive] = useState(navigation);
   useEffect(() => {
-    active.map((item) => {
+    const updatedActive = active.map(item => {
       if (pathname.includes(item.name)) {
-        setActive([...active, { ...item, current: true }]);
+        return { ...item, current: true };
+      }else {
+        return { ...item, current: false };
       }
+      return item;
     });
-    console.log(active);
+    setActive(updatedActive);
   }, [pathname]);
 
   return (
@@ -57,9 +81,9 @@ export const Sidebar = () => {
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
             <ul role="list" className="-mx-2 space-y-1">
-              {navigation.map((item) => (
+              {active.map(item => (
                 <li key={item.name}>
-                  <a
+                  <Link
                     href={item.href}
                     className={classNames(
                       item.current
@@ -86,7 +110,7 @@ export const Sidebar = () => {
                         {item.count}
                       </span>
                     ) : null}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -1,10 +1,12 @@
 "use client";
-import { TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { TrashIcon, XMarkIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
+import { Spinner } from "components";
 import Image from "next/image";
 import { useState } from "react";
 
-const PostCard = () => {
+const PostCard = ({ content, time, id, updatedPosts, setUpdatedPosts }) => {
   const [toggleDelete, setToggleDelete] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const toggleDeleteHandler = (e) => {
     e.stopPropagation();
@@ -16,8 +18,44 @@ const PostCard = () => {
   };
 
   const handleDelete = (e) => {
-    e.stopPropagation()
+    e.stopPropagation();
+    deletePosts();
+
   }
+
+  
+
+    const deletePosts = async () => {
+      setLoading(true);
+      const Token = localStorage.getItem("Token")
+      try {
+        const response = await fetch(
+          `https://worrisome-pocketbook-calf.cyclic.app/api/v1/post/${id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${Token}`,
+            },
+    
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        const newUpdatedPosts = updatedPosts.filter((post) => post._id !== id);
+        setUpdatedPosts(newUpdatedPosts);
+        closeDelete();
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+        closeDelete();
+      }
+    }
+
+
 
   return (
     <div className=" bg-white w-full " onClick={closeDelete}>
@@ -35,7 +73,79 @@ const PostCard = () => {
               <div className="text-lg font-semibold text-gray-900">
                 Brad Adams
               </div>
-              <div className="text-xs text-gray-700">22h ago</div>
+              <div className="text-xs text-gray-700">
+              {Math.floor(
+                      (new Date() - new Date(Date.parse(time))) /
+                        (1000 * 60)
+                    ) < 59
+                      ? parseInt(
+                          Math.floor(
+                            (new Date() -
+                              new Date(Date.parse(time))) /
+                              (1000 * 60)
+                          )
+                        ) + " m ago"
+                      : Math.floor(
+                          (new Date() - new Date(Date.parse(time))) /
+                            (1000 * 60)
+                        ) /
+                          60 <
+                        24
+                      ? parseInt(
+                          Math.floor(
+                            (new Date() -
+                              new Date(Date.parse(time))) /
+                              (1000 * 60)
+                          ) / 60
+                        ) + " h ago"
+                      : Math.floor(
+                          (new Date() - new Date(Date.parse(time))) /
+                            1000
+                        ) /
+                          (60 * 60 * 24) <
+                        7
+                      ? parseInt(
+                          Math.floor(
+                            (new Date() -
+                              new Date(Date.parse(time))) /
+                              1000
+                          ) /
+                            (60 * 60 * 24)
+                        ) + " d ago"
+                      : Math.floor(
+                          (new Date() - new Date(Date.parse(time))) /
+                            1000
+                        ) /
+                          (60 * 60 * 24 * 7) <
+                        4
+                      ? parseInt(
+                          Math.floor(
+                            (new Date() -
+                              new Date(Date.parse(time))) /
+                              1000
+                          ) /
+                            (60 * 60 * 24 * 7)
+                        ) + " weeks"
+                      : Math.floor(
+                          (new Date() - new Date(Date.parse(time))) /
+                            1000
+                        ) /
+                          (60 * 60 * 24 * 30) <
+                        12
+                      ? parseInt(
+                          Math.floor(
+                            (new Date() -
+                              new Date(Date.parse(time))) /
+                              1000
+                          ) /
+                            (60 * 60 * 24 * 30)
+                        ) + " monthes"
+                      : parseInt(
+                          (new Date() - new Date(Date.parse(time))) /
+                            1000 /
+                            (60 * 60 * 24 * 30 * 12)
+                        ) + " year"}
+              </div>
             </div>
           </div>
           <div className="relative">
@@ -46,12 +156,13 @@ const PostCard = () => {
                onBlur={closeDelete}
 
               >
+                 {loading ? <Spinner /> :
                 <TrashIcon className="text-gray-700 w-5 h-5 mr-2" />
-                Delete post
+               && "Delete post" } 
               </div>
             )}
 
-            <XMarkIcon
+            <EllipsisHorizontalIcon
               className="text-gray-700 w-5 h-5 cursor-pointer"
               onClick={toggleDeleteHandler}
             />
@@ -59,8 +170,7 @@ const PostCard = () => {
         </div>
 
         <p className="mt-3 text-gray-700 text-sm">
-          Lorem ipsum, dolor sit amet conse. Saepe optio minus rem dolor sit
-          amet!
+          {content}
         </p>
         <div className="mt-4 flex items-center">
           <div className="flex mr-2 text-gray-700 text-sm">

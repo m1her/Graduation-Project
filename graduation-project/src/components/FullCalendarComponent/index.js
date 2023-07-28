@@ -75,7 +75,7 @@ const FullCalendarComponent = () => {
   ]);
 
   return (
-    <div className="bg-[#ffff] font-semibold p-1 w-[850px] my-4 rounded shadow-md text-black">
+    <div className="bg-[#ffff] font-semibold p-1 w-full my-4 rounded shadow-md text-black">
       <FullCalendar
         headerToolbar={{
           left: "title",

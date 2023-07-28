@@ -3,37 +3,27 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   experimental: {
-    appDir: true
+    appDir: true,
   },
- // images: {
- //   domains: ["drive.google.com", ]
-    // remotePatterns: [
-    //   {
-    //     protocol: 'https',
-    //     hostname: 'drive.google.com',
-    //    // port: '3000',
-    //    // pathname: '/web/**',
-    //   },
-    // ],
-  //}
 };
 
 module.exports = {
   generateEtags: false,
   ...nextConfig,
   typescript: {
-    ignoreBuildErrors: true
+    ignoreBuildErrors: true,
   },
-
   images: {
-    //formats: ["image/avif", "image/webp"],
-    domains: ["firebasestorage.googleapis.com", "drive.google.com", "images.unsplash.com"],
-    // remotePatterns: [
-    //   {
-    //     protocol: "https",
-    //     hostname: "firebasestorage.googleapis.com",
-    //     pathname: "/image/upload/**"
-    //   }
-    // ]
+    domains: [
+      "firebasestorage.googleapis.com",
+      "drive.google.com",
+      "images.unsplash.com",
+    ],
+  },
+  future: { webpack5: true },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+      config.resolve.alias.canvas = false
+      config.resolve.alias.encoding = false
+      return config
   }
 };
