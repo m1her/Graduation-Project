@@ -180,12 +180,11 @@ export function CustomizedAccordions() {
           </AccordionDetails>
         </Accordion>
         <Accordion
-          expanded={expanded === "panel7"}
-          onChange={handleChange("panel7")}
+          expanded={expanded === "panel8"}
+          onChange={handleChange("panel8")}
         >
           <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
             <Typography>
-              {" "}
               Can I share my booked sessions with others or invite friends to
               join?
             </Typography>
