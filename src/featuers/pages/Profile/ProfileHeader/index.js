@@ -13,6 +13,8 @@ const ProfileHeader = (props) => {
 
   const [userName, setUserName] = useState("");
   const [userBio, setUserBio] = useState("");
+  const [expert, setExpert] = useState("");
+  const [isExpert, setIsExpert] = useState();
   const [image, setImage] = useState();
   const [imageType, setImageType] = useState("");
   const user = getStorageItem("User");
@@ -20,37 +22,38 @@ const ProfileHeader = (props) => {
   useEffect(() => {
     setUserName(user.name);
     setUserBio(user.bio);
-  }, [user]);
+    setExpert(user.expert);
+    setIsExpert(user.isExpert);
+  }, []);
 
   const onSubmit = async (formData) => {
     formData.append("name", userName);
     console.log(formData);
     const Token = JSON.parse(Cookies.get("currentUser"));
+    // try {
+    //   const response = await fetch(
+    //     "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/profile/",
+    //     {
+    //       method: "PUT",
+    //       headers: {
+    //         Authorization: `Bearer ${Token.accessToken}`,
+    //       },
+    //       body: formData,
+    //     }
+    //   );
 
-    try {
-      const response = await fetch(
-        "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/profile/644c2caee836fcbba051edee",
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${Token.accessToken}`,
-          },
-          body: formData,
-        }
-      );
+    //   if (!response.ok) {
+    //     throw new Error("Wrong email or password.");
+    //   }
 
-      if (!response.ok) {
-        throw new Error("Wrong email or password.");
-      }
-
-      const data = await response.json();
-      console.log(data);
-      setStorageItem("User", data.data.user);
-      setUserName(data.data.user.name);
-      setUserBio(data.data.user.bio === "undefined" ? "" : data.data.user.bio);
-    } catch (error) {
-      console.log(error);
-    }
+    //   const data = await response.json();
+    //   console.log(data);
+    //   setStorageItem("User", data.data.user);
+    //   setUserName(data.data.user.name);
+    //   setUserBio(data.data.user.bio === "undefined" ? "" : data.data.user.bio);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const nameHandler = (e) => {
@@ -116,9 +119,9 @@ const ProfileHeader = (props) => {
   };
 
   return (
-    <Card className=" relative w-[850px] rounded-sm">
+    <Card className=" relative w-full rounded-sm">
       {image && (
-        <CropImage Image={image} onConfirm={onSubmit} imageType={imageType} />
+        <CropImage Image={image} onConfirm={onSubmit} imageType={imageType}  />
       )}
 
       <div>
@@ -235,55 +238,85 @@ const ProfileHeader = (props) => {
           </div>
 
           <div className="w-fit absolute bottom-0 text-center ml-14">
-            <div className="text-gray-700 right-0 text-lg font-semibold">
-              ${user.expert.hourlyRate} USD / Hour
+            <div className="text-gray-700 text-lg font-semibold absolute bottom-8">
+              {user
+                ? "$" + (expert.hourlyRate || "0") + " USD / Hour"
+                : "$0 USD / Hour"}
             </div>
-            <p className="text-gray-800 text-lg font-medium">{user.expert.catagories[1]} specialist</p>
+            {/* <p className="text-gray-800 text-lg font-medium">
+              {expert ? expert.catagories[1] : ""}
+            </p> */}
+            <div className="flex w-36 float-left flex-wrap -mb-4">
+              {expert
+                ? expert.catagories.map((item) => (
+                    <div
+                      key={Math.random()}
+                      className="bg-gray-300 text-gray-800 rounded-full w-fit px-4 text-sm m-0.5"
+                    >
+                      {item}
+                    </div>
+                  ))
+                : ""}
+            </div>
           </div>
         </div>
       </div>
 
       <hr className=" my-4 -mx-4 right-0 h-px bg-gray-800 border-0 dark:bg-gray-300" />
       <div className="">
-        <button
-          className={`text-lg ml-14
+        {isExpert ? (
+          <button
+            className={`text-lg ml-14
           ${
             active === "posts"
               ? "font-semibold text-[#394cac] underline"
               : "text-gray-500"
           }
           `}
-          data-value="posts"
-          onClick={handleClickDrawer}
-        >
-          Posts
-        </button>
-        <button
-          className={`text-lg ml-14
+            data-value="posts"
+            onClick={handleClickDrawer}
+          >
+            Posts
+          </button>
+        ) : (
+          ""
+        )}
+        {isExpert ? (
+          <button
+            className={`text-lg ml-14
           ${
             active === "resume"
               ? "font-semibold text-[#394cac] underline"
               : "text-gray-500"
           }
           `}
-          data-value="resume"
-          onClick={handleClickDrawer}
-        >
-          Resume
-        </button>
-        <button
-          className={`text-lg ml-14
+            data-value="resume"
+            onClick={handleClickDrawer}
+          >
+            Resume
+          </button>
+        ) : (
+          ""
+        )}
+
+        {isExpert ? (
+          <button
+            className={`text-lg ml-14
           ${
             active === "reviwes"
               ? "font-semibold text-[#394cac] underline"
               : "text-gray-500"
           }
           `}
-          data-value="reviwes"
-          onClick={handleClickDrawer}
-        >
-          Reviwes
-        </button>
+            data-value="reviwes"
+            onClick={handleClickDrawer}
+          >
+            Reviwes
+          </button>
+        ) : (
+          ""
+        )}
+
         <button
           className={`text-lg ml-14
           ${

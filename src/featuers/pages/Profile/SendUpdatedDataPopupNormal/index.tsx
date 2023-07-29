@@ -1,5 +1,13 @@
 "use client";
-import { Card, Input, Button, PhoneInput, Select } from "components";
+import {
+  Card,
+  Input,
+  Button,
+  PhoneInput,
+  Select,
+  MultipleSelectChip,
+  ExpertDilog,
+} from "components";
 import { XMarkIconMini, CalendarIcon } from "lib";
 import { getStorageItem } from "utils";
 import useForm, { Controller } from "lib/react-hook-form";
@@ -24,6 +32,7 @@ const SendUpdatedDataPopupNormal = (props) => {
   const [date, setDate] = useState(
     user.dob ? new Date(user.dob).toLocaleDateString() : ""
   );
+  const [expertData, setExpertData] = useState({ catagories: [] });
 
   const {
     register,
@@ -89,6 +98,8 @@ const SendUpdatedDataPopupNormal = (props) => {
   });
   const onExpertSubmit = handleSubmit((data, e) => {
     console.log("verify");
+    console.log(data.salary);
+    console.log(expertData);
   });
 
   const closePopHandler = (e) => {
@@ -314,13 +325,16 @@ const SendUpdatedDataPopupNormal = (props) => {
             {user.isExpert ? (
               ""
             ) : (
-              <Button
-                className="z-10 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mr-2 dark:bg-indigo-500 bg-indigo-500 hover:bg-indigo-700 focus:outline-none font-bold px-3 text-sm text-center"
-                fullWidth
-                buttonSize="small"
-              >
-                Apply To Become An Expert
-              </Button>
+              <div className="z-10 absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                <ExpertDilog />
+              </div>
+              // <Button
+              //   className="z-10 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mr-2 dark:bg-indigo-500 bg-indigo-500 hover:bg-indigo-700 focus:outline-none font-bold px-3 text-sm text-center"
+              //   fullWidth
+              //   buttonSize="small"
+              // >
+              //   Apply To Become An Expert
+              // </Button>
             )}
             <div
               className={`${
@@ -337,17 +351,16 @@ const SendUpdatedDataPopupNormal = (props) => {
                   <div className="text-gray-800 flex items-center">
                     Specialty:
                   </div>
-                  <Select
-                    options={specialityList}
-                    id="specialty-select"
-                    placeholder="Enter Specialty"
-                    selectSize="small"
-                    {...register("speciality")}
-                    withoutHelperText
+                  <MultipleSelectChip
+                    selectClassName=""
+                    expertData={expertData}
+                    setExpertData={setExpertData}
                   />
                   <div className="text-gray-800 flex items-center">Salary:</div>
                   <Input
                     id="salary"
+                    type="number"
+                    min={0}
                     inputSize="small"
                     inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
                     placeholder="Enter your per hour salary"

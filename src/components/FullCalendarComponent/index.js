@@ -5,6 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import React, { useState, useRef, useEffect } from "react";
 
+<<<<<<< HEAD:src/components/FullCalendarComponent/index.js
 // import {
 //   Button,
 //   Dialog,
@@ -12,8 +13,18 @@ import React, { useState, useRef, useEffect } from "react";
 //   DialogBody,
 //   DialogFooter,
 // } from "@material-tailwind/react";
+=======
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
+>>>>>>> 0a551231507c155c36be0e6f6beafce51fca115a:graduation-project/src/components/FullCalendarComponent/index.js
 
-const FullCalendarComponent = () => {
+const FullCalendarComponent = ({ expertAvailableHours }) => {
+  console.log(expertAvailableHours);
   const calendarRef = useRef();
 
   const handleAddEvent = () => {
@@ -74,7 +85,7 @@ const FullCalendarComponent = () => {
   ]);
 
   return (
-    <div className="bg-[#ffff] font-semibold p-1 w-[850px] my-4 rounded shadow-md text-black">
+    <div className="bg-[#ffff] font-semibold p-1 w-full my-4 rounded shadow-md text-black">
       <FullCalendar
         headerToolbar={{
           left: "title",
@@ -93,6 +104,15 @@ const FullCalendarComponent = () => {
         displayEventTime={false}
         eventBorderColor="red"
         eventClick={eventClickHandler}
+<<<<<<< HEAD:src/components/FullCalendarComponent/index.js
+=======
+        businessHours={{
+          daysOfWeek: [1, 2, 3, 4], // Monday - Thursday
+
+          startTime: expertAvailableHours.fromTime, // a start time (10am in this example)
+          endTime: expertAvailableHours.toTime,
+        }}
+>>>>>>> 0a551231507c155c36be0e6f6beafce51fca115a:graduation-project/src/components/FullCalendarComponent/index.js
       />
     </div>
   );

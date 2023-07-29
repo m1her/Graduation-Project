@@ -49,6 +49,8 @@ function Login() {
 
       const data = await response.json();
 
+    
+
       Cookies.set("currentUser", JSON.stringify(data.data));
       localStorage.setItem("Token", data.data.accessToken);
       console.log(data.data.user);

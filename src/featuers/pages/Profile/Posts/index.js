@@ -1,21 +1,34 @@
 "use client";
 import { PencilIcon, PlusIcon } from "lib";
-import { Card } from "components";
+import { Card, Spinner } from "components";
 import PostCard from "./PostCard";
 import PostInput from "./PostInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Posts = () => {
+const Posts = ({ posts, noPosts }) => {
   const [postInputVisibility, setPostInputVisibility] = useState(false);
+  const [updatedPosts, setUpdatedPosts] = useState([]);
   const openPostInput = () => {
     setPostInputVisibility(true);
   };
   const closePostInput = () => {
     setPostInputVisibility(false);
   };
+
+  useEffect(() => {
+    setUpdatedPosts([...posts].reverse());
+   
+  }, [posts]);
+
   return (
-    <Card className=" my-4 pb-0 rounded-sm w-[580px] ">
-      {postInputVisibility && <PostInput close={closePostInput} />}
+    <Card className=" my-4 pb-0 rounded-sm w-full ">
+      {postInputVisibility && (
+        <PostInput
+          updatedPosts={updatedPosts}
+          setUpdatedPosts={setUpdatedPosts}
+          close={closePostInput}
+        />
+      )}
       <div className="w-full flex items-center justify-between">
         <div className="text-xl font-semibold -mt-2">Posts</div>
         <div className="flex items-center">
@@ -29,9 +42,26 @@ const Posts = () => {
         </div>
       </div>
       <hr className=" h-px -mx-4 my-3 bg-gray-800 border-0 dark:bg-gray-300" />
-      <PostCard />
-      <PostCard />
-      <PostCard />
+      {updatedPosts.length != 0 ? (
+        updatedPosts.map((item) => (
+          <PostCard
+            key={item._id}
+            id={item._id}
+            content={item.content}
+            time={item.createdAt}
+            updatedPosts={updatedPosts}
+            setUpdatedPosts={setUpdatedPosts}
+          />
+        ))
+      ) : noPosts != "" ? (
+        <div className="font-sm text-gray-400 w-full text-center">
+          {noPosts}
+        </div>
+      ) : (
+        <div className=" w-full flex justify-center">
+          <Spinner />
+        </div>
+      )}
     </Card>
   );
 };
