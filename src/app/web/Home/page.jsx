@@ -34,38 +34,6 @@ const Home = () => {
       <div className="grid gap-4 grid-cols-3 grid-rows-2 w-full">
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/Investment.jpg')]"}
-<<<<<<< HEAD:src/app/web/Home/page.jsx
-          catagory="Investment"
-        >
-          Investment
-        </CatagoryCard>
-        <CatagoryCard
-          bgUrl={"bg-[url('/assets/img/Catagories/Realestate1.jpg')]"}
-          catagory="Realstate"
-        >
-          Realestate
-        </CatagoryCard>
-        <CatagoryCard
-          bgUrl={"bg-[url('/assets/img/Catagories/SocialMedia.jpeg')]"}
-          catagory="Social Media"
-        >
-          Social Media
-        </CatagoryCard>
-        <CatagoryCard
-          bgUrl={"bg-[url('/assets/img/Catagories/Technology1.jpg')]"}
-          catagory="Technology"
-        >
-          Technology
-        </CatagoryCard>
-        <CatagoryCard
-          bgUrl={"bg-[url('/assets/img/Catagories/Finance.png')]"}
-          catagory="Finance"
-        >
-          Finance
-        </CatagoryCard>
-        <Card className="cursor-pointer select-none w-full h-36 justify-center items-center flex opacity-40 hover:bg-gray-800 hover:bg-opacity-50">
-          <p>Others</p>
-=======
           text="Investment"
         ></CatagoryCard>
         <CatagoryCard
@@ -86,7 +54,6 @@ const Home = () => {
         ></CatagoryCard>
         <Card className="cursor-pointer select-none w-full h-40 flex justify-center items-center  opacity-40 hover:bg-gray-700 hover:bg-opacity-50">
           <p className="text-xl text-gray-600">o o o</p>
->>>>>>> 0a551231507c155c36be0e6f6beafce51fca115a:graduation-project/src/app/web/Home/page.jsx
         </Card>
       </div>
 

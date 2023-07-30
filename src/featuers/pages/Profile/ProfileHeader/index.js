@@ -75,7 +75,7 @@ const ProfileHeader = (props) => {
     if (userName === "") {
       console.log("empty");
     } else {
-      const formData = new FormData();
+     const formData = new FormData();
 
       formData.append("bio", userBio);
       setEdit(false);
