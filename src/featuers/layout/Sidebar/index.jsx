@@ -15,10 +15,20 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const navigation = [
-  { name: "Home", href: "Home", icon: HomeIcon, current: true },
-  { name: "Messages", href: "Messages", icon: EnvelopeIcon, current: false },
-  { name: "Meetings", href: "Meetings", icon: VideoCameraIcon, current: false },
-  { name: "Browse", href: "Browse", icon: GlobeAltIcon, current: false },
+  { name: "Home", href: "/web/Home", icon: HomeIcon, current: true },
+  {
+    name: "Messages",
+    href: "/web/Messages",
+    icon: EnvelopeIcon,
+    current: false,
+  },
+  {
+    name: "Meetings",
+    href: "/web/Meetings",
+    icon: VideoCameraIcon,
+    current: false,
+  },
+  { name: "Browse", href: "/web/Browse", icon: GlobeAltIcon, current: false },
 
   {
     name: "Schedule",
@@ -63,12 +73,12 @@ export const Sidebar = () => {
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
             <ul role="list" className="-mx-2 space-y-1">
-              {active.map((item) => (
+              {navigation.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
                     className={classNames(
-                      item.current
+                      pathname.includes(item.name)
                         ? "bg-gray-50 text-indigo-600"
                         : "text-gray-700 hover:text-indigo-600 hover:bg-gray-50",
                       "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
