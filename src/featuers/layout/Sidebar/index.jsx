@@ -8,25 +8,26 @@ import {
   GlobeAltIcon,
   CalendarDaysIcon,
   Cog8ToothIcon,
-  ClipboardDocumentIcon
+  ClipboardDocumentIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useCurrentUser } from "Hooks";
 
 const navigation = [
-  { name: "Home", href: "/web/Home", icon: HomeIcon, current: false },
+  { name: "Home", href: "/web/Home", icon: HomeIcon, current: true },
   {
     name: "Messages",
     href: "/web/Messages",
     icon: EnvelopeIcon,
-    current: false
+    current: false,
   },
   {
     name: "Meetings",
     href: "/web/Meetings",
     icon: VideoCameraIcon,
-    current: false
+    current: false,
   },
   { name: "Browse", href: "/web/Browse", icon: GlobeAltIcon, current: false },
 
@@ -35,45 +36,40 @@ const navigation = [
     href: "#",
     icon: CalendarDaysIcon,
     count: "20+",
-    current: false
+    current: false,
   },
   {
     name: "Settings",
     href: "/web/Settings",
     icon: Cog8ToothIcon,
-    current: false
+    current: false,
   },
   {
     name: "Support",
     href: "/web/Support",
     icon: ClipboardDocumentIcon,
-    current: false
-  }
+    current: false,
+  },
 ];
-// const teams = [
-//   { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
-//   { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
-//   { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
-// ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export const Sidebar = () => {
+  const { ["log"]: c } = console;
+
   const router = useRouter();
   const pathname = usePathname();
-  const [active, setActive] = useState(navigation);
+  const { userRole } = useCurrentUser();
+  const [dinamicSideBar, setDinamicSideBar] = useState(navigation);
   useEffect(() => {
-    const updatedActive = active.map(item => {
-      if (pathname.includes(item.name)) {
-        return { ...item, current: true };
-      }else {
-        return { ...item, current: false };
-      }
-      return item;
-    });
-    setActive(updatedActive);
-  }, [pathname]);
+    if (userRole == "expert") {
+      const expertSideBar = dinamicSideBar.filter(
+        (item) => item.name !== "Browse"
+      );
+      setDinamicSideBar(expertSideBar);
+    }
+  }, [userRole]);
 
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
@@ -81,20 +77,29 @@ export const Sidebar = () => {
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
             <ul role="list" className="-mx-2 space-y-1">
-              {active.map(item => (
+              {dinamicSideBar.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
                     className={classNames(
-                      item.current
+                      pathname.includes(item.name)
                         ? "bg-gray-50 text-indigo-600"
                         : "text-gray-700 hover:text-indigo-600 hover:bg-gray-50",
                       "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                     )}
                   >
+                    {/* <item.icon
+                      className={classNames(
+                        pathname.includes(item.name)
+                          ? "bg-gray-50 text-indigo-600"
+                          : "text-gray-700 hover:text-indigo-600 hover:bg-gray-50",
+                        "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                      )}
+                      href={item.href}
+                    > */}
                     <item.icon
                       className={classNames(
-                        item.current
+                        pathname.includes(item.name)
                           ? "text-indigo-600"
                           : "text-gray-400 group-hover:text-indigo-600",
                         "h-6 w-6 shrink-0"

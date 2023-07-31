@@ -11,15 +11,17 @@ import {
   NoSsr,
   Review,
   Select,
-  ExpertDilog
+  ExpertDilog,
+  Statistics,
 } from "components";
 // import { Datepicker } from "@mobiscroll/react";
 
 import { CalendarComponent } from "@syncfusion/ej2-react-calendars";
 import PostCard from "featuers/pages/Profile/Posts/PostCard";
-import { useToggle } from "Hooks";
+import { useCurrentUser } from "Hooks";
 
 const Home = () => {
+  const { userRole } = useCurrentUser();
   // const {
   //   isOpen: isOpen,
   //   close: closeButton,
@@ -28,33 +30,36 @@ const Home = () => {
 
   return (
     <div className="w-[80%] flex-col px-4 py-2">
-      <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">
-        Categories
-      </p>
-      <div className="grid gap-4 grid-cols-3 grid-rows-2 w-full">
-        <CatagoryCard
-          bgUrl={"bg-[url('/assets/img/Catagories/Investment.jpg')]"}
-          text="Investment"
-        ></CatagoryCard>
-        <CatagoryCard
-          bgUrl={"bg-[url('/assets/img/Catagories/Realestate1.jpg')]"}
-          text="Real estate"
-        ></CatagoryCard>
-        <CatagoryCard
-          bgUrl={"bg-[url('/assets/img/Catagories/SocialMedia.jpeg')]"}
-          text="Social Media"
-        ></CatagoryCard>
-        <CatagoryCard
-          bgUrl={"bg-[url('/assets/img/Catagories/Technology1.jpg')]"}
-          text="Technology"
-        ></CatagoryCard>
-        <CatagoryCard
-          bgUrl={"bg-[url('/assets/img/Catagories/Finance.png')]"}
-          text="Finance"
-        ></CatagoryCard>
-        <Card className="cursor-pointer select-none w-full h-40 flex justify-center items-center  opacity-40 hover:bg-gray-700 hover:bg-opacity-50">
-          <p className="text-xl text-gray-600">o o o</p>
-        </Card>
+      {userRole == "expert" && <Statistics />}
+      <div>
+        <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">
+          Categories
+        </p>
+        <div className="grid gap-4 grid-cols-3 grid-rows-2 w-full">
+          <CatagoryCard
+            bgUrl={"bg-[url('/assets/img/Catagories/Investment.jpg')]"}
+            text="Investment"
+          ></CatagoryCard>
+          <CatagoryCard
+            bgUrl={"bg-[url('/assets/img/Catagories/Realestate1.jpg')]"}
+            text="Real estate"
+          ></CatagoryCard>
+          <CatagoryCard
+            bgUrl={"bg-[url('/assets/img/Catagories/SocialMedia.jpeg')]"}
+            text="Social Media"
+          ></CatagoryCard>
+          <CatagoryCard
+            bgUrl={"bg-[url('/assets/img/Catagories/Technology1.jpg')]"}
+            text="Technology"
+          ></CatagoryCard>
+          <CatagoryCard
+            bgUrl={"bg-[url('/assets/img/Catagories/Finance.png')]"}
+            text="Finance"
+          ></CatagoryCard>
+          <Card className="cursor-pointer select-none w-full h-40 flex justify-center items-center  opacity-40 hover:bg-gray-700 hover:bg-opacity-50">
+            <p className="text-xl text-gray-600">o o o</p>
+          </Card>
+        </div>
       </div>
 
       {/* <Modal

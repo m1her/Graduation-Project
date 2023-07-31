@@ -75,7 +75,7 @@ const ProfileHeader = (props) => {
     if (userName === "") {
       console.log("empty");
     } else {
-     const formData = new FormData();
+      const formData = new FormData();
 
       formData.append("bio", userBio);
       setEdit(false);
@@ -121,7 +121,7 @@ const ProfileHeader = (props) => {
   return (
     <Card className=" relative w-full rounded-sm">
       {image && (
-        <CropImage Image={image} onConfirm={onSubmit} imageType={imageType}  />
+        <CropImage Image={image} onConfirm={onSubmit} imageType={imageType} />
       )}
 
       <div>
@@ -190,7 +190,7 @@ const ProfileHeader = (props) => {
                 className="mb-2 w-64"
                 value={userName}
                 withoutHelperText
-                onChange={nameHandler}
+                onChange={(e) => nameHandler(e)}
               />
             )}
             {!edit ? (
