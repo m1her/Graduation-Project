@@ -2,19 +2,20 @@ import { VideoCameraIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
 
-const CategoryBarCard = () => {
+const CategoryBarCard = ({ text, bg }) => {
+  console.log(text);
+  
   return (
     <div className="w-full relative shadow rounded-lg p-4">
       <Image
-        src="/CattegoryPageImages/FinanceCategory.jpg"
+        src={bg}
         alt=" "
         fill
         className="object-cover object-center -z-10 rounded-lg"
       />
-      <div className="bg-[#ffffffe7] w-1/2 rounded-lg p-5 ">
+      <div className="bg-[#ffffffe7] w-1/2 rounded-lg p-5 h-[350px] flex flex-col justify-between">
         <div className="text-4xl font-semibold text-justify">
-          Take control of your financial future with expert guidance and
-          personalized solutions
+         {text}
         </div>
         <div className="w-full flex justify-start mt-20">
           <Link href="/web/Category" className="text-white text-lg font-semibold bg-indigo-700 hover:bg-indigo-800 px-3 py-2 flex items-center rounded-lg">

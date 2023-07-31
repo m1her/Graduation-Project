@@ -1,12 +1,46 @@
 "use client";
-import { Card } from "components";
-import { useRef } from "react";
+import { Card, Spinner } from "components";
+import { useRef, useState } from "react";
 
-const PostInput = ({ close }) => {
+const PostInput = ({ close, updatedPosts, setUpdatedPosts }) => {
+  const [loading, setLoading] = useState(false);
   const postRef = useRef();
 
-  const postHandler = () => {
-    console.log(postRef.current.value);
+  const postHandler = async () => {
+    if (postRef.current.value != "") {
+      setLoading(true);
+    const Token = localStorage.getItem("Token");
+    try {
+      const response = await fetch(
+        "https://worrisome-pocketbook-calf.cyclic.app/api/v1/post",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Token}`,
+          },
+          body: JSON.stringify({
+            title: postRef.current.value,
+            content: postRef.current.value,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data.data.post);
+      setUpdatedPosts((prev => [data.data.post, ...prev]))
+      setLoading(false);
+      close();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+    } else {
+      
+    }
+    
   };
 
   return (
@@ -25,7 +59,7 @@ const PostInput = ({ close }) => {
             className="bg-indigo-600 hover:bg-indigo-700 text-white rounded w-16 h-8 flex items-center justify-center"
             onClick={postHandler}
           >
-            Post
+            {loading? <Spinner /> : "Post"}
           </button>
         </div>
       </Card>

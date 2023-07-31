@@ -25,7 +25,7 @@ const About = (props) => {
   };
 
   return (
-    <Card className="ml-4 my-4 w-[254px] h-fit rounded-sm relative">
+    <Card className="ml-4 my-4 w-[280px] h-fit rounded-sm relative">
       <div className="w-full -mt-2">
         <p className="text-xl font-semibold">About</p>
         <PencilIcon

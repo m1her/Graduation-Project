@@ -5,17 +5,6 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  // images: {
-  //   domains: ["drive.google.com", ]
-  // remotePatterns: [
-  //   {
-  //     protocol: 'https',
-  //     hostname: 'drive.google.com',
-  //    // port: '3000',
-  //    // pathname: '/web/**',
-  //   },
-  // ],
-  //}
 };
 
 module.exports = {
@@ -24,21 +13,17 @@ module.exports = {
   typescript: {
     ignoreBuildErrors: true,
   },
-
   images: {
-    //formats: ["image/avif", "image/webp"],
     domains: [
       "firebasestorage.googleapis.com",
       "drive.google.com",
       "images.unsplash.com",
-      "randomuser.me",
     ],
-    // remotePatterns: [
-    //   {
-    //     protocol: "https",
-    //     hostname: "firebasestorage.googleapis.com",
-    //     pathname: "/image/upload/**"
-    //   }
-    // ]
   },
+  future: { webpack5: true },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+      config.resolve.alias.canvas = false
+      config.resolve.alias.encoding = false
+      return config
+  }
 };
