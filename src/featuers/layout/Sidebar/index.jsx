@@ -16,7 +16,7 @@ import { usePathname } from "next/navigation";
 import { useCurrentUser } from "Hooks";
 
 const navigation = [
-  { name: "Feeds", href: "/", icon: HomeIcon, current: false },
+  { name: "Home", href: "Home", icon: HomeIcon, current: true },
   { name: "Messages", href: "Messages", icon: EnvelopeIcon, current: false },
   { name: "Meetings", href: "Meetings", icon: VideoCameraIcon, current: false },
   { name: "Browse", href: "Browse", icon: GlobeAltIcon, current: false },
@@ -36,16 +36,18 @@ const navigation = [
     current: false,
   },
 ];
-const teams = [
-  { id: 1, name: "Heroicons", initial: "H", current: false },
-  { id: 2, name: "Tailwind Labs", initial: "T", current: false },
-  { id: 3, name: "Workcation", initial: "W", current: false },
-];
+// const teams = [
+//   { id: 1, name: "Heroicons", initial: "H", current: false },
+//   { id: 2, name: "Tailwind Labs", initial: "T", current: false },
+//   { id: 3, name: "Workcation", initial: "W", current: false },
+// ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export const Sidebar = () => {
+  const { ["log"]: c } = console;
+
   const router = useRouter();
   const { userRole } = useCurrentUser();
 
@@ -53,35 +55,8 @@ export const Sidebar = () => {
     userRole == "expert" && navigation.filter((item) => item.name !== "Browse");
 
   const pathname = usePathname();
-  const [active, setActive] = useState(newNavigation);
-  useEffect(() => {
-    active.map((item) => {
-      if (pathname.includes(item.name)) {
-        setActive([...active, { ...item, current: true }]);
-      }
-    });
-    console.log(active);
-  }, [pathname]);
 
   useEffect(() => {}, [userRole]);
-
-  // const handleSidBarNavigation = (name) => {
-  //   if (name == "Feeds") {
-  //     router.push("Home");
-  //   } else if (name == "Meetings") {
-  //     router.push("Meetings");
-  //   } else if (name == "Messages") {
-  //     router.push("Messages");
-  //   } else if (name == "Browse") {
-  //     router.push("Browse");
-  //   } else if (name == "Support") {
-  //     router.push("Support");
-  //   } else if (name == "Settings") {
-  //     router.push("Settings");
-  //   } else if (name == "profile") {
-  //     router.push("profile");
-  //   }
-  // };
 
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
@@ -97,7 +72,7 @@ export const Sidebar = () => {
                   >
                     <Link
                       className={classNames(
-                        item.current
+                        pathname.includes(item.name)
                           ? "bg-gray-50 text-indigo-600"
                           : "text-gray-700 hover:text-indigo-600 hover:bg-gray-50",
                         "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
@@ -106,7 +81,7 @@ export const Sidebar = () => {
                     >
                       <item.icon
                         className={classNames(
-                          item.current
+                          pathname.includes(item.name)
                             ? "text-indigo-600"
                             : "text-gray-400 group-hover:text-indigo-600",
                           "h-6 w-6 shrink-0"

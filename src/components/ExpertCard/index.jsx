@@ -19,16 +19,16 @@ const fetchPersonImages = async (count) => {
 export const ExpertCard = ({ expertData }) => {
   const { imgSrc, user, rating, bio, hourlyRate, countryFlag, catagories } =
     expertData;
-  const [expertImg, setExpertImg] = useState([]);
+  // const [expertImg, setExpertImg] = useState([]);
   const [value, setValue] = useState(2);
 
-  const generatePersonImages = async () => {
-    const personImages = await fetchPersonImages(100); // Generate 10 fake person images
-    setExpertImg(personImages);
-  };
-  useEffect(() => {
-    generatePersonImages();
-  }, []);
+  // const generatePersonImages = async () => {
+  //   const personImages = await fetchPersonImages(100); // Generate 10 fake person images
+  //   setExpertImg(personImages);
+  // };
+  // useEffect(() => {
+  //   generatePersonImages();
+  // }, []);
 
   return (
     <div className="flex w-full justify-between items-center border shadow-sm py-4 my-4 m-2 p-4">
@@ -36,10 +36,7 @@ export const ExpertCard = ({ expertData }) => {
         <div className="flex-col">
           <Image
             alt="pfp"
-            src={
-              expertImg[Math.floor(Math.random() * 100) + 1] ||
-              "https://randomuser.me/api/portraits/men/75.jpg"
-            }
+            src={"https://randomuser.me/api/portraits/men/75.jpg"}
             height="100"
             width="100"
             className="w-28 h-28 object-cover object-center rounded-full"

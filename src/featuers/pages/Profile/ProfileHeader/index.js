@@ -29,7 +29,7 @@ const ProfileHeader = (props) => {
 
     try {
       const response = await fetch(
-        "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/profile/644c2caee836fcbba051edee",
+        "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/profile",
         {
           method: "PUT",
           headers: {
@@ -187,7 +187,7 @@ const ProfileHeader = (props) => {
                 className="mb-2 w-64"
                 value={userName}
                 withoutHelperText
-                onChange={nameHandler}
+                onChange={(e) => nameHandler(e)}
               />
             )}
             {!edit ? (
@@ -236,9 +236,11 @@ const ProfileHeader = (props) => {
 
           <div className="w-fit absolute bottom-0 text-center ml-14">
             <div className="text-gray-700 right-0 text-lg font-semibold">
-              ${user.expert.hourlyRate} USD / Hour
+              ${user?.expert?.hourlyRate} USD / Hour
             </div>
-            <p className="text-gray-800 text-lg font-medium">{user.expert.catagories[1]} specialist</p>
+            <p className="text-gray-800 text-lg font-medium">
+              {user?.expert?.catagories[1]} specialist
+            </p>
           </div>
         </div>
       </div>
