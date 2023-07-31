@@ -13,6 +13,7 @@ import {
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useCurrentUser } from "Hooks";
 
 const navigation = [
   { name: "Home", href: "/web/Home", icon: HomeIcon, current: true },
@@ -50,11 +51,6 @@ const navigation = [
     current: false,
   },
 ];
-// const teams = [
-//   { id: 1, name: "Heroicons", initial: "H", current: false },
-//   { id: 2, name: "Tailwind Labs", initial: "T", current: false },
-//   { id: 3, name: "Workcation", initial: "W", current: false },
-// ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -64,8 +60,16 @@ export const Sidebar = () => {
 
   const router = useRouter();
   const pathname = usePathname();
-
-  // useEffect(() => {}, [userRole]);
+  const { userRole } = useCurrentUser();
+  const [dinamicSideBar, setDinamicSideBar] = useState(navigation);
+  useEffect(() => {
+    if (userRole == "expert") {
+      const expertSideBar = dinamicSideBar.filter(
+        (item) => item.name !== "Browse"
+      );
+      setDinamicSideBar(expertSideBar);
+    }
+  }, [userRole]);
 
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
@@ -73,7 +77,7 @@ export const Sidebar = () => {
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
             <ul role="list" className="-mx-2 space-y-1">
-              {navigation.map((item) => (
+              {dinamicSideBar.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}

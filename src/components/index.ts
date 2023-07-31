@@ -35,5 +35,6 @@ export * from "./SnackBar";
 
 export * from "./ExpertCard";
 export * from "./CustomizedAccordions";
+export * from "./Statistics";
 
 // export * from "./AccordionComponent";

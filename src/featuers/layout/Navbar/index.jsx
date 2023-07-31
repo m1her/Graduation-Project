@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { Button, Modal, NoSsr, ExpertDilog, Link } from "components";
 import { useCurrentUser, useLogout, useToggle } from "Hooks";
+import { usePathname } from "next/navigation";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -16,8 +17,22 @@ export const Navbar = () => {
   //   close: closeButton,
   //   open: OpenButton,
   // } = useToggle(false);
+  const [isActive, setIsActive] = useState({
+    dashbord: false,
+    callender: false,
+  });
   const { userRole } = useCurrentUser();
   const logout = useLogout();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname.includes("Callender")) {
+      setIsActive({ dashbord: false, callender: true });
+    } else {
+      setIsActive({ dashbord: true, callender: false });
+    }
+  }, [pathname]);
+  console.log(pathname.includes("Callender"), "pathnamepathname");
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
@@ -55,13 +70,15 @@ export const Navbar = () => {
                 </div>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
                   {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                  <a
-                    href="#"
-                    className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                  <Link
+                    href="web/Home"
+                    className={`inline-flex items-center ${
+                      isActive.dashbord ? "border-b-2 border-indigo-500" : ""
+                    } px-1 pt-1 text-sm font-medium text-gray-900`}
                   >
                     Dashboard
-                  </a>
-                  <a
+                  </Link>
+                  {/* <a
                     href="#"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
@@ -72,13 +89,15 @@ export const Navbar = () => {
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
                     Projects
-                  </a>
-                  <a
-                    href="#"
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  </a> */}
+                  <Link
+                    href="web/Callender"
+                    className={`inline-flex items-center  px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 ${
+                      isActive.callender ? "!border-b-2 !border-indigo-500" : ""
+                    }`}
                   >
                     Calendar
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="flex items-center">
