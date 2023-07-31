@@ -15,10 +15,20 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const navigation = [
-  { name: "Home", href: "Home", icon: HomeIcon, current: true },
-  { name: "Messages", href: "Messages", icon: EnvelopeIcon, current: false },
-  { name: "Meetings", href: "Meetings", icon: VideoCameraIcon, current: false },
-  { name: "Browse", href: "Browse", icon: GlobeAltIcon, current: false },
+  { name: "Home", href: "/web/Home", icon: HomeIcon, current: false },
+  {
+    name: "Messages",
+    href: "/web/Messages",
+    icon: EnvelopeIcon,
+    current: false
+  },
+  {
+    name: "Meetings",
+    href: "/web/Meetings",
+    icon: VideoCameraIcon,
+    current: false
+  },
+  { name: "Browse", href: "/web/Browse", icon: GlobeAltIcon, current: false },
 
   {
     name: "Schedule",
@@ -37,13 +47,13 @@ const navigation = [
     name: "Support",
     href: "/web/Support",
     icon: ClipboardDocumentIcon,
-    current: false,
-  },
+    current: false
+  }
 ];
 // const teams = [
-//   { id: 1, name: "Heroicons", initial: "H", current: false },
-//   { id: 2, name: "Tailwind Labs", initial: "T", current: false },
-//   { id: 3, name: "Workcation", initial: "W", current: false },
+//   { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
+//   { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
+//   { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
 // ];
 
 function classNames(...classes) {
@@ -52,8 +62,18 @@ function classNames(...classes) {
 export const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
-
-  useEffect(() => {}, [userRole]);
+  const [active, setActive] = useState(navigation);
+  useEffect(() => {
+    const updatedActive = active.map(item => {
+      if (pathname.includes(item.name)) {
+        return { ...item, current: true };
+      }else {
+        return { ...item, current: false };
+      }
+      return item;
+    });
+    setActive(updatedActive);
+  }, [pathname]);
 
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
@@ -74,16 +94,22 @@ export const Sidebar = () => {
                   >
                     <item.icon
                       className={classNames(
-                        pathname.includes(item.name)
-                          ? "bg-gray-50 text-indigo-600"
-                          : "text-gray-700 hover:text-indigo-600 hover:bg-gray-50",
-                        "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                        item.current
+                          ? "text-indigo-600"
+                          : "text-gray-400 group-hover:text-indigo-600",
+                        "h-6 w-6 shrink-0"
                       )}
-                      href={item.href}
-                    > 
-                      
-                   </item.icon>
-                   
+                      aria-hidden="true"
+                    />
+                    {item.name}
+                    {item.count ? (
+                      <span
+                        className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-white px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-gray-600 ring-1 ring-inset ring-gray-200"
+                        aria-hidden="true"
+                      >
+                        {item.count}
+                      </span>
+                    ) : null}
                   </Link>
                 </li>
               ))}

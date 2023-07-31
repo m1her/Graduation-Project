@@ -11,7 +11,7 @@ import {
   NoSsr,
   Review,
   Select,
-  ExpertDilog,
+  ExpertDilog
 } from "components";
 // import { Datepicker } from "@mobiscroll/react";
 
@@ -31,39 +31,29 @@ const Home = () => {
       <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">
         Categories
       </p>
-      <div className="grid gap-8 grid-cols-3 grid-rows-2 w-full">
+      <div className="grid gap-4 grid-cols-3 grid-rows-2 w-full">
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/Investment.jpg')]"}
-          catagory="Investment"
-        >
-          Investment
-        </CatagoryCard>
+          text="Investment"
+        ></CatagoryCard>
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/Realestate1.jpg')]"}
-          catagory="Realstate"
-        >
-          Realestate
-        </CatagoryCard>
+          text="Real estate"
+        ></CatagoryCard>
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/SocialMedia.jpeg')]"}
-          catagory="Social Media"
-        >
-          Social Media
-        </CatagoryCard>
+          text="Social Media"
+        ></CatagoryCard>
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/Technology1.jpg')]"}
-          catagory="Technology"
-        >
-          Technology
-        </CatagoryCard>
+          text="Technology"
+        ></CatagoryCard>
         <CatagoryCard
           bgUrl={"bg-[url('/assets/img/Catagories/Finance.png')]"}
-          catagory="Finance"
-        >
-          Finance
-        </CatagoryCard>
-        <Card className="cursor-pointer select-none w-full h-36 justify-center items-center flex opacity-40 hover:bg-gray-800 hover:bg-opacity-50">
-          <p>Others</p>
+          text="Finance"
+        ></CatagoryCard>
+        <Card className="cursor-pointer select-none w-full h-40 flex justify-center items-center  opacity-40 hover:bg-gray-700 hover:bg-opacity-50">
+          <p className="text-xl text-gray-600">o o o</p>
         </Card>
       </div>
 
