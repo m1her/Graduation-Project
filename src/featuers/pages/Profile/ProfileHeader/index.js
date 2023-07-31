@@ -42,23 +42,9 @@ const ProfileHeader = (props) => {
     //     }
     //   );
 
-<<<<<<< HEAD
-    try {
-      const response = await fetch(
-        "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/profile",
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${Token.accessToken}`,
-          },
-          body: formData,
-        }
-      );
-=======
     //   if (!response.ok) {
     //     throw new Error("Wrong email or password.");
     //   }
->>>>>>> 9c38c955891f8425aa84c6f71857074b6ec58f70
 
     //   const data = await response.json();
     //   console.log(data);
@@ -89,7 +75,7 @@ const ProfileHeader = (props) => {
     if (userName === "") {
       console.log("empty");
     } else {
-     const formData = new FormData();
+      const formData = new FormData();
 
       formData.append("bio", userBio);
       setEdit(false);
@@ -135,7 +121,7 @@ const ProfileHeader = (props) => {
   return (
     <Card className=" relative w-full rounded-sm">
       {image && (
-        <CropImage Image={image} onConfirm={onSubmit} imageType={imageType}  />
+        <CropImage Image={image} onConfirm={onSubmit} imageType={imageType} />
       )}
 
       <div>
@@ -252,14 +238,6 @@ const ProfileHeader = (props) => {
           </div>
 
           <div className="w-fit absolute bottom-0 text-center ml-14">
-<<<<<<< HEAD
-            <div className="text-gray-700 right-0 text-lg font-semibold">
-              ${user?.expert?.hourlyRate} USD / Hour
-            </div>
-            <p className="text-gray-800 text-lg font-medium">
-              {user?.expert?.catagories[1]} specialist
-            </p>
-=======
             <div className="text-gray-700 text-lg font-semibold absolute bottom-8">
               {user
                 ? "$" + (expert.hourlyRate || "0") + " USD / Hour"
@@ -280,7 +258,6 @@ const ProfileHeader = (props) => {
                   ))
                 : ""}
             </div>
->>>>>>> 9c38c955891f8425aa84c6f71857074b6ec58f70
           </div>
         </div>
       </div>

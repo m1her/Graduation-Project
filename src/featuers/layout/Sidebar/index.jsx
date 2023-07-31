@@ -8,7 +8,7 @@ import {
   GlobeAltIcon,
   CalendarDaysIcon,
   Cog8ToothIcon,
-  ClipboardDocumentIcon
+  ClipboardDocumentIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
@@ -25,13 +25,13 @@ const navigation = [
     href: "#",
     icon: CalendarDaysIcon,
     count: "20+",
-    current: false
+    current: false,
   },
   {
     name: "Settings",
     href: "/web/Settings",
     icon: Cog8ToothIcon,
-    current: false
+    current: false,
   },
   {
     name: "Support",
@@ -53,7 +53,7 @@ export const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  useEffect(() => {}, [userRole]);
+  // useEffect(() => {}, [userRole]);
 
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
@@ -61,7 +61,7 @@ export const Sidebar = () => {
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
             <ul role="list" className="-mx-2 space-y-1">
-              {active.map(item => (
+              {active.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
@@ -80,10 +80,7 @@ export const Sidebar = () => {
                         "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                       )}
                       href={item.href}
-                    > 
-                      
-                   </item.icon>
-                   
+                    ></item.icon>
                   </Link>
                 </li>
               ))}
