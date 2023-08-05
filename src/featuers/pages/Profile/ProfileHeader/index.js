@@ -1,66 +1,61 @@
 "use client";
-import { Card, Image, Input } from "components";
-import { useEffect, useState, useCallback, useSyncExternalStore } from "react";
+import { Card, Image, Input, TextArea } from "components";
+import { useState, useEffect } from "react";
 import { PencilIcon, CheckIconMini, XMarkIcon, CameraIcon } from "lib";
-import { getStorageItem } from "utils";
 import Cookies from "js-cookie";
 import { setStorageItem } from "utils";
 import CropImage from "./CropImage";
 
-const ProfileHeader = (props) => {
+const ProfileHeader = ({ handleProfileSection, user, currentUserId }) => {
   const [edit, setEdit] = useState(false);
-  const [active, setActive] = useState("posts");
-
-  const [userName, setUserName] = useState("");
-  const [userBio, setUserBio] = useState("");
-  const [expert, setExpert] = useState("");
-  const [isExpert, setIsExpert] = useState();
+  const [active, setActive] = useState(user.isExpert ? "posts" : "callender");
+  const [userName, setUserName] = useState(user.name);
+  const [userBio, setUserBio] = useState(user.bio);
   const [image, setImage] = useState();
   const [imageType, setImageType] = useState("");
-  const user = getStorageItem("User");
+  const [current, setCurrent] = useState({ name: user.name, bio: user.bio });
 
-  useEffect(() => {
-    setUserName(user.name);
-    setUserBio(user.bio);
-    setExpert(user.expert);
-    setIsExpert(user.isExpert);
-  }, []);
+useEffect(() => {
+  handleProfileSection(user.isExpert ? "posts" : "callender");
+}, []);
 
   const onSubmit = async (formData) => {
     formData.append("name", userName);
     console.log(formData);
     const Token = JSON.parse(Cookies.get("currentUser"));
-    // try {
-    //   const response = await fetch(
-    //     "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/profile/",
-    //     {
-    //       method: "PUT",
-    //       headers: {
-    //         Authorization: `Bearer ${Token.accessToken}`,
-    //       },
-    //       body: formData,
-    //     }
-    //   );
+    try {
+      const response = await fetch(
+        "https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/profile/",
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${Token.accessToken}`,
+          },
+          body: formData,
+        }
+      );
 
-    //   if (!response.ok) {
-    //     throw new Error("Wrong email or password.");
-    //   }
+      if (!response.ok) {
+        throw new Error("Wrong email or password.");
+      }
 
-    //   const data = await response.json();
-    //   console.log(data);
-    //   setStorageItem("User", data.data.user);
-    //   setUserName(data.data.user.name);
-    //   setUserBio(data.data.user.bio === "undefined" ? "" : data.data.user.bio);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      const data = await response.json();
+      console.log(data);
+      setStorageItem("User", data.data.user);
+      setUserName(data.data.user.name);
+      setUserBio(data.data.user.bio === "undefined" ? "" : data.data.user.bio);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const nameHandler = (e) => {
     setUserName(e.target.value);
   };
   const aboutHandler = (e) => {
-    setUserBio(e.target.value);
+    const value = e.target.value;
+    const newValue = value.replace(/\n/g, "");
+    setUserBio(newValue);
   };
 
   const editHandler = () => {
@@ -68,6 +63,8 @@ const ProfileHeader = (props) => {
   };
 
   const cancelHandler = () => {
+    setUserName(current.name);
+    setUserBio(current.bio);
     setEdit(false);
   };
 
@@ -75,11 +72,13 @@ const ProfileHeader = (props) => {
     if (userName === "") {
       console.log("empty");
     } else {
-     const formData = new FormData();
+      const formData = new FormData();
 
       formData.append("bio", userBio);
       setEdit(false);
       onSubmit(formData);
+      const newCurrent = { name: userName, bio: userBio };
+      setCurrent(newCurrent);
     }
   };
 
@@ -95,7 +94,7 @@ const ProfileHeader = (props) => {
 
   const handleClickDrawer = (e) => {
     const value = e.target.getAttribute("data-value");
-    props.handleProfileSection(value);
+    handleProfileSection(value);
     switch (value) {
       case "posts": {
         setActive("posts");
@@ -121,24 +120,26 @@ const ProfileHeader = (props) => {
   return (
     <Card className=" relative w-full rounded-sm">
       {image && (
-        <CropImage Image={image} onConfirm={onSubmit} imageType={imageType}  />
+        <CropImage Image={image} onConfirm={onSubmit} imageType={imageType} />
       )}
 
       <div>
-        <div className="w-6 h-6 p-1 flex content-center items-center absolute right-8 top-5 bg-[#ffffffd1] rounded-full">
-          <label
-            htmlFor="file-input"
-            className="flex items-center rounded-full px-2 py-2 bg-gray-100 text-gray-700 cursor-pointer hover:bg-gray-200"
-          >
-            <PencilIcon className="w-6 h-6 text-blue font-bold" />
-            <input
-              id="file-input"
-              type="file"
-              className="hidden"
-              onChange={handleBannerChange}
-            />
-          </label>
-        </div>
+        {currentUserId == user._id && (
+          <div className="w-6 h-6 p-1 flex content-center items-center absolute right-8 top-5 bg-[#ffffffd1] rounded-full">
+            <label
+              htmlFor="file-input"
+              className="flex items-center rounded-full px-2 py-2 bg-gray-100 text-gray-700 cursor-pointer hover:bg-gray-200"
+            >
+              <PencilIcon className="w-6 h-6 text-blue font-bold" />
+              <input
+                id="file-input"
+                type="file"
+                className="hidden"
+                onChange={handleBannerChange}
+              />
+            </label>
+          </div>
+        )}
 
         <Image
           // src={user.photo}
@@ -176,79 +177,73 @@ const ProfileHeader = (props) => {
           </div>
           <div className="w-full px-6 mt-4 relative">
             {!edit ? (
-              <div className="text-3xl font-semibold ">
-                {userName ? (
-                  userName
-                ) : (
-                  <div className="w-44 h-5 mt-4 rounded-xl bg-gray-400 animate-pulse"></div>
-                )}
-              </div>
+              <div className="text-3xl font-semibold ">{current.name}</div>
             ) : (
-              <Input
-                inputSize="medium"
-                inputClassName="h-9 font-semibold text.lg bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
-                className="mb-2 w-64"
-                value={userName}
-                withoutHelperText
-                onChange={nameHandler}
-              />
+              <div className="flex gap-2 items-start">
+                <label className="font-semibold mt-1">Your Name</label>
+                <Input
+                  inputSize="medium"
+                  inputClassName="h-9 font-semibold text.lg bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
+                  className="w-64"
+                  value={userName}
+                  withoutHelperText
+                  onChange={nameHandler}
+                />
+              </div>
             )}
             {!edit ? (
               <div className="text-lg font-medium text-gray-700">
-                {userBio ? (
-                  userBio
-                ) : (
-                  <div className="w-80 h-4 mt-2 rounded-xl bg-gray-300 animate-pulse"></div>
-                )}
+                {current.bio}
               </div>
             ) : (
-              <Input
-                inputSize="small"
-                inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
-                className="mb-2 w-64"
-                value={userBio}
-                withoutHelperText
-                onChange={aboutHandler}
-              />
+              <div className="flex gap-7 items-start">
+                <label className="font-semibold mt-4">Your Bio</label>
+                <TextArea
+                  className="!w-[350px] overflow-y-scroll resize-none"
+                  value={userBio}
+                  withoutHelperText
+                  onChange={aboutHandler}
+                />
+              </div>
             )}
-
-            {!edit ? (
-              <div
-                className="absolute top-0 right-0 rounded-full p-2 border border-gray-200 drop-shadow-lg text-black hover:bg-indigo-700 hover:border-indigo-800 hover:text-white cursor-pointer"
-                onClick={!edit ? editHandler : saveHandler}
-              >
-                <PencilIcon className=" w-5 h-5" />
-              </div>
-            ) : (
-              <>
-                <div
-                  className="absolute top-0 right-10 rounded-full p-2 border border-gray-200 drop-shadow-lg text-black hover:bg-indigo-700 hover:border-indigo-800 hover:text-white cursor-pointer"
-                  onClick={!edit ? editHandler : saveHandler}
-                >
-                  <CheckIconMini className=" w-5 h-5" />
-                </div>
+            {currentUserId == user._id &&
+              (!edit ? (
                 <div
                   className="absolute top-0 right-0 rounded-full p-2 border border-gray-200 drop-shadow-lg text-black hover:bg-indigo-700 hover:border-indigo-800 hover:text-white cursor-pointer"
-                  onClick={!edit ? editHandler : cancelHandler}
+                  onClick={!edit ? editHandler : saveHandler}
                 >
-                  <XMarkIcon className=" w-5 h-5" />
+                  <PencilIcon className=" w-5 h-5" />
                 </div>
-              </>
-            )}
+              ) : (
+                <>
+                  <div
+                    className="absolute top-0 right-10 rounded-full p-2 border border-gray-200 drop-shadow-lg text-black hover:bg-indigo-700 hover:border-indigo-800 hover:text-white cursor-pointer"
+                    onClick={!edit ? editHandler : saveHandler}
+                  >
+                    <CheckIconMini className=" w-5 h-5" />
+                  </div>
+                  <div
+                    className="absolute top-0 right-0 rounded-full p-2 border border-gray-200 drop-shadow-lg text-black hover:bg-indigo-700 hover:border-indigo-800 hover:text-white cursor-pointer"
+                    onClick={!edit ? editHandler : cancelHandler}
+                  >
+                    <XMarkIcon className=" w-5 h-5" />
+                  </div>
+                </>
+              ))}
           </div>
 
           <div className="w-fit absolute bottom-0 text-center ml-14">
             <div className="text-gray-700 text-lg font-semibold absolute bottom-8">
               {user
-                ? "$" + (expert.hourlyRate || "0") + " USD / Hour"
+                ? "$" + (user.expert.hourlyRate || "0") + " USD / Hour"
                 : "$0 USD / Hour"}
             </div>
             {/* <p className="text-gray-800 text-lg font-medium">
               {expert ? expert.catagories[1] : ""}
             </p> */}
             <div className="flex w-36 float-left flex-wrap -mb-4">
-              {expert
-                ? expert.catagories.map((item) => (
+              {user.expert
+                ? user.expert.catagories.map((item) => (
                     <div
                       key={Math.random()}
                       className="bg-gray-300 text-gray-800 rounded-full w-fit px-4 text-sm m-0.5"
@@ -264,7 +259,7 @@ const ProfileHeader = (props) => {
 
       <hr className=" my-4 -mx-4 right-0 h-px bg-gray-800 border-0 dark:bg-gray-300" />
       <div className="">
-        {isExpert ? (
+        {user.isExpert ? (
           <button
             className={`text-lg ml-14
           ${
@@ -281,7 +276,7 @@ const ProfileHeader = (props) => {
         ) : (
           ""
         )}
-        {isExpert ? (
+        {user.isExpert ? (
           <button
             className={`text-lg ml-14
           ${
@@ -299,7 +294,7 @@ const ProfileHeader = (props) => {
           ""
         )}
 
-        {isExpert ? (
+        {user.isExpert ? (
           <button
             className={`text-lg ml-14
           ${

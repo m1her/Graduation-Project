@@ -5,7 +5,7 @@ import PostCard from "./PostCard";
 import PostInput from "./PostInput";
 import { useEffect, useState } from "react";
 
-const Posts = ({ posts, noPosts }) => {
+const Posts = ({ posts, noPosts, isVisitor }) => {
   const [postInputVisibility, setPostInputVisibility] = useState(false);
   const [updatedPosts, setUpdatedPosts] = useState([]);
   const openPostInput = () => {
@@ -31,7 +31,7 @@ const Posts = ({ posts, noPosts }) => {
       )}
       <div className="w-full flex items-center justify-between">
         <div className="text-xl font-semibold -mt-2">Posts</div>
-        <div className="flex items-center">
+       {isVisitor && <div className="flex items-center">
           <button
             className="flex rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-1 py-2"
             onClick={openPostInput}
@@ -39,7 +39,7 @@ const Posts = ({ posts, noPosts }) => {
             <PlusIcon className="text-white h-5 w-5" />
             Create new post
           </button>
-        </div>
+        </div>}
       </div>
       <hr className=" h-px -mx-4 my-3 bg-gray-800 border-0 dark:bg-gray-300" />
       {updatedPosts.length != 0 ? (

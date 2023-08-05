@@ -57,8 +57,8 @@ const Browse = () => {
       <Search users={users} loading={loading} />
 
       {experts &&
-        experts.map((expert) => {
-          return <ExpertCard expertData={expert} />;
+        experts.map((expert, index) => {
+          return <ExpertCard key={index} expertData={expert} />;
         })}
       {ExpertLoading && <Skeleton className="w-full" />}
     </div>

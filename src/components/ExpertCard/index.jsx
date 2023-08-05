@@ -3,6 +3,7 @@ import { CalendarIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 // import Rating from "components/Rating";
 import Rating from "@mui/material/Rating";
 import Image from "next/image";
+import Link from "next/link";
 const fetchPersonImages = async (count) => {
   try {
     const response = await fetch(`https://randomuser.me/api/?results=${count}`);
@@ -57,7 +58,7 @@ export const ExpertCard = ({ expertData }) => {
         </div>
         <div className="ml-4 ">
           <div className="text-4xl font-semibold flex-col items-center">
-            {user.name}
+           <Link href={`/web/Profile/${user._id}`}>{user.name}</Link> 
             {/* <div>Ahmed Thabet</div> */}
 
             <div className="text-xl font-semibold">${hourlyRate} USD/hr</div>

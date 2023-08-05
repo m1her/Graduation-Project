@@ -4,7 +4,7 @@ import { Spinner } from "components";
 import Image from "next/image";
 import { useState } from "react";
 
-const PostCard = ({ content, time, id, updatedPosts, setUpdatedPosts }) => {
+const PostCard = ({ content, time, id, updatedPosts, setUpdatedPosts, name }) => {
   const [toggleDelete, setToggleDelete] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -71,7 +71,7 @@ const PostCard = ({ content, time, id, updatedPosts, setUpdatedPosts }) => {
             />
             <div className="flex flex-col justify-end">
               <div className="text-lg font-semibold text-gray-900">
-                Brad Adams
+                {name}
               </div>
               <div className="text-xs text-gray-700">
               {Math.floor(

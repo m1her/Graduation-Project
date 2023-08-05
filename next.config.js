@@ -18,6 +18,7 @@ module.exports = {
       "firebasestorage.googleapis.com",
       "drive.google.com",
       "images.unsplash.com",
+      "randomuser.me",
     ],
   },
   future: { webpack5: true },

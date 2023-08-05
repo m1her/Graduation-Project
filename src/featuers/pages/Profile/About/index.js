@@ -1,6 +1,5 @@
 "use client";
-import { Card, Input, FileInput, Button } from "components";
-import { getStorageItem } from "utils";
+import { Card } from "components";
 import {
   PencilIcon,
   EnvelopeIcon,
@@ -9,18 +8,10 @@ import {
   MapPinIcon,
   TagIcon,
 } from "lib";
-import { useEffect, useState } from "react";
 
-const About = (props) => {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    const user = getStorageItem("User");
-    setUser(user);
-  }, []);
-
+const About = ({ user, handlePops, currentUserId }) => {
   const handlePop = () => {
-    props.handlePops(true);
+    handlePops(true);
     document.body.style.overflow = "hidden";
   };
 
@@ -28,14 +19,19 @@ const About = (props) => {
     <Card className="ml-4 my-4 w-[280px] h-fit rounded-sm relative">
       <div className="w-full -mt-2">
         <p className="text-xl font-semibold">About</p>
-        <PencilIcon
+        {currentUserId == user._id &&  <PencilIcon
           className="text-gray-700 h-5 w-5 absolute top-2 right-2 hover:text-indigo-700 hover:cursor-pointer"
           onClick={handlePop}
-        />
+        />}
+       
         <hr className=" h-px -mx-4 my-3 bg-gray-800 border-0 dark:bg-gray-300" />
       </div>
       <div className=" w-fit font-semibold right-0">
-        <div className={`flex items-center align-middle ${user? "mb-2" : "mb-[10px] mt-[14px]"}`}>
+        <div
+          className={`flex items-center align-middle ${
+            user ? "mb-2" : "mb-[10px] mt-[14px]"
+          }`}
+        >
           <EnvelopeIcon className="text-white fill-black w-5 h-5" />
           <div className="ml-2">
             {user ? (
@@ -45,7 +41,11 @@ const About = (props) => {
             )}
           </div>
         </div>
-        <div className={`flex items-center align-middle ${user? "mb-2" : "mb-[12px] mt-3"}`}>
+        <div
+          className={`flex items-center align-middle ${
+            user ? "mb-2" : "mb-[12px] mt-3"
+          }`}
+        >
           <PhoneIcon className="fill-black w-5 h-5" />
           <div className="ml-2">
             {user ? (
@@ -55,7 +55,11 @@ const About = (props) => {
             )}
           </div>
         </div>
-        <div className={`flex items-center align-middle ${user? "mb-2" : "mb-[12px]"}`}>
+        <div
+          className={`flex items-center align-middle ${
+            user ? "mb-2" : "mb-[12px]"
+          }`}
+        >
           <CalendarIcon className="text-white fill-black w-5 h-5" />
           <div className="ml-2">
             {user ? (
@@ -65,7 +69,11 @@ const About = (props) => {
             )}
           </div>
         </div>
-        <div className={`flex items-center align-middle ${user? "mb-2" : "mb-[13px]"}`}>
+        <div
+          className={`flex items-center align-middle ${
+            user ? "mb-2" : "mb-[13px]"
+          }`}
+        >
           <MapPinIcon className="text-white fill-black w-5 h-5" />
           <div className="ml-2">
             {" "}
