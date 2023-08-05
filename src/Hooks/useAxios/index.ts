@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useCallback } from "react";
 import axios, { isAxiosError } from "lib/axios";
 import { axiosErrorHandler, getAuthorizationHeader } from "utils";
