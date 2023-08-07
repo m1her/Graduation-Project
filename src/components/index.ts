@@ -38,5 +38,6 @@ export * from "./CustomizedAccordions";
 export * from "./Statistics";
 export * from "./BusinessHoursCell";
 export * from "./AddSession";
+export * from "./ApproveSession";
 
 // export * from "./AccordionComponent";

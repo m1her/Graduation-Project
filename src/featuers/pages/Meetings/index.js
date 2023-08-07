@@ -45,8 +45,8 @@ const MeetingsPage = () => {
   console.log(allSessions, "::allSessions");
 
   return (
-    <div className="w-[80%] h-[70vh]  overflow-auto grid grid-cols-10 px-4 pt-2 pb-4">
-      <div className="col-span-7 pr-4">
+    <div className="w-[100%] h-[70vh]  overflow-auto mx-auto  grid grid-cols-6 px-4 pt-2 pb-4">
+      <div className="col-span-7 pr-4 ">
         <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">
           Meetings
         </p>

@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { Card, Input, Select } from "components";
-import { EnvelopeIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/solid";
-
+import { Card, Input, Select, ApproveSession } from "components";
+import { EnvelopeIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, CheckIcon } from "@heroicons/react/24/solid";
+import { useCurrentUser } from "Hooks";
+import { Button } from "@material-tailwind/react";
 function convertTimeFormat(input) {
   const date = new Date(input);
 
@@ -41,20 +42,27 @@ function formatHoursRange(startTime, endTime) {
   )}`;
   return formattedTimeRange;
 }
+const cardStatus = (status) => {
+  if (status == "pending") {
+    return "#FFC300";
+  } else if (status == "approved") {
+    return "#84cc16";
+  } else {
+    return "#ff0000";
+  }
+};
 const MeetingCard = ({ sessionData }) => {
   console.log("Session Data:", sessionData);
-  const expetObject = sessionData?.expert || sessionData?.user;
+  const { userRole } = useCurrentUser();
+  const expetObject =
+    userRole != "expert" ? sessionData?.expert : sessionData?.user;
   const sessionObject = sessionData?.session;
-
-  console.log(expetObject, "expetObjectexpetObject");
 
   return (
     <Card
-      className={`flex w-full mt-2 justify-between items-center cursor-pointer hover:bg-gray-light  border-l-4  ${
-        sessionObject?.status == "pending"
-          ? "border-[#FFC300]"
-          : "border-[#84cc16]"
-      }  `}
+      className={`flex w-full mt-2 justify-between items-center cursor-pointer hover:bg-gray-light  border-l-4  border-[${cardStatus(
+        sessionObject?.status
+      )}]`}
     >
       <div className="flex items-center  justify-between">
         <Image
@@ -68,8 +76,10 @@ const MeetingCard = ({ sessionData }) => {
           <p className="text-xl font-semibold my-2">
             {expetObject?.user?.name.toUpperCase()}
           </p>
-          <p className="text-sm">{expetObject?.user?.email}</p>
-          <p className="text-gray-500 -mt-1">{expetObject?.expertBio}</p>
+          <p className="text-sm">{expetObject?.email}</p>
+          <p className="text-gray-500 -mt-1">
+            {expetObject?.expertBio || expetObject?.bio}
+          </p>
         </div>
       </div>
 
@@ -82,16 +92,19 @@ const MeetingCard = ({ sessionData }) => {
         </p>
       </div>
       <div className="flex-col items-center justify-center">
-        <div className=" font-semibold text-2xl my-4">
-          {expetObject?.hourlyRate}/
-          {sessionObject?.payment?.currency?.toUpperCase()}
-        </div>
-        <div className="flex items-center justify-center">
-          <div className="w-9 h-9 shadow self-center text-center flex items-center justify-center rounded">
-            <EnvelopeIcon className="w-6 h-6 text-indigo-500" />
+        {userRole != "expert" && (
+          <div className=" font-semibold text-2xl my-4">
+            {expetObject?.hourlyRate}/
+            {sessionObject?.payment?.currency?.toUpperCase()}
           </div>
-          <div className="w-9 h-9 shadow self-center text-center ml-2 flex items-center justify-center rounded">
-            <XMarkIcon className="w-5 h-5 text-red-500 border-2 border-red-500 rounded" />
+        )}
+        <div className="flex items-center justify-center">
+          <div className="w-9 h-9  self-center text-center flex items-center justify-center cursor-pointer">
+            <ApproveSession action="approve" id={sessionObject._id} />
+          </div>
+
+          <div className="w-9 h-9  self-center text-center ml-2 flex items-center justify-center  cursor-pointer">
+            <ApproveSession action="reject" id={sessionObject._id} />
           </div>
         </div>
       </div>

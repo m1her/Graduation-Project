@@ -61,15 +61,28 @@ const getWorkingDays = (arr) => {
 // };
 const FullCalendarComponent = ({
   expertAvailableHours,
-  sessions,
   calander,
   setSteps,
-  steps,
 }) => {
   const router = useRouter();
   const calendarRef = useRef();
-  useEffect(() => {}, [steps]);
-  console.log(steps);
+  let sessions = [];
+  if (calander?.data) {
+    sessions = calander?.data?.map((sessionObj) => {
+      return {
+        id: sessionObj?.session?._id,
+        title: "Session",
+        start: sessionObj?.session?.startTime.substring(
+          0,
+          sessionObj?.session?.startTime.length - 2
+        ),
+        end: sessionObj?.session?.endTime?.substring(
+          0,
+          sessionObj?.session?.endTime?.length - 2
+        ),
+      };
+    });
+  }
   const handlePreviousPage = () => {
     console.log("prev was clicked ");
     calendarRef.current.getApi().prev();
@@ -87,7 +100,8 @@ const FullCalendarComponent = ({
     console.log("Event clicked: ", event);
     router.push(`/web/Session?id=${event._def.publicId}`);
   };
-
+  console.log(sessions, "sessions sessions");
+  console.log(calander, "calandercalander");
   return (
     <NoSsr>
       <div className="bg-[#ffff] font-semibold p-1 w-full my-4 rounded shadow-md text-black">
@@ -115,14 +129,13 @@ const FullCalendarComponent = ({
           themeSystem="Litera"
           eventContent="Sessino"
           eventBackgroundColor={
-            (calander &&
-            calander.sessions &&
-            calander?.sessions[0] &&
-            calander?.sessions[0]?.status == "pending"
-              ? "#FFC300"
-              : "green") || "#FFC300"
+            calander &&
+            calander?.data &&
+            calander?.data[0]?.session?.status == "pending"
+              ? "yallow"
+              : "green"
           }
-          eventTextColor="white"
+          eventTextColor="black"
           displayEventTime={true}
           businessHours={{
             daysOfWeek: getWorkingDays(calander?.workingHours?.daysOfWork), // Monday - Thursday

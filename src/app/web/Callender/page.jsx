@@ -50,18 +50,6 @@ const Callender = () => {
     uploadExpert();
   }, [steps]);
   console.log(steps);
-  let sessions = [];
-
-  if (calander?.sessions) {
-    sessions = calander?.sessions?.map((sessionObj) => {
-      return {
-        id: sessionObj._id,
-        title: "Session",
-        start: sessionObj.startTime,
-        end: sessionObj.endTime,
-      };
-    });
-  }
 
   return (
     <NoSsr>
@@ -73,7 +61,6 @@ const Callender = () => {
         <FullCalendarComponent
           expertAvailableHours={user?.expert?.availableHours}
           calander={calander}
-          sessions={sessions}
           setSteps={setSteps}
           steps={steps}
         />
