@@ -32,7 +32,7 @@ export const Navbar = () => {
       setIsActive({ dashbord: true, callender: false });
     }
   }, [pathname]);
-  console.log(pathname.includes("Callender"), "pathnamepathname");
+
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
