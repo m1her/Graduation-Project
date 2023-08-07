@@ -44,6 +44,7 @@ useEffect(() => {
       setStorageItem("User", data.data.user);
       setUserName(data.data.user.name);
       setUserBio(data.data.user.bio === "undefined" ? "" : data.data.user.bio);
+      setImage();
     } catch (error) {
       console.log(error);
     }
@@ -142,12 +143,11 @@ useEffect(() => {
         )}
 
         <Image
-          // src={user.photo}
-          src="https://drive.google.com/"
-          height={100}
-          width={100}
+          src={`https://drive.google.com/uc?id=${user.profileBanner}`}
+          height={1000}
+          width={1000}
           alt="Banner"
-          className="bg-center bg-cover w-full h-60 rounded-t-sm"
+          className="w-full h-60 rounded-t-sm object-cover object-center"
         ></Image>
       </div>
 
@@ -155,8 +155,9 @@ useEffect(() => {
         <div className="flex w-full h-36 mb-8 relative">
           <div className="relative inline-block w-[350px]">
             <Image
+            src={`https://drive.google.com/uc?id=${user.profileImage}`}
               // src={user.photo}
-              src="/CattegoryPageImages/FinanceInspirational.jpeg"
+             // src="/CattegoryPageImages/FinanceInspirational.jpeg"
               height={1000}
               width={1000}
               alt="profile"

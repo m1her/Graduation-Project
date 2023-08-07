@@ -12,7 +12,7 @@ const MeetingsPage = () => {
   const [value, onChange] = useState(new Date());
 
   return (
-    <div className="w-[80%] grid grid-cols-10 px-4 pt-2 pb-4">
+    <div className="w-[80%] grid grid-cols-10 pr-4 pt-2 pb-4">
       <div className="col-span-7 pr-4">
         <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">
           Meetings

@@ -45,6 +45,7 @@ export const ExpertCard = ({ expertData }) => {
           <div className="mt-2 ml-2">
             {/* <Rating rating={3.5} /> */}
             <Rating
+              readOnly
               name="simple-controlled"
               value={rating || value}
               onChange={(event, newValue) => {
@@ -55,15 +56,18 @@ export const ExpertCard = ({ expertData }) => {
         </div>
         <div className="ml-4 ">
           <div className="text-4xl font-semibold flex-col items-center">
-           <Link href={`/web/Profile/${user._id}`}>{user.name}</Link> 
+            <Link href={`/web/Profile/${user._id}`}>{user.name}</Link>
             {/* <div>Ahmed Thabet</div> */}
 
             <div className="text-xl font-semibold">${hourlyRate} USD/hr</div>
           </div>
           <div id="badges" className="flex items-center justify-start">
-            {catagories.map((catagory) => {
+            {catagories.map((catagory, index) => {
               return (
-                <div className="text-gray-500 w-fit p-1 text-xs mt-3 mx-1 border rounded-lg bg-gray-light">
+                <div
+                  key={index}
+                  className="text-gray-500 w-fit p-1 text-xs mt-3 mx-1 border rounded-lg bg-gray-light"
+                >
                   {catagory}
                 </div>
               );
@@ -77,10 +81,10 @@ export const ExpertCard = ({ expertData }) => {
       <div className="flex flex-col items-end justify-between ">
         <div className="flex">
           <div className="w-9 h-9  p-1 mr-2">
-            <EnvelopeIcon className="text-indigo-700 hover:text-indigo-800 hover:scale-150" />
+            <EnvelopeIcon className="text-indigo-700 hover:text-indigo-800 hover:scale-110 transition-all duration-300 cursor-pointer" />
           </div>
           <div className="w-9 h-9  p-1">
-            <CalendarIcon className="text-indigo-600 hover:text-indigo-800 hover:scale-150" />{" "}
+            <CalendarIcon className="text-indigo-600 hover:text-indigo-800 hover:scale-110 transition-all duration-300 cursor-pointer" />{" "}
           </div>
         </div>
       </div>

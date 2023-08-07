@@ -1,68 +1,54 @@
 "use client";
-import { Card, Select } from "components";
-import SearchTitleAndFilter from "./SearchedUsersCard";
-import SearchedUsersCard from "./SearchedUsersCard";
+import { Card, ExpertCard, Input, Select } from "components";
 import { useEffect, useRef, useState } from "react";
+import { MagnifyingGlassIcon } from "../../../lib/@heroicons";
 
-const Search = ({ users, loading }) => {
+const Search = ({ experts, loading }) => {
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [userType, setUserType] = useState("expert");
   const [category, setCategory] = useState("All");
-  const [filter, setFilter] = useState("Top");
+  const [sort, setSort] = useState("Top");
+  const searchRef = useRef();
 
-  const filterHandler = (e) => {
-    setFilter(e.target.value);
+  const sortHandler = (e) => {
+    setSort(e.target.value);
   };
   const categoryHandler = (e) => {
     setCategory(e.target.value);
   };
-  const userTypeHandler = (e) => {
-    setUserType(e.target.value);
+
+
+  const handleSearch = (event) => {
+    if (event.key === 'Enter') {
+      const searchFilter = experts.filter((expert) =>
+      expert.user.name.toLowerCase().includes(searchRef.current.value)
+    );
+    setFilteredUsers(searchFilter);
+    }
+
   };
 
   useEffect(() => {
-    console.log(users.filter((user) => user.role == userType));
-    setFilteredUsers(users.filter((user) => user.role == userType));
-  }, [userType, category, filter, users]);
+    const categoryFilter = experts.filter(
+      (expert) => category === "All" || expert.catagories.includes(category)
+    );
+    // if (sort == "New") {
+    //  console.log(categoryFilter.sort((a, b) => b.createdAt - a.createdAt));
+    // }
+    // console.log(categoryFilter.sort((a, b) => b.createdAt - a.createdAt));
+    // const sortFilter = categoryFilter.sort((a, b) => b.createdAt - a.createdAt);
+
+    setFilteredUsers(categoryFilter);
+  }, [category, sort, experts]);
 
   return (
-    <Card className=" relative w-[850px] rounded-sm">
+    <Card className=" relative w-full rounded-sm">
       <Card className=" -m-4 h-fit flex items-center justify-between mb-4">
         <div className="text-gray-700 font-semibold text-2xl">
-          {(filter == "LeastPrice"
-            ? filter.substring(0, 5) + " " + filter.slice(5)
-            : filter.substring(0, 4) + " " + filter.slice(4)) +
-            " " +
-            userType.charAt(0).toUpperCase() +
-            userType.slice(1) +
-            "s"}
+          {(sort == "LeastPaid"
+            ? sort.substring(0, 5) + " " + sort.slice(5)
+            : sort.substring(0, 4) + " " + sort.slice(4)) + " Experts"}
         </div>
         <div className="flex items-center ">
-          <div className="flex items-center mr-2">
-            <div className="text-gray-600 text-sm font-semibold mr-2">
-              User type:
-            </div>
-            <Select
-              name="userType"
-              id="userType"
-              className="text-sm cursor-pointer"
-              selectClassName="h-9 bg-gray-100 cursor-pointer"
-              labelClassName="block mb-2 text-sm font-bold text-gray-900"
-              selectSize="small"
-              onChange={userTypeHandler}
-              value={userType}
-              options={[
-                {
-                  value: "expert",
-                  label: "Experts",
-                },
-                {
-                  value: "user",
-                  label: "Users",
-                },
-              ]}
-            />
-          </div>
           <div className="flex items-center mr-2">
             <div className="text-gray-600 text-sm font-semibold mr-2">
               Category:
@@ -101,34 +87,42 @@ const Search = ({ users, loading }) => {
                   value: "Investment",
                   label: "Investment",
                 },
+                {
+                  value: "math",
+                  label: "Math",
+                },
               ]}
             />
           </div>
           <div className="flex items-center">
             <div className="text-gray-600 text-sm font-semibold mr-2">
-              Filter:
+              Sort:
             </div>
             <Select
-              name="filter"
-              id="filter"
+              name="sort"
+              id="sort"
               className="text-sm cursor-pointer"
               selectClassName="h-9 bg-gray-100 cursor-pointer"
               labelClassName="block mb-2 text-sm font-bold text-gray-900"
               selectSize="small"
-              onChange={filterHandler}
-              value={filter}
+              onChange={sortHandler}
+              value={sort}
               options={[
                 {
                   value: "Top",
                   label: "Top",
                 },
                 {
-                  value: "LeastPrice",
-                  label: "Least Price",
+                  value: "New",
+                  label: "New",
                 },
                 {
-                  value: "MostRated",
-                  label: "Most Rated",
+                  value: "LeastPaid",
+                  label: "Least Paid",
+                },
+                {
+                  value: "MostPaid",
+                  label: "Most Paid",
                 },
                 {
                   value: "MostActive",
@@ -139,9 +133,25 @@ const Search = ({ users, loading }) => {
           </div>
         </div>
       </Card>
+      <div className="w-full flex items-center gap-4 border-b border-gray-400">
+        <MagnifyingGlassIcon width={18} height={18} className="text-gray-600" />
+        <input
+          ref={searchRef}
+          placeholder="Enter expert name"
+          className="py-2 border-none outline-none focus:outline-none"
+          onKeyDown={handleSearch}
+        />
+      </div>
+      {filteredUsers.length == 0 && !loading ? (
+        <div className="w-full text-center text-gray-500">
+          There is ne experts
+        </div>
+      ) : (
+        ""
+      )}
       {!loading ? (
-        filteredUsers.map((user, index) => (
-          <SearchedUsersCard user={user} key={index} />
+        filteredUsers.map((expert, index) => (
+          <ExpertCard key={index} expertData={expert} />
         ))
       ) : (
         <div role="status" className="w-full flex justify-center">

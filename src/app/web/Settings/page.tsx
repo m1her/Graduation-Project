@@ -1,6 +1,6 @@
 const Settings = () => {
   return (
-    <div className="w-[80%] ">
+    <div className="w-[80%] pr-4 pt-4">
       <div className=" top-0 left-0 w-full bg-gray-50 py-28">
         <div className="text-5xl font-thin text-gray-600 ml-16">Settings</div>
       </div>

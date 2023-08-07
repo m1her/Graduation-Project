@@ -5,7 +5,7 @@ import PostCard from "./PostCard";
 import PostInput from "./PostInput";
 import { useEffect, useState } from "react";
 
-const Posts = ({ posts, noPosts, isVisitor }) => {
+const Posts = ({ posts, noPosts, isVisitor, name, profileImage }) => {
   const [postInputVisibility, setPostInputVisibility] = useState(false);
   const [updatedPosts, setUpdatedPosts] = useState([]);
   const openPostInput = () => {
@@ -17,7 +17,6 @@ const Posts = ({ posts, noPosts, isVisitor }) => {
 
   useEffect(() => {
     setUpdatedPosts([...posts].reverse());
-   
   }, [posts]);
 
   return (
@@ -47,10 +46,12 @@ const Posts = ({ posts, noPosts, isVisitor }) => {
           <PostCard
             key={item._id}
             id={item._id}
+            name={name}
             content={item.content}
             time={item.createdAt}
             updatedPosts={updatedPosts}
             setUpdatedPosts={setUpdatedPosts}
+            profileImage={profileImage}
           />
         ))
       ) : noPosts != "" ? (

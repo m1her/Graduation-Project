@@ -111,6 +111,8 @@ const Profile = ({ params }) => {
                 posts={posts}
                 noPosts={noPosts}
                 isVisitor={currentUser._id == user._id}
+                name={user.name}
+                profileImage={user.profileImage}
               />
             )}
             {profileSection === "reviwes" && <Reviwes />}
