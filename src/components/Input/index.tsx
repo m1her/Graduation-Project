@@ -73,7 +73,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative">
           {startIcon && (
-            <span className={`${classNames.icon} ${classNames.startIcon}`}>
+            <span className={`${classNames.icon} !static ${classNames.startIcon}`}>
               {startIcon}
             </span>
           )}

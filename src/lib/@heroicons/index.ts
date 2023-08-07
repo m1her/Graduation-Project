@@ -11,6 +11,7 @@ import {
   CheckIcon as CheckIconMini,
   PlusIcon as Plus,
   Bars3CenterLeftIcon as MenuBar,
+  HeartIcon as SolidHeartIcon
 } from "@heroicons/react/20/solid";
 
 import {
@@ -40,10 +41,12 @@ import {
   UserIcon,
   MapPinIcon,
   TagIcon,
-  
+  HeartIcon,
 } from "@heroicons/react/24/outline";
 
 export {
+  SolidHeartIcon,
+  HeartIcon,
   CameraIcon,
   TagIcon,
   CalendarIcon,

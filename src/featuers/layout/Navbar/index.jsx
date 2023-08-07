@@ -7,6 +7,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Button, Modal, NoSsr, ExpertDilog, Link } from "components";
 import { useCurrentUser, useLogout, useToggle } from "Hooks";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -24,6 +25,7 @@ export const Navbar = () => {
   const { userRole } = useCurrentUser();
   const logout = useLogout();
   const pathname = usePathname();
+  const user = JSON.parse(localStorage.getItem("User"));
 
   useEffect(() => {
     if (pathname.includes("Callender")) {
@@ -105,10 +107,12 @@ export const Navbar = () => {
                     <div>
                       <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2  ">
                         <span className="sr-only">Open user menu</span>
-                        <img
+                        <Image
                           className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                         src={`https://drive.google.com/uc?id=${user.profileImage}`}
                           alt=""
+                          height={500}
+                          width={500}
                         />
                       </Menu.Button>
                     </div>
@@ -125,7 +129,7 @@ export const Navbar = () => {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              href="web/profile"
+                              href={`/web/Profile/${user._id}`}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"

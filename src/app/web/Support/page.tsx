@@ -22,7 +22,7 @@ const Support = () => {
     question.split(" ").length >= 4 ? openSnack() : openWarningSnack();
   };
   return (
-    <div className="w-[80%] mx-8 h-[900px]  ">
+    <div className="w-[80%] h-[900px]  ">
       {/* <div className=" top-0 left-0 w-full bg-gray-50 py-28">
         <div className="text-5xl font-thin text-gray-600 ml-16">
           Leap Start Support
@@ -71,8 +71,9 @@ const Support = () => {
           </Button>
         </div>
       </div>
-
+<div className="w-full pr-4">
       <CustomizedAccordions />
+</div>
     </div>
   );
 };
