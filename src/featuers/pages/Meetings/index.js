@@ -7,40 +7,61 @@ import React, { useEffect, useState, useRef } from "react";
 import { HomeCalender } from "components";
 import DateCalendar from "./DateCalendar";
 import Link from "next/link";
+import { useAxios } from "Hooks";
 
 const MeetingsPage = () => {
-  const [value, onChange] = useState(new Date());
+  const [allSessions, setAllSessions] = useState();
+  const {
+    fetchData: getAllSessions,
+    error,
+    loading,
+  } = useAxios({
+    config: {
+      url: `https://worrisome-pocketbook-calf.cyclic.app/api/v1/session`,
+      method: "Get",
+    },
+    options: {
+      manual: true,
+      withAuthHeader: true,
+    },
+    onSuccess: (data) => {
+      console.log(data, "All Sessions");
+      setAllSessions(data.data);
+
+      // close();
+      // openSnack();
+    },
+    onError: (data) => {
+      // setErrorMeesage(data.message);
+      // close();
+      // openErrorSnack();
+    },
+  });
+
+  useEffect(() => {
+    getAllSessions();
+  }, []);
+
+  console.log(allSessions, "::allSessions");
 
   return (
-    <div className="w-[80%] grid grid-cols-10 px-4 pt-2 pb-4">
-      <div className="col-span-7 pr-4">
+    <div className="w-[100%] h-[70vh]  overflow-auto mx-auto  grid grid-cols-6 px-4 pt-2 pb-4">
+      <div className="col-span-7 pr-4 ">
         <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">
           Meetings
         </p>
-        <div className="text-gray-900 my-2 font-semibold leading-4 text-lg">
-          Today
-        </div>
-        <MeetingCard />
-        <div className="text-gray-900 my-2 font-semibold leading-4 text-lg mt-4">
-          Tomorrow
-        </div>
-        <MeetingCard />
-        <MeetingCard />
-        <MeetingCard />
-        <div className="text-gray-900 my-2 font-semibold leading-4 text-lg mt-4">
-          History
-        </div>
-        <MeetingCard />
-        <MeetingCard />
+        {allSessions?.data.map((session) => {
+          return <MeetingCard sessionData={session} />;
+        })}
       </div>
 
-      <div className="col-span-3 flex-col items-center flex pt-24">
+      {/* <div className="col-span-3 flex-col items-center flex pt-24">
         {/* <Calendar
 				className="p-1 rounded-lg border-none shadow w-full aspect-square text-sm"
 				onChange={onChange}
 				value={value}
 			/>  */}
-        <div className="p-1 rounded-lg border-none shadow w-fit text-sm bg-white">
+      {/* <div className="p-1 rounded-lg border-none shadow w-fit text-sm bg-white">
           <DateCalendar />
           <div className="flex justify-between px-2 items-center">
           <p className="text-gray-800 font-semibold ">Oct 7/2023 | Monday</p>
@@ -49,7 +70,7 @@ const MeetingsPage = () => {
           <MiniMeeting />
           <MiniMeeting />
         </div>
-      </div>
+      </div>  */}
     </div>
   );
 };

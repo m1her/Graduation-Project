@@ -10,6 +10,11 @@ const nextConfig = {
 module.exports = {
   generateEtags: false,
   ...nextConfig,
+  modularizeImports: {
+    "@mui/icons-material/?(((\\w*)?/?)*)": {
+      transform: "@mui/icons-material/{{ matches.[1] }}/{{member}}",
+    },
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -18,12 +23,13 @@ module.exports = {
       "firebasestorage.googleapis.com",
       "drive.google.com",
       "images.unsplash.com",
+      "randomuser.me",
     ],
   },
-  future: { webpack5: true },
+
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-      config.resolve.alias.canvas = false
-      config.resolve.alias.encoding = false
-      return config
-  }
+    config.resolve.alias.canvas = false;
+    config.resolve.alias.encoding = false;
+    return config;
+  },
 };
