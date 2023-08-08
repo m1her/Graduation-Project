@@ -26,7 +26,7 @@ export const Navbar = () => {
   const logout = useLogout();
   const pathname = usePathname();
   const user = JSON.parse(localStorage.getItem("User"));
-
+  
   useEffect(() => {
     if (pathname.includes("Callender")) {
       setIsActive({ dashbord: false, callender: true });
@@ -109,7 +109,7 @@ export const Navbar = () => {
                         <span className="sr-only">Open user menu</span>
                         <Image
                           className="h-8 w-8 rounded-full"
-                         src={`https://drive.google.com/uc?id=${user.profileImage}`}
+                          src={user.profileImage}
                           alt=""
                           height={500}
                           width={500}
