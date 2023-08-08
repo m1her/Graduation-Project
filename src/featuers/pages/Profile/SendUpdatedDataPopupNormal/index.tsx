@@ -233,20 +233,6 @@ const SendUpdatedDataPopupNormal = (props) => {
                   </Popover>
                 }
               />
-              {/*  */}
-              {/* <div className="text-gray-800 flex items-center">Specialty:</div>
-
-              <Select
-                options={specialityList}
-                id="specialty-select"
-                placeholder="Enter Specialty"
-                selectSize="small"
-                {...register("speciality")}
-                withoutHelperText
-                //defaultValue={user.Specialty}
-              /> */}
-
-              {/* GRiddddddd */}
             </div>
             <div id="footer" className="w-full relative h-10">
               <Button
@@ -282,107 +268,6 @@ const SendUpdatedDataPopupNormal = (props) => {
             </div>
             <hr className="-mx-4 h-px my-2 bottom-0 bg-gray-800 border-0 dark:bg-gray-800" />
           </form>
-          {/* formmm 22222222 */}
-          {/* <form onSubmit={handleSubmit(onVerificationSubmit)}>
-            <div className="text-xs float-right mb-4">
-              Verification by email is required .
-            </div>
-             <div className="grid gap-y-4 mt-8 mb-2 grid-cols-2 w-full">
-              <div className="text-gray-800 flex items-center">Email:</div>
-              <Input
-                id="email-input"
-                placeholder="Example@example.com"
-                inputSize="small"
-                inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
-                {...register("email")}
-                withoutHelperText
-              />
-              <div className="text-gray-800 flex items-center">Password:</div>
-              <Input
-                id="password-input"
-                placeholder=""
-                inputSize="small"
-                inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
-                {...register("password")}
-                withoutHelperText
-              />
-            </div> 
-            <div className="w-full relative h-10">
-              <Button
-                className="text-white absolute right-2 top-0 mr-2 dark:bg-indigo-500 bg-indigo-500 hover:bg-indigo-700 focus:outline-none font-bold px-3 text-sm text-center"
-                fullWidth
-                buttonSize="small"
-                type="submit"
-                onClick={resetPassHandler}
-              >
-                Reset Passsword
-              </Button>
-            </div>
-            <hr className="-mx-4 h-px my-2 bottom-0 bg-gray-800 border-0 dark:bg-gray-800" />
-          </form> */}
-          {/* formmmm 33333 */}
-          <div className="relative h-52">
-            {user.isExpert ? (
-              ""
-            ) : (
-              <div className="z-10 absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                <ExpertDilog />
-              </div>
-              // <Button
-              //   className="z-10 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mr-2 dark:bg-indigo-500 bg-indigo-500 hover:bg-indigo-700 focus:outline-none font-bold px-3 text-sm text-center"
-              //   fullWidth
-              //   buttonSize="small"
-              // >
-              //   Apply To Become An Expert
-              // </Button>
-            )}
-            <div
-              className={`${
-                user.isExpert
-                  ? ""
-                  : " absolute top-0 left-0 w-full blur grid place-items-center pointer-events-none"
-              }`}
-            >
-              <form onSubmit={handleSubmit(onExpertSubmit)}>
-                <div className="text-xs float-right mb-4">
-                  Needs to be verified by an admin.
-                </div>
-                <div className="grid gap-y-4 mt-8 mb-2 grid-cols-2 w-full">
-                  <div className="text-gray-800 flex items-center">
-                    Specialty:
-                  </div>
-                  <MultipleSelectChip
-                    selectClassName=""
-                    expertData={expertData}
-                    setExpertData={setExpertData}
-                  />
-                  <div className="text-gray-800 flex items-center">Salary:</div>
-                  <Input
-                    id="salary"
-                    type="number"
-                    min={0}
-                    inputSize="small"
-                    inputClassName="h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:border-gray-800 focus:outline-none focus:border-1"
-                    placeholder="Enter your per hour salary"
-                    withoutHelperText
-                    {...register("salary")}
-                  />
-                  <div className="text-gray-800 flex items-center">file:</div>
-                  <div className="text-gray-800 flex items-center">file:</div>
-                </div>
-                <div className="w-full relative h-10">
-                  <Button
-                    className="text-white absolute right-2 top-0 mr-2 dark:bg-indigo-500 bg-indigo-500 hover:bg-indigo-700 focus:outline-none font-bold px-3 text-sm text-center"
-                    fullWidth
-                    buttonSize="small"
-                    type="submit"
-                  >
-                    Save
-                  </Button>
-                </div>
-              </form>
-            </div>
-          </div>
         </div>
       </Card>
     </div>
