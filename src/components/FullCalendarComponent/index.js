@@ -76,6 +76,15 @@ const FullCalendarComponent = ({
         end: sessionObj?.session?.endTime,
       };
     });
+  } else if (!calander?.data) {
+    sessions = calander?.sessions?.map((sessionObj) => {
+      return {
+        id: sessionObj?._id,
+        title: "Session",
+        start: sessionObj?.startTime,
+        end: sessionObj?.endTime,
+      };
+    });
   }
   const handlePreviousPage = () => {
     console.log("prev was clicked ");
@@ -113,7 +122,7 @@ const FullCalendarComponent = ({
             center: "",
             right: "prev,next", // user can switch between the two
           }}
-          events={sessions.length > 1 && sessions}
+          events={sessions}
           plugins={[timeGridPlugin]}
           initialView="timeGridWeek"
           allDaySlot={false}

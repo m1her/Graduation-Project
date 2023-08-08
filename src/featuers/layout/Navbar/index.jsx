@@ -113,7 +113,7 @@ export const Navbar = () => {
                       <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2  ">
                         <Image
                           className="h-8 w-8 rounded-full"
-                          src={`https://drive.google.com/uc?id=${user?.profileImage}`}
+                          src={`${user?.profileImage}`}
                           alt=""
                           height={500}
                           width={500}
