@@ -116,7 +116,9 @@ const Profile = ({ params }) => {
               />
             )}
             {profileSection === "reviwes" && <Reviwes />}
-            {profileSection === "callender" && <Callender />}
+            {profileSection === "callender" && (
+              <Callender id={user?.expert?._id} />
+            )}
 
             {profileSection != "callender" && (
               <About

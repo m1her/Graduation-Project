@@ -160,11 +160,13 @@ const ProfileHeader = ({ handleProfileSection, user, currentUserId }) => {
         <div className="flex w-full h-36 mb-8 relative">
           <div className="relative inline-block w-[350px]">
             <Image
+
               src={`${
                 user.profileImage
                   ? "https://drive.google.com/uc?id=" + user.profileImage
                   : "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"
               }`}
+
               // src={user.photo}
               // src="/CattegoryPageImages/FinanceInspirational.jpeg"
               height={1000}
@@ -250,8 +252,10 @@ const ProfileHeader = ({ handleProfileSection, user, currentUserId }) => {
               {expert ? expert.catagories[1] : ""}
             </p> */}
             <div className="flex w-36 float-left flex-wrap -mb-4">
+
               {user.isExpert
                 ? user.expert.catagories.map((item) => (
+
                     <div
                       key={Math.random()}
                       className="bg-gray-300 text-gray-800 rounded-full w-fit px-4 text-sm m-0.5"

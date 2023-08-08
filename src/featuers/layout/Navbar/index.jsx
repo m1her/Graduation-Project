@@ -22,11 +22,16 @@ export const Navbar = () => {
     dashbord: false,
     callender: false,
   });
-  const { userRole } = useCurrentUser();
+  const { userRole, user } = useCurrentUser();
   const logout = useLogout();
   const pathname = usePathname();
-  const user = JSON.parse(localStorage.getItem("User"));
-  
+
+  // let user = {};
+  // useEffect(() => {
+  //   user = JSON.parse(localStorage.getItem("User"));
+  // }, []);
+
+
   useEffect(() => {
     if (pathname.includes("Callender")) {
       setIsActive({ dashbord: false, callender: true });
@@ -34,6 +39,8 @@ export const Navbar = () => {
       setIsActive({ dashbord: true, callender: false });
     }
   }, [pathname]);
+
+  console.log(user?.profileImage, "user?.profileImage");
 
   return (
     <Disclosure as="nav" className="bg-white shadow">
@@ -106,10 +113,11 @@ export const Navbar = () => {
                   <Menu as="div" className="relative ml-3">
                     <div>
                       <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2  ">
-                        <span className="sr-only">Open user menu</span>
                         <Image
                           className="h-8 w-8 rounded-full"
+
                           src={user.profileImage || "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"}
+
                           alt=""
                           height={500}
                           width={500}
@@ -129,7 +137,7 @@ export const Navbar = () => {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              href={`/web/Profile/${user._id}`}
+                              href={`/web/Profile/${user?._id}`}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
