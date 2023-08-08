@@ -3,7 +3,7 @@ import { getStorageItem } from "utils";
 
 const Callender = () => {
   const user = getStorageItem("User");
-
-  return <FullCalendarComponent expertAvailableHours={user.expert.availableHours} />;
+  //expertAvailableHours={user.expert.availableHours} 
+  return <FullCalendarComponent />;
 };
 export default Callender;

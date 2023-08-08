@@ -52,7 +52,7 @@ const Support = () => {
         <div className="text-4xl font-thin m-6  text-gray-600 text-center ">
           How Can We Help You ?
         </div>
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center">
           <Input
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
@@ -60,10 +60,10 @@ const Support = () => {
             inputSize="large"
             inputClassName="!w-[600px]"
             className="flex items-end justify-center w-[600px]"
-            startIcon={<MagnifyingGlassIcon />}
+            startIcon={<MagnifyingGlassIcon className="w-8 h-8" />}
           />
           <Button
-            className="!bg-indigo-500 w-[200px]  !text-2xl"
+            className="!bg-indigo-500 w-[200px] !text-2xl"
             fullWidth={false}
             onClick={handleSendClick}
           >

@@ -109,7 +109,7 @@ export const Navbar = () => {
                         <span className="sr-only">Open user menu</span>
                         <Image
                           className="h-8 w-8 rounded-full"
-                          src={user.profileImage}
+                          src={user.profileImage || "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"}
                           alt=""
                           height={500}
                           width={500}

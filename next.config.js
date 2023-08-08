@@ -24,6 +24,7 @@ module.exports = {
       "drive.google.com",
       "images.unsplash.com",
       "randomuser.me",
+      "cdn.vectorstock.com",
     ],
   },
 

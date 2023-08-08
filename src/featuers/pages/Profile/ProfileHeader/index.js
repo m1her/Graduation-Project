@@ -7,6 +7,7 @@ import { setStorageItem } from "utils";
 import CropImage from "./CropImage";
 
 const ProfileHeader = ({ handleProfileSection, user, currentUserId }) => {
+  console.log(user);
   const [edit, setEdit] = useState(false);
   const [active, setActive] = useState(user.isExpert ? "posts" : "callender");
   const [userName, setUserName] = useState(user.name);
@@ -15,9 +16,9 @@ const ProfileHeader = ({ handleProfileSection, user, currentUserId }) => {
   const [imageType, setImageType] = useState("");
   const [current, setCurrent] = useState({ name: user.name, bio: user.bio });
 
-useEffect(() => {
-  handleProfileSection(user.isExpert ? "posts" : "callender");
-}, []);
+  useEffect(() => {
+    handleProfileSection(user.isExpert ? "posts" : "callender");
+  }, []);
 
   const onSubmit = async (formData) => {
     formData.append("name", userName);
@@ -143,7 +144,11 @@ useEffect(() => {
         )}
 
         <Image
-          src={`https://drive.google.com/uc?id=${user.profileBanner}`}
+          src={`${
+            user.profileBanner
+              ? "https://drive.google.com/uc?id=" + user.profileBanner
+              : "https://cdn.vectorstock.com/i/preview-1x/01/92/businessman-banner-design-vector-45230192.webp"
+          }`}
           height={1000}
           width={1000}
           alt="Banner"
@@ -155,9 +160,13 @@ useEffect(() => {
         <div className="flex w-full h-36 mb-8 relative">
           <div className="relative inline-block w-[350px]">
             <Image
-            src={`https://drive.google.com/uc?id=${user.profileImage}`}
+              src={`${
+                user.profileImage
+                  ? "https://drive.google.com/uc?id=" + user.profileImage
+                  : "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"
+              }`}
               // src={user.photo}
-             // src="/CattegoryPageImages/FinanceInspirational.jpeg"
+              // src="/CattegoryPageImages/FinanceInspirational.jpeg"
               height={1000}
               width={1000}
               alt="profile"
@@ -235,15 +244,13 @@ useEffect(() => {
 
           <div className="w-fit absolute bottom-0 text-center ml-14">
             <div className="text-gray-700 text-lg font-semibold absolute bottom-8">
-              {user
-                ? "$" + (user.expert.hourlyRate || "0") + " USD / Hour"
-                : "$0 USD / Hour"}
+              {user.isExpert && "$" + (user.expert.hourlyRate || "0") + " USD / Hour"}
             </div>
             {/* <p className="text-gray-800 text-lg font-medium">
               {expert ? expert.catagories[1] : ""}
             </p> */}
             <div className="flex w-36 float-left flex-wrap -mb-4">
-              {user.expert
+              {user.isExpert
                 ? user.expert.catagories.map((item) => (
                     <div
                       key={Math.random()}

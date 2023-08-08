@@ -20,6 +20,7 @@ const PostCard = ({
   setUpdatedPosts,
   name,
   profileImage,
+  className
 }) => {
   const [toggleDelete, setToggleDelete] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -73,7 +74,7 @@ const PostCard = ({
 
   return (
     <div className=" bg-white w-full " onClick={closeDelete}>
-      <div className="mb-0 mt-6">
+      <div className={`mb-0 mt-6 ${className}`}>
         <div className="flex items-top justify-between">
           <div className="flex items-center">
             <Image
