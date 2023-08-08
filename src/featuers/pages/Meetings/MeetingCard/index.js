@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { Card, Input, Select, ApproveSession } from "components";
-import { EnvelopeIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon, CheckIcon } from "@heroicons/react/24/solid";
+
 import { useCurrentUser } from "Hooks";
-import { Button } from "@material-tailwind/react";
+import { useRouter } from "next/navigation";
 function convertTimeFormat(input) {
   const date = new Date(input);
 
@@ -44,37 +43,45 @@ function formatHoursRange(startTime, endTime) {
 }
 const cardStatus = (status) => {
   if (status == "pending") {
-    return "#FFC300";
+    return "border-[#FFC300]";
   } else if (status == "approved") {
-    return "#84cc16";
+    return "border-[#84cc16]";
   } else {
-    return "#ff0000";
+    return "border-[#ff0000]";
   }
 };
-const MeetingCard = ({ sessionData }) => {
+const MeetingCard = ({ sessionData, setMutate }) => {
+  const router = useRouter();
+  console.log(router);
   console.log("Session Data:", sessionData);
   const { userRole } = useCurrentUser();
   const expetObject =
-    userRole != "expert" ? sessionData?.expert : sessionData?.user;
+    userRole == "expert" ? sessionData?.expert : sessionData?.user;
   const sessionObject = sessionData?.session;
+
+  const handleSessionNavigation = () => {
+    router.push(`/web/Session?id=${sessionObject?._id}`);
+    console.log("pushed successfully");
+  };
 
   return (
     <Card
-      className={`flex w-full mt-2 justify-between items-center cursor-pointer hover:bg-gray-light  border-l-4  border-[${cardStatus(
+      className={`flex w-full mt-2 justify-between items-center cursor-pointer hover:bg-gray-light  border-l-4  ${cardStatus(
         sessionObject?.status
-      )}]`}
+      )}`}
+      onClick={handleSessionNavigation}
     >
       <div className="flex items-center  justify-between">
         <Image
           alt="pfp"
-          src="/assets/img/pfp.jpeg"
+          src={`https://drive.google.com/uc?id=${expetObject?.user?.profileImage}`}
           height="100"
           width="100"
           className="w-20 h-20 object-cover rounded-full"
         ></Image>
         <div className="ml-4 flex flex-col items-start">
           <p className="text-xl font-semibold my-2">
-            {expetObject?.user?.name.toUpperCase()}
+            {expetObject?.user?.name?.toUpperCase()}
           </p>
           <p className="text-sm">{expetObject?.email}</p>
           <p className="text-gray-500 -mt-1">
@@ -99,13 +106,24 @@ const MeetingCard = ({ sessionData }) => {
           </div>
         )}
         <div className="flex items-center justify-center">
-          <div className="w-9 h-9  self-center text-center flex items-center justify-center cursor-pointer">
-            <ApproveSession action="approve" id={sessionObject._id} />
-          </div>
-
-          <div className="w-9 h-9  self-center text-center ml-2 flex items-center justify-center  cursor-pointer">
-            <ApproveSession action="reject" id={sessionObject._id} />
-          </div>
+          {sessionObject?.status !== "rejected" && userRole == "expert" && (
+            <>
+              <div className="w-9 h-9  self-center text-center flex items-center justify-center cursor-pointer">
+                <ApproveSession
+                  action="approve"
+                  id={sessionObject?._id}
+                  setMutate={setMutate}
+                />
+              </div>
+              <div className="w-9 h-9  self-center text-center ml-2 flex items-center justify-center  cursor-pointer">
+                <ApproveSession
+                  action="reject"
+                  id={sessionObject?._id}
+                  setMutate={setMutate}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </Card>

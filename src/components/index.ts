@@ -40,4 +40,6 @@ export * from "./BusinessHoursCell";
 export * from "./AddSession";
 export * from "./ApproveSession";
 
+export * from "./MeetingCall";
+
 // export * from "./AccordionComponent";
