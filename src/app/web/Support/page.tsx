@@ -52,15 +52,17 @@ const Support = () => {
         <div className="text-4xl font-thin m-6  text-gray-600 text-center ">
           How Can We Help You ?
         </div>
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center items-center gap-4">
           <Input
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Ask for Help To Get Out The Most  of Our Website "
             inputSize="large"
-            inputClassName="!w-[600px]"
+            inputClassName="!w-[600px] relative"
             className="flex items-end justify-center w-[600px]"
-            startIcon={<MagnifyingGlassIcon />}
+            startIcon={
+              <MagnifyingGlassIcon className="w-10 h1-0 absolute top-2 right-2 z-10" />
+            }
           />
           <Button
             className="!bg-indigo-500 w-[200px]  !text-2xl"
@@ -71,9 +73,9 @@ const Support = () => {
           </Button>
         </div>
       </div>
-<div className="w-full pr-4">
-      <CustomizedAccordions />
-</div>
+      <div className="w-full pr-4">
+        <CustomizedAccordions />
+      </div>
     </div>
   );
 };

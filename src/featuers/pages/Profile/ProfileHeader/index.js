@@ -15,9 +15,9 @@ const ProfileHeader = ({ handleProfileSection, user, currentUserId }) => {
   const [imageType, setImageType] = useState("");
   const [current, setCurrent] = useState({ name: user.name, bio: user.bio });
 
-useEffect(() => {
-  handleProfileSection(user.isExpert ? "posts" : "callender");
-}, []);
+  useEffect(() => {
+    handleProfileSection(user.isExpert ? "posts" : "callender");
+  }, []);
 
   const onSubmit = async (formData) => {
     formData.append("name", userName);
@@ -155,9 +155,9 @@ useEffect(() => {
         <div className="flex w-full h-36 mb-8 relative">
           <div className="relative inline-block w-[350px]">
             <Image
-            src={`https://drive.google.com/uc?id=${user.profileImage}`}
+              src={`https://drive.google.com/uc?id=${user.profileImage}`}
               // src={user.photo}
-             // src="/CattegoryPageImages/FinanceInspirational.jpeg"
+              // src="/CattegoryPageImages/FinanceInspirational.jpeg"
               height={1000}
               width={1000}
               alt="profile"
@@ -244,7 +244,7 @@ useEffect(() => {
             </p> */}
             <div className="flex w-36 float-left flex-wrap -mb-4">
               {user.expert
-                ? user.expert.catagories.map((item) => (
+                ? user?.expert?.catagories?.map((item) => (
                     <div
                       key={Math.random()}
                       className="bg-gray-300 text-gray-800 rounded-full w-fit px-4 text-sm m-0.5"

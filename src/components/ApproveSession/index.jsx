@@ -5,7 +5,7 @@ import { XMarkIcon, CheckIcon } from "@heroicons/react/24/solid";
 import TextArea from "components/TextArea";
 import { useAxios, useToggle } from "Hooks";
 import { SnackBar } from "components";
-export function ApproveSession({ action, id }) {
+export function ApproveSession({ action, id, setMutate }) {
   let [isOpen, setIsOpen] = useState(false);
   const [rejectionReson, setRejectionReson] = useState("");
 
@@ -39,6 +39,7 @@ export function ApproveSession({ action, id }) {
       console.log(data);
       openSnack();
       closeModal();
+      setMutate((prev) => prev + 1);
       // close();
     },
     onError: (data) => {
@@ -53,6 +54,7 @@ export function ApproveSession({ action, id }) {
       status: "approved",
     });
     closeModal();
+    setMutate((prev) => prev + 1);
   };
   const handleReject = () => {
     sessionAction({
