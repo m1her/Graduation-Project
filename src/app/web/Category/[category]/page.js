@@ -117,17 +117,37 @@ const Category = () => {
       </div>
       <div className="flex items-start justify-between">
         <div className=" w-[60%]">
-          <div className="w-full bg-white shadow-md rounded-lg px-4 pt-4">
-            <PostCard />
+          <div className="w-full bg-white shadow-md rounded-lg px-4 pt-0.5 mb-4">
+            <PostCard
+              className="!mt-4"
+              time="Tue Aug 08 2023 21:41:15 GMT+0300 (Eastern European Summer Time)"
+              name="Mohammed A"
+              content="Investing grows wealth. Define goals, diversify (stocks, bonds, real estate), assess risk, and adjust. Patience pays off."
+            />
           </div>
-          <div className="w-full bg-white shadow-md rounded-lg px-4 pt-4">
-            <PostCard />
+          <div className="w-full bg-white shadow-md rounded-lg px-4 pt-0.5 mb-4">
+            <PostCard
+              className="!mt-4"
+              time="Tue Aug 06 2023 21:41:15 GMT+0300 (Eastern European Summer Time)"
+              name="Mohammed A"
+              content="Invest early, reap compounding benefits. Earnings on earnings, time is your ally. Regular investments, reinvesting, and time fuel growth."
+            />
           </div>
-          <div className="w-full bg-white shadow-md rounded-lg px-4 pt-4">
-            <PostCard />
+          <div className="w-full bg-white shadow-md rounded-lg px-4 pt-0.5 mb-4">
+            <PostCard
+              className="!mt-4"
+              time="Tue Aug 02 2023 21:41:15 GMT+0300 (Eastern European Summer Time)"
+              name="Ahmed Alhalaby"
+              content="Stocks ride waves. Diversify, stay calm. Long view beats emotional reactions. Dollar-cost averaging smooths bumps. Opportunity in downturns."
+            />
           </div>
-          <div className="w-full bg-white shadow-md rounded-lg px-4 pt-4">
-            <PostCard />
+          <div className="w-full bg-white shadow-md rounded-lg px-4 pt-0.5 mb-4">
+            <PostCard
+              className="!mt-4"
+              time="Tue Aug 02 2023 21:41:15 GMT+0300 (Eastern European Summer Time)"
+              name="Ahmed Alhalaby"
+              content="Profit + Purpose = Sustainable investing. Support values: ESG (environmental, social, governance). Research needed. Shape a better future through investments."
+            />
           </div>
         </div>
         <div className=" w-[38%]">

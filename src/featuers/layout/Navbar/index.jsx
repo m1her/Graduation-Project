@@ -25,10 +25,12 @@ export const Navbar = () => {
   const { userRole, user } = useCurrentUser();
   const logout = useLogout();
   const pathname = usePathname();
+
   // let user = {};
   // useEffect(() => {
   //   user = JSON.parse(localStorage.getItem("User"));
   // }, []);
+
 
   useEffect(() => {
     if (pathname.includes("Callender")) {
@@ -113,7 +115,9 @@ export const Navbar = () => {
                       <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2  ">
                         <Image
                           className="h-8 w-8 rounded-full"
-                          src={`${user?.profileImage}`}
+
+                          src={user.profileImage || "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"}
+
                           alt=""
                           height={500}
                           width={500}

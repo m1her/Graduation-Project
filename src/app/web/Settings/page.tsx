@@ -86,11 +86,11 @@ export default function Example() {
         {/* Static sidebar for desktop */}
 
         {/* Content area */}
-        <div className="lg:pl-64 w-full">
-          <div className="lg:px-8">
-            <div className="mx-auto flex flex-col lg:max-w-4xl">
+        <div className=" w-full">
+          <div className="">
+            <div className=" flex flex-col ">
               <main className="flex-1">
-                <div className="relative mx-auto max-w-4xl">
+                <div className="relative ml-8 mr-32">
                   <div className="pb-16 pt-10">
                     <div className="px-4 sm:px-6 lg:px-0">
                       <h1 className="text-3xl font-bold tracking-tight text-gray-900">
