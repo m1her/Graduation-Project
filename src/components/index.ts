@@ -39,8 +39,7 @@ export * from "./Statistics";
 export * from "./BusinessHoursCell";
 export * from "./AddSession";
 export * from "./ApproveSession";
-export * from "./VideoChat";
-export * from "./Room";
+
 export * from "./MeetingCall";
 
 // export * from "./AccordionComponent";
