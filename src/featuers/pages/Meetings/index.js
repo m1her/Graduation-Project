@@ -44,7 +44,7 @@ const MeetingsPage = () => {
           Meetings
         </p>
         {allSessions?.data.map((session) => {
-          return <MeetingCard sessionData={session} />;
+          return <MeetingCard key={session._id} sessionData={session} />;
         })}
       </div>
 

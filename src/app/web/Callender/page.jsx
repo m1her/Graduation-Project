@@ -49,8 +49,7 @@ const Callender = () => {
 
   useEffect(() => {
     uploadExpert();
-  }, [steps]);
-  console.log(steps);
+  }, [steps, uploadExpert]);
 
   return (
     <NoSsr>

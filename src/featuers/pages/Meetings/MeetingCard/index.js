@@ -50,7 +50,7 @@ const cardStatus = (status) => {
     return "border-[#ff0000]";
   }
 };
-const MeetingCard = ({ sessionData }) => {
+const MeetingCard = ({ sessionData, key }) => {
   const router = useRouter();
 
   console.log("Session Data:", sessionData);
@@ -70,6 +70,7 @@ const MeetingCard = ({ sessionData }) => {
         sessionObject?.status
       )}`}
       onClick={handleSessionNavigation}
+      key={key}
     >
       <div className="flex items-center  justify-between">
         <Image
