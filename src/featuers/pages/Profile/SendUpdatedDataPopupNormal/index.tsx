@@ -5,14 +5,12 @@ import {
   Button,
   PhoneInput,
   Select,
-  MultipleSelectChip,
-  ExpertDilog,
 } from "components";
 import { XMarkIconMini, CalendarIcon } from "lib";
 import { getStorageItem } from "utils";
 import useForm, { Controller } from "lib/react-hook-form";
 import { useState } from "react";
-import { FORM_VALIDATION, countriesList, specialityList } from "data";
+import { FORM_VALIDATION, countriesList } from "data";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Cookies from "js-cookie";

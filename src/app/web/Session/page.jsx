@@ -38,7 +38,7 @@ const Session = () => {
   });
   useEffect(() => {
     getSession();
-  }, []);
+  });
 
   return (
     <div className="w-[80%] h-[75vh] flex-col justify-between gap-8 p-10">

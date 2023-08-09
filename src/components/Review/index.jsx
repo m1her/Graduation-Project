@@ -1,4 +1,5 @@
 import { StarIcon } from "@heroicons/react/20/solid";
+import Image from "next/image";
 
 const reviews = [
   {
@@ -64,7 +65,9 @@ export function Review() {
               </div>
 
               <div className="order-1 flex items-center sm:flex-col sm:items-start">
-                <img
+                <Image
+                width={500}
+                height={500}
                   src={review.avatarSrc}
                   alt={`${review.author}.`}
                   className="h-12 w-12 rounded-full"

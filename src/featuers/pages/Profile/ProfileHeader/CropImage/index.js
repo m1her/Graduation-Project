@@ -1,6 +1,6 @@
 "use client";
 import { Card } from "components";
-import { useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import Cropper from "react-easy-crop";
 
 const CropImage = (props) => {

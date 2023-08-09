@@ -8,7 +8,6 @@ import Callender from "featuers/pages/Profile/Callender";
 import SendUpdatedDataPopupNormal from "featuers/pages/Profile/SendUpdatedDataPopupNormal";
 import React, { useState, useEffect } from "react";
 import { getStorageItem } from "utils";
-import { Card } from "components";
 
 const Profile = ({ params }) => {
   const [profileSection, setProfileSection] = useState("");
@@ -84,7 +83,7 @@ const Profile = ({ params }) => {
       }
     };
     getUser();
-  }, []);
+  });
 
   return (
     <div className="w-[80%] flex-col mt-2 px-4 py-2">

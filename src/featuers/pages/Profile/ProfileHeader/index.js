@@ -18,7 +18,7 @@ const ProfileHeader = ({ handleProfileSection, user, currentUserId }) => {
 
   useEffect(() => {
     handleProfileSection(user.isExpert ? "posts" : "callender");
-  }, []);
+  });
 
   const onSubmit = async (formData) => {
     formData.append("name", userName);

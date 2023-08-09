@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const featuredPost = {
   id: 1,
   title: "We’re incredibly proud to announce we have secured $75m in Series B",
@@ -82,7 +84,9 @@ export function Featuers() {
                 href={featuredPost.author.href}
                 className="flex gap-x-2.5 text-sm font-semibold leading-6 text-gray-900"
               >
-                <img
+                <Image
+                  width={500}
+                  height={500}
                   src={featuredPost.author.imageUrl}
                   alt=""
                   className="h-6 w-6 flex-none rounded-full bg-gray-50"
@@ -118,7 +122,9 @@ export function Featuers() {
                     href={post.author.href}
                     className="relative flex gap-x-2.5 text-sm font-semibold leading-6 text-gray-900"
                   >
-                    <img
+                    <Image
+                      width={500}
+                      height={500}
                       src={post.author.imageUrl}
                       alt=""
                       className="h-6 w-6 flex-none rounded-full bg-gray-50"

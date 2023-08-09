@@ -14,12 +14,11 @@
   ```
 */
 "use client";
-import { Fragment, useState } from "react";
-import { Dialog, Switch, Transition } from "@headlessui/react";
+import Image from "next/image";
+import { useState } from "react";
+import { Switch } from "@headlessui/react";
 import {
   ArrowLeftOnRectangleIcon,
-  Bars3BottomLeftIcon,
-  BellIcon,
   BriefcaseIcon,
   ChatBubbleOvalLeftEllipsisIcon,
   CogIcon,
@@ -27,9 +26,7 @@ import {
   HomeIcon,
   QuestionMarkCircleIcon,
   UsersIcon,
-  XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
 const navigation = [
   { name: "Home", href: "#", icon: HomeIcon, current: false },
@@ -173,7 +170,9 @@ export default function Example() {
                                 </dt>
                                 <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                   <span className="flex-grow">
-                                    <img
+                                    <Image
+                                    width={500}
+                                    height={500}
                                       className="h-8 w-8 rounded-full"
                                       src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                       alt=""

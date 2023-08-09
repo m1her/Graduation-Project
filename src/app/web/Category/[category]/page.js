@@ -3,7 +3,6 @@ import CategoryBarCard from "featuers/pages/Categories/CategoryBarCard";
 import ArticleCard from "featuers/pages/Categories/ArticleCard";
 import CategoryExpertList from "featuers/pages/Categories/CategoryExpertList";
 import PostCard from "featuers/pages/Profile/Posts/PostCard";
-import { Card } from "components";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 

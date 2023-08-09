@@ -23,7 +23,7 @@ export const UploadExpert = ({ expertData, setExpertData }) => {
       ...expertData,
       ...requiredExpertData,
     });
-  }, [requiredExpertData]);
+  }, [expertData, requiredExpertData, setExpertData]);
 
   return (
     <div className="my-8">

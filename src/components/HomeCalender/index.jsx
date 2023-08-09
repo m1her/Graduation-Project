@@ -8,6 +8,7 @@ import {
   MapPinIcon,
 } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
+import Image from "next/image";
 
 const meetings = [
   {
@@ -177,7 +178,9 @@ export function HomeCalender() {
               key={meeting.id}
               className="relative flex space-x-6 py-6 xl:static"
             >
-              <img
+              <Image
+                width={500}
+                height={500}
                 src={meeting.imageUrl}
                 alt=""
                 className="h-14 w-14 flex-none rounded-full"
