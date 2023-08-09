@@ -39,8 +39,8 @@ const CategoryExpertList = ({ type }) => {
           <div className="w-full flex justify-center mt-1">
             <Spinner />
           </div>
-        ) : (  experts
-          .filter((expert) => expert.catagories.includes("math")).length > 0 ?
+        ) : experts.filter((expert) => expert.catagories.includes("math"))
+            .length > 0 ? (
           experts
             .filter((expert) => expert.catagories.includes("math"))
             .map((expert) => (
@@ -50,12 +50,16 @@ const CategoryExpertList = ({ type }) => {
               >
                 <div className="flex items-center">
                   <div className="bg-gray-300 w-14 h-14 rounded-full mr-2">
-                    {/* <Image
+                    <Image
                       alt=" "
                       width={250}
                       height={250}
-                      src={`https://drive.google.com/uc?id=${expert.profileImage}`}
-                    /> */}
+                      src={
+                        expert.profileImage
+                          ? `https://drive.google.com/uc?id=${expert.profileImage}`
+                          : "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"
+                      }
+                    />
                   </div>
                   <div>
                     <div className="font-medium">{expert.user.name}</div>
@@ -67,7 +71,9 @@ const CategoryExpertList = ({ type }) => {
                 </div>
               </div>
             ))
-       : <div className="text-center text-gray-500">No experts</div> )}
+        ) : (
+          <div className="text-center text-gray-500">No experts</div>
+        )}
       </div>
     </Card>
   );

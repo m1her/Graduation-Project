@@ -4,17 +4,14 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
+const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export function SnackBar({
   withButton = false,
   ButtonData = "open SnackBar",
-  type = "success",
+  type = "error" || "success" || "warning" || "info",
   sucessMessage = "",
   errorMessage = "",
   warningMessage = "",
@@ -25,16 +22,11 @@ export function SnackBar({
   anchorOrigin,
   isOpen,
 }) {
-  // const [open, setOpen] = React.useState(false);
-
   const handleClick = () => {
     open();
   };
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
+  const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -54,7 +46,7 @@ export function SnackBar({
           open={open}
           autoHideDuration={6000}
           onClose={handleClose}
-          anchorOrigin={{ ...anchorOrigin }}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
           TransitionComponent={TransitionComponent}
         >
           {
