@@ -50,7 +50,6 @@ const Callender = () => {
   useEffect(() => {
     uploadExpert();
   }, [steps]);
-  console.log(steps);
 
   return (
     <NoSsr>

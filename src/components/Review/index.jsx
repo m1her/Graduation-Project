@@ -64,7 +64,7 @@ export function Review() {
               </div>
 
               <div className="order-1 flex items-center sm:flex-col sm:items-start">
-                <img
+                <Image
                   src={review.avatarSrc}
                   alt={`${review.author}.`}
                   className="h-12 w-12 rounded-full"
