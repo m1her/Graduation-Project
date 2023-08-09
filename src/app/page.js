@@ -20,6 +20,10 @@ export default function Home() {
       },
     },
   };
+  useEffect(() => {
+    const stripe =
+      typeof window !== "undefined" && window.Stripe("stripeID_Here");
+  });
 
   return (
     <body className="bg-[#a5b4fc] select-none ">
