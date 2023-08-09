@@ -26,7 +26,7 @@ export default function Home() {
       <motion.div
         id="container"
         className="fixed top-0 left-0 w-full h-screen flex justify-center items-center"
-        initial={{scale: 1.5, x: 100}}
+        initial={{ scale: 1 }}
       >
         <motion.div className="flex justify-between items-center text-indigo-500 z-20">
           <motion.svg
@@ -98,7 +98,7 @@ export default function Home() {
               className="text-center bg-indigo-500 ml-2 text-white w-1/2 -semibold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-500 dark:hover:bg-indigo-700 focus:outline-none"
               href="/authentication/login"
               whileHover={{ scale: 1.1, backgroundColor: "#4C51BF" }}
-              transition={{ type: "tween", duration:0.1 }}
+              transition={{ type: "tween", duration: 0.1 }}
             >
               Login
             </motion.a>
@@ -106,7 +106,7 @@ export default function Home() {
               className="text-center bg-indigo-500 text-white w-1/2 font-semibold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-500 dark:hover:bg-indigo-700 focus:outline-none"
               href="/authentication/sign-up"
               whileHover={{ scale: 1.1, backgroundColor: "#4C51BF" }}
-              transition={{ type: "tween", duration:0.1 }}
+              transition={{ type: "tween", duration: 0.1 }}
             >
               Signup
             </motion.a>

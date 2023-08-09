@@ -20,7 +20,7 @@ const PostCard = ({
   setUpdatedPosts,
   name,
   profileImage,
-  className
+  className,
 }) => {
   const [toggleDelete, setToggleDelete] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -78,7 +78,11 @@ const PostCard = ({
         <div className="flex items-top justify-between">
           <div className="flex items-center">
             <Image
-              src={`https://drive.google.com/uc?id=${profileImage}`}
+              src={
+                profileImage
+                  ? `https://drive.google.com/uc?id=${profileImage}`
+                  : "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"
+              }
               className="w-11 h-11 rounded-full object-fit mr-2 shadow"
               alt="avatar"
               width={100}

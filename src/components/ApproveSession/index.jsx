@@ -5,7 +5,7 @@ import { XMarkIcon, CheckIcon } from "@heroicons/react/24/solid";
 import TextArea from "components/TextArea";
 import { useAxios, useToggle } from "Hooks";
 import { SnackBar } from "components";
-export function ApproveSession({ action, id, setMutate }) {
+export function ApproveSession({ action, id }) {
   let [isOpen, setIsOpen] = useState(false);
   const [rejectionReson, setRejectionReson] = useState("");
 

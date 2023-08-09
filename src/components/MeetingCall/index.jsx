@@ -12,7 +12,7 @@ export const MeetingCall = () => {
     EndCall: () => setVideoCall(false),
   };
   return videoCall ? (
-    <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
+    <div style={{ display: "flex", width: "70vw", height: "100vh" }}>
       <AgoraUIKit rtcProps={rtcProps} callbacks={callbacks} />
     </div>
   ) : (
