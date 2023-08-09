@@ -88,6 +88,8 @@ export function Featuers() {
                   src={featuredPost.author.imageUrl}
                   alt=""
                   className="h-6 w-6 flex-none rounded-full bg-gray-50"
+                  width={24}
+                  height={24}
                 />
                 {featuredPost.author.name}
               </a>
@@ -124,6 +126,8 @@ export function Featuers() {
                       src={post.author.imageUrl}
                       alt=""
                       className="h-6 w-6 flex-none rounded-full bg-gray-50"
+                      width={24}
+                      height={24}
                     />
                     {post.author.name}
                   </a>

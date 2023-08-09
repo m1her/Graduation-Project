@@ -68,6 +68,8 @@ export function Review() {
                   src={review.avatarSrc}
                   alt={`${review.author}.`}
                   className="h-12 w-12 rounded-full"
+                  width={48}
+                  height={48}
                 />
 
                 <div className="ml-4 sm:ml-0 sm:mt-4">
