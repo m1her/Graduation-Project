@@ -83,7 +83,7 @@ const Profile = ({ params }) => {
       }
     };
     getUser();
-  });
+  }, [params.id]);
 
   return (
     <div className="w-[80%] flex-col mt-2 px-4 py-2">
@@ -115,7 +115,9 @@ const Profile = ({ params }) => {
               />
             )}
             {profileSection === "reviwes" && <Reviwes />}
-            {profileSection === "callender" && <Callender />}
+            {profileSection === "callender" && (
+              <Callender id={user?.expert?._id} />
+            )}
 
             {profileSection != "callender" && (
               <About

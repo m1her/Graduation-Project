@@ -72,21 +72,24 @@ const FullCalendarComponent = ({
       return {
         id: sessionObj?.session?._id,
         title: "Session",
-        start: sessionObj?.session?.startTime.substring(
-          0,
-          sessionObj?.session?.startTime.length - 2
-        ),
-        end: sessionObj?.session?.endTime?.substring(
-          0,
-          sessionObj?.session?.endTime?.length - 2
-        ),
+        start: sessionObj?.session?.startTime,
+        end: sessionObj?.session?.endTime,
+      };
+    });
+  } else if (!calander?.data) {
+    sessions = calander?.sessions?.map((sessionObj) => {
+      return {
+        id: sessionObj?._id,
+        title: "Session",
+        start: sessionObj?.startTime,
+        end: sessionObj?.endTime,
       };
     });
   }
   const handlePreviousPage = () => {
     console.log("prev was clicked ");
     calendarRef.current.getApi().prev();
-    setSteps((prev) => (prev > 0 ? prev - 1 : 0));
+    setSteps((prev) => prev - 1);
   };
 
   const handleNextPage = () => {
@@ -119,7 +122,7 @@ const FullCalendarComponent = ({
             center: "",
             right: "prev,next", // user can switch between the two
           }}
-          events={[...sessions]}
+          events={sessions}
           plugins={[timeGridPlugin]}
           initialView="timeGridWeek"
           allDaySlot={false}
@@ -132,10 +135,10 @@ const FullCalendarComponent = ({
             calander &&
             calander?.data &&
             calander?.data[0]?.session?.status == "pending"
-              ? "yallow"
-              : "green"
+              ? "#FFC300"
+              : "#84cc16"
           }
-          eventTextColor="black"
+          eventTextColor="white"
           displayEventTime={true}
           businessHours={{
             daysOfWeek: getWorkingDays(calander?.workingHours?.daysOfWork), // Monday - Thursday

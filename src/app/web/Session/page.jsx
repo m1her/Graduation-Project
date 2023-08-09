@@ -3,8 +3,9 @@ import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useAxios } from "Hooks";
-import { Card } from "components";
+import { Card, Room, MeetingCall } from "components";
 import MeetingCard from "../../../featuers/pages/Meetings/MeetingCard";
+// import VideoChat from "components/VideoChat";
 
 const Session = () => {
   const searchParams = useSearchParams();
@@ -38,10 +39,10 @@ const Session = () => {
   });
   useEffect(() => {
     getSession();
-  });
+  }, [getSession]);
 
   return (
-    <div className="w-[80%] h-[75vh] flex-col justify-between gap-8 p-10">
+    <div className="w-[80%] h-[75vh] flex-col  overflow-auto justify-between gap-8 p-10">
       {loading && (
         <div className="flex items-center justify-center h-screen w-[80%]">
           <div className="border-t-4 border-blue-500 border-solid rounded-full animate-spin w-12 h-12"></div>
@@ -52,9 +53,15 @@ const Session = () => {
         <MeetingCard sessionData={session} />
       </div>
       <div>
-        <Card className="w-full h-full !bg-red my-4">
+        <Card className="w-full h-full  my-4">
           <h2>The Session will Be Here</h2>
+          <MeetingCall />
+          {/* <VideoChat /> */}
+          {/* <Room /> */}
         </Card>
+      </div>
+      <div>
+        {/* rating the session with its review rating stars and the expert feedback   */}
       </div>
     </div>
   );

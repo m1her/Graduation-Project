@@ -5,7 +5,7 @@ import { useAxios } from "Hooks";
 import { useRouter } from "next/navigation";
 import { HelperText, Card, Input, Button } from "components";
 import { ErrorIconMini } from "lib";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useCounter from "featuers/authentecation/Hooks/useCounter";
 

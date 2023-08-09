@@ -3,7 +3,7 @@ import { PencilIcon } from "lib";
 import { Card } from "components";
 //import { Document, Page } from "react-pdf";
 //import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 //import { pdfjs } from 'react-pdf';
 //import thepdf from "../../../../../public/dummy.pdf"
 

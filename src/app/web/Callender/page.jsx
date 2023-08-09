@@ -14,9 +14,10 @@ import { AddSession, Button, NoSsr } from "components";
 // pending status should be shown( Done)
 //
 const Callender = () => {
+  const { userRole } = useCurrentUser();
   const { user } = useCurrentUser();
   const [calander, setCalander] = useState({});
-  const [steps, setSteps] = useState(1);
+  const [steps, setSteps] = useState(0);
   // const [sessions, setSessions] = useState([]);
 
   const {
@@ -54,10 +55,12 @@ const Callender = () => {
   return (
     <NoSsr>
       <div className="flex-col w-full">
-        <AddSession
-          expertAvailableHours={user?.expert?.availableHours}
-          addLoading={loading}
-        />
+        {userRole == "expert" && (
+          <AddSession
+            expertAvailableHours={user?.expert?.availableHours}
+            addLoading={loading}
+          />
+        )}
         <FullCalendarComponent
           expertAvailableHours={user?.expert?.availableHours}
           calander={calander}

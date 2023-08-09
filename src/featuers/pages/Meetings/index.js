@@ -11,6 +11,7 @@ import { useAxios } from "Hooks";
 
 const MeetingsPage = () => {
   const [allSessions, setAllSessions] = useState();
+  const [mutate, setMutate] = useState(0);
   const {
     fetchData: getAllSessions,
     error,
@@ -27,7 +28,7 @@ const MeetingsPage = () => {
     onSuccess: (data) => {
       console.log(data, "All Sessions");
       setAllSessions(data.data);
-
+      setMutate((prev) => prev + 1);
       // close();
       // openSnack();
     },
@@ -40,12 +41,9 @@ const MeetingsPage = () => {
 
   useEffect(() => {
     getAllSessions();
-  });
-
-  console.log(allSessions, "::allSessions");
+  }, [getAllSessions]);
 
   return (
-
     <div className="w-[100%] h-[70vh]  overflow-auto mx-auto  grid grid-cols-6 px-4 pt-2 pb-4">
       <div className="col-span-7 pr-4 ">
         <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">

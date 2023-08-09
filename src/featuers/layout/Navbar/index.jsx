@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-
-import { Button, Modal, NoSsr, ExpertDilog, Link } from "components";
-import { useCurrentUser, useLogout, useToggle } from "Hooks";
+import { ExpertDilog, Link } from "components";
+import { useCurrentUser, useLogout } from "Hooks";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { getStorageItem } from "utils";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -23,43 +22,9 @@ export const Navbar = () => {
     dashbord: false,
     callender: false,
   });
-  const { userRole } = useCurrentUser();
+  const { userRole, user } = useCurrentUser();
   const logout = useLogout();
   const pathname = usePathname();
-
-  //const user = getStorageItem("User");
- const [user, setUser] = useState();
-  
- useEffect(() => {
-  const getUser = async () => {
-    const Token = localStorage.getItem("Token");
-    try {
-      const response = await fetch(
-        `https://worrisome-pocketbook-calf.cyclic.app/api/v1/users/profile/${params.id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${Token}`,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setUser(data.data.user[0]);
-      if (data.data.user[0].isExpert) {
-        getUsersPosts(data.data.user[0].expert._id);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setIsLoading(false);
-    }
-  };
-  getUser();
-});
 
   useEffect(() => {
     if (pathname.includes("Callender")) {
@@ -68,6 +33,8 @@ export const Navbar = () => {
       setIsActive({ dashbord: true, callender: false });
     }
   }, [pathname]);
+
+  console.log(user?.profileImage, "user?.profileImage");
 
   return (
     <Disclosure as="nav" className="bg-white shadow">
@@ -140,7 +107,6 @@ export const Navbar = () => {
                   <Menu as="div" className="relative ml-3">
                     <div>
                       <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2  ">
-                        <span className="sr-only">Open user menu</span>
                         <Image
                           className="h-8 w-8 rounded-full"
                           src={user?.profileImage || "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"}
@@ -163,7 +129,7 @@ export const Navbar = () => {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              href={`/web/Profile/${user._id}`}
+                              href={`/web/Profile/${user?._id}`}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
