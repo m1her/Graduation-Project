@@ -50,9 +50,9 @@ const cardStatus = (status) => {
     return "border-[#ff0000]";
   }
 };
-const MeetingCard = ({ sessionData, setMutate }) => {
+const MeetingCard = ({ sessionData, key }) => {
   const router = useRouter();
-  console.log(router);
+
   console.log("Session Data:", sessionData);
   const { userRole } = useCurrentUser();
   const expetObject =
@@ -70,11 +70,16 @@ const MeetingCard = ({ sessionData, setMutate }) => {
         sessionObject?.status
       )}`}
       onClick={handleSessionNavigation}
+      key={key}
     >
       <div className="flex items-center  justify-between">
         <Image
           alt="pfp"
-          src={`https://drive.google.com/uc?id=${expetObject?.user?.profileImage}`}
+          src={
+            expetObject?.user?.profileImage
+              ? `https://drive.google.com/uc?id=${expetObject?.user?.profileImage}`
+              : "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"
+          }
           height="100"
           width="100"
           className="w-20 h-20 object-cover rounded-full"
@@ -109,18 +114,10 @@ const MeetingCard = ({ sessionData, setMutate }) => {
           {sessionObject?.status !== "rejected" && userRole == "expert" && (
             <>
               <div className="w-9 h-9  self-center text-center flex items-center justify-center cursor-pointer">
-                <ApproveSession
-                  action="approve"
-                  id={sessionObject?._id}
-                  setMutate={setMutate}
-                />
+                <ApproveSession action="approve" id={sessionObject?._id} />
               </div>
               <div className="w-9 h-9  self-center text-center ml-2 flex items-center justify-center  cursor-pointer">
-                <ApproveSession
-                  action="reject"
-                  id={sessionObject?._id}
-                  setMutate={setMutate}
-                />
+                <ApproveSession action="reject" id={sessionObject?._id} />
               </div>
             </>
           )}

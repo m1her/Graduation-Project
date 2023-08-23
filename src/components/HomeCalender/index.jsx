@@ -179,8 +179,10 @@ export function HomeCalender() {
               className="relative flex space-x-6 py-6 xl:static"
             >
               <Image
+
                 width={500}
                 height={500}
+
                 src={meeting.imageUrl}
                 alt=""
                 className="h-14 w-14 flex-none rounded-full"

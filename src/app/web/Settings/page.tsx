@@ -1,4 +1,3 @@
-
 /*
   This example requires some changes to your config:
   
@@ -171,8 +170,11 @@ export default function Example() {
                                 <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                   <span className="flex-grow">
                                     <Image
+
                                     width={500}
                                     height={500}
+
+
                                       className="h-8 w-8 rounded-full"
                                       src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                       alt=""

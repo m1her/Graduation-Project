@@ -1,17 +1,12 @@
 "use client";
 import MeetingCard from "./MeetingCard";
-import MiniMeeting from "./MiniMeeting";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import React, { useEffect, useState, useRef } from "react";
-import { HomeCalender } from "components";
-import DateCalendar from "./DateCalendar";
-import Link from "next/link";
 import { useAxios } from "Hooks";
 
 const MeetingsPage = () => {
   const [allSessions, setAllSessions] = useState();
-  const [mutate, setMutate] = useState(0);
+
   const {
     fetchData: getAllSessions,
     error,
@@ -28,7 +23,6 @@ const MeetingsPage = () => {
     onSuccess: (data) => {
       console.log(data, "All Sessions");
       setAllSessions(data.data);
-      setMutate((prev) => prev + 1);
       // close();
       // openSnack();
     },
@@ -41,7 +35,9 @@ const MeetingsPage = () => {
 
   useEffect(() => {
     getAllSessions();
+
   }, [getAllSessions]);
+
 
   return (
     <div className="w-[100%] h-[70vh]  overflow-auto mx-auto  grid grid-cols-6 px-4 pt-2 pb-4">
@@ -49,8 +45,10 @@ const MeetingsPage = () => {
         <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">
           Meetings
         </p>
+
         {allSessions?.data.map((session, index) => {
           return <MeetingCard key={index} sessionData={session} />;
+
         })}
       </div>
 

@@ -27,6 +27,7 @@ export const MeetingCall = () => {
     EndCall: () => setVideoCall(false),
   };
 
+
   return (
     <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
       {videoCall ? (
@@ -34,6 +35,7 @@ export const MeetingCall = () => {
       ) : (
         <h3 onClick={() => setVideoCall(true)}>Start Call</h3>
       )}
+
     </div>
   );
 };

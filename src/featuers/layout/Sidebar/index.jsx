@@ -33,7 +33,7 @@ const navigation = [
 
   {
     name: "Schedule",
-    href: "#",
+    href: "/web/Home",
     icon: CalendarDaysIcon,
     count: "20+",
     current: false,
