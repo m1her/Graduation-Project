@@ -1,36 +1,15 @@
 "use client";
-import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useCycle } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  const [gameOn, setGameOn] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState({ x: 670, y: 265 });
-
-  const rocketAnimation = {
-    animationOne: {
-      x: !gameOn ? 0 : cursorPosition.x - 670,
-      y: !gameOn ? 0 : cursorPosition.y - 265,
-      scale: gameOn ? 1 : [1, 1, 1, 2, 1],
-      transition: {
-        type: gameOn ? "spring" : "tween",
-        duration: gameOn ? 0.01 : 2,
-        ease: "linear",
-        stiffness: 120,
-      },
-    },
-  };
-  useEffect(() => {
-    const stripe =
-      typeof window !== "undefined" && window.Stripe("stripeID_Here");
-  });
 
   return (
     <body className="bg-[#a5b4fc] select-none ">
       <motion.div
         id="container"
         className="fixed top-0 left-0 w-full h-screen flex justify-center items-center"
-        initial={{ scale: 1 }}
+    initial={{scale: 1}}
       >
         <motion.div className="flex justify-between items-center text-indigo-500 z-20">
           <motion.svg

@@ -72,7 +72,7 @@ export function MultipleSelectChip({
       ...expertData,
       catagories: expertFileds,
     });
-  }, [expertFileds]);
+  }, [expertData, expertFileds, setExpertData]);
 
   return (
     <div>

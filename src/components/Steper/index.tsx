@@ -57,7 +57,7 @@ export function HorizontalLinearStepper({
       fromData: value.startDate,
       toDate: value.endDate,
     });
-  }, [file]);
+  }, [expertData, file, setExpertData, value.endDate, value.startDate]);
 
   // const isStepOptional = (step: number) => {
   //   return step === 1;

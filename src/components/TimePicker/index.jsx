@@ -21,7 +21,7 @@ export function TimePickerValue({ requiredExpertData, setRequiredExpertData }) {
       from: time && time[0] && `${time[0]?.$H}:${time[0]?.$m}${ampm}`,
       to: time && time[1] && `${time[1]?.$H}:${time[1]?.$m}${ampm}`,
     });
-  }, [time]);
+  }, [requiredExpertData, setRequiredExpertData, time]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>

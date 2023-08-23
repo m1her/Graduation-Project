@@ -6,7 +6,6 @@ import {
   PhoneIcon,
   CalendarIcon,
   MapPinIcon,
-  TagIcon,
 } from "lib";
 
 const About = ({ user, handlePops, currentUserId }) => {

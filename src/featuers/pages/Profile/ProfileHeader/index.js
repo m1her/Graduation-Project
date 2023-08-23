@@ -15,12 +15,14 @@ const ProfileHeader = ({ handleProfileSection, user, currentUserId }) => {
   const [image, setImage] = useState();
   const [imageType, setImageType] = useState("");
   const [current, setCurrent] = useState({ name: user.name, bio: user.bio });
+  const [imageLoading, setImageLoading] = useState(false);
 
   useEffect(() => {
     handleProfileSection(user.isExpert ? "posts" : "callender");
-  }, []);
+  }, [handleProfileSection, user.isExpert]);
 
   const onSubmit = async (formData) => {
+    setImageLoading(true);
     formData.append("name", userName);
     console.log(formData);
     const Token = JSON.parse(Cookies.get("currentUser"));
@@ -46,6 +48,7 @@ const ProfileHeader = ({ handleProfileSection, user, currentUserId }) => {
       setUserName(data.data.user.name);
       setUserBio(data.data.user.bio === "undefined" ? "" : data.data.user.bio);
       setImage();
+      setImageLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -122,7 +125,7 @@ const ProfileHeader = ({ handleProfileSection, user, currentUserId }) => {
   return (
     <Card className=" relative w-full rounded-sm">
       {image && (
-        <CropImage Image={image} onConfirm={onSubmit} imageType={imageType} />
+        <CropImage imageLoading={imageLoading} Image={image} onConfirm={onSubmit} imageType={imageType} />
       )}
 
       <div>

@@ -39,7 +39,7 @@ const Session = () => {
   });
   useEffect(() => {
     getSession();
-  }, []);
+  }, [getSession]);
 
   return (
     <div className="w-[80%] h-[75vh] flex-col  overflow-auto justify-between gap-8 p-10">

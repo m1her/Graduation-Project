@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-
-import { Button, Modal, NoSsr, ExpertDilog, Link } from "components";
-import { useCurrentUser, useLogout, useToggle } from "Hooks";
+import { ExpertDilog, Link } from "components";
+import { useCurrentUser, useLogout } from "Hooks";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -25,11 +25,6 @@ export const Navbar = () => {
   const { userRole, user } = useCurrentUser();
   const logout = useLogout();
   const pathname = usePathname();
-
-  // let user = {};
-  // useEffect(() => {
-  //   user = JSON.parse(localStorage.getItem("User"));
-  // }, []);
 
   useEffect(() => {
     if (pathname.includes("Callender")) {
@@ -114,10 +109,9 @@ export const Navbar = () => {
                       <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2  ">
                         <Image
                           className="h-8 w-8 rounded-full"
-                          src={
-                            user.profileImage ||
-                            "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"
-                          }
+
+                          src={user?.profileImage || "https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.jpg"}
+
                           alt=""
                           height={500}
                           width={500}
@@ -218,6 +212,10 @@ export const Navbar = () => {
               <div className="flex items-center px-4 sm:px-6">
                 <div className="flex-shrink-0">
                   <Image
+
+                  width={500}
+                  height={500}
+
                     className="h-10 w-10 rounded-full"
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                     alt=""

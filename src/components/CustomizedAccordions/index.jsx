@@ -75,10 +75,11 @@ export function CustomizedAccordions() {
           <AccordionDetails>
             <Typography>
               You can browse and search for available sessions by logging into
-              your account and clicking on the &quot;Browse Sessions&quot; or
-              &quot;Search&quot; tab. You can filter sessions by date, time,
-              location, and category to find sessions that match your
-              preferences.
+
+              your account and clicking on the `&quot;Browse Sessions`&quot; or `&quot;Search`&quot;
+              tab. You can filter sessions by date, time, location, and category
+              to find sessions that match your preferences.
+
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -92,9 +93,10 @@ export function CustomizedAccordions() {
           <AccordionDetails>
             <Typography>
               To book a session, click on the session you are interested in and
-              then click on the &quot;Book Now&quot; button. Follow the prompts
-              to select the date and time for the session and complete the
-              booking process
+
+              then click on the `&quot;Book Now`&quot; button. Follow the prompts to select
+              the date and time for the session and complete the booking process
+
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -109,11 +111,12 @@ export function CustomizedAccordions() {
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              Yes, you can cancel or reschedule a booked session. Go to the
-              &quot;My Bookings&quot; or &quot;My Account&quot; section, find
-              the booked session, and click on the &quot;Cancel&quot; or
-              &quot;Reschedule&quot; button. Please note that there may be
-              cancellation or rescheduling policies in place.
+
+              Yes, you can cancel or reschedule a booked session. Go to the `&quot;My
+              Bookings`&quot; or `&quot;My Account`&quot; section, find the booked session, and
+              click on the `&quot;Cancel`&quot; or `&quot;Reschedule`&quot; button. Please note that
+              there may be cancellation or rescheduling policies in place.
+
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -145,9 +148,11 @@ export function CustomizedAccordions() {
           <AccordionDetails>
             <Typography>
               Yes, we value your feedback and suggestions! You can provide
-              feedback through the &quot;Feedback&quot; or &quot;Contact
-              Us&quot; section on the website or app. Your feedback helps us
-              improve the system and enhance your experience.
+
+              feedback through the `&quot;Feedback`&quot; or `&quot;Contact Us`&quot; section on the
+              website or app. Your feedback helps us improve the system and
+              enhance your experience.
+
             </Typography>
           </AccordionDetails>
         </Accordion>{" "}

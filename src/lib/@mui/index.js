@@ -6,9 +6,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default {
+export {
   Button,
-  Dialog,
+  Dialog as MuiDialog,
   DialogActions,
   DialogContent,
   DialogContentText,

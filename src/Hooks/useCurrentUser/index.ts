@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { getCookie, setCookie } from "lib/js-cookie";
 import { COOKIES_KEYS } from "data";
 import type { UserType, CurrentUserType } from "types";

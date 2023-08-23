@@ -1,5 +1,5 @@
 "use client";
-import { PencilIcon, PlusIcon } from "lib";
+import { PlusIcon } from "lib";
 import { Card, Spinner } from "components";
 import PostCard from "./PostCard";
 import PostInput from "./PostInput";

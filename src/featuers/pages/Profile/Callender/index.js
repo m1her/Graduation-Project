@@ -40,7 +40,7 @@ const Callender = ({ id }) => {
   console.log(pathname.split("/").at(3), "user?.expert?._id");
   useEffect(() => {
     getExpertSessions();
-  }, [steps]);
+  }, [getExpertSessions, steps]);
 
   return (
     <FullCalendarComponent

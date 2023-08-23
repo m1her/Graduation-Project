@@ -35,7 +35,9 @@ const MeetingsPage = () => {
 
   useEffect(() => {
     getAllSessions();
-  }, []);
+
+  }, [getAllSessions]);
+
 
   return (
     <div className="w-[100%] h-[70vh]  overflow-auto mx-auto  grid grid-cols-6 px-4 pt-2 pb-4">
@@ -43,8 +45,10 @@ const MeetingsPage = () => {
         <p className="text-2xl font-semibold leading-6 text-gray-900 my-6">
           Meetings
         </p>
-        {allSessions?.data.map((session) => {
-          return <MeetingCard key={session._id} sessionData={session} />;
+
+        {allSessions?.data.map((session, index) => {
+          return <MeetingCard key={index} sessionData={session} />;
+
         })}
       </div>
 

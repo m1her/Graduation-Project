@@ -16,14 +16,13 @@ const Dayes = [
 //  setRequiredExpertData = { setRequiredExpertData };
 export function SelectDay({ requiredExpertData, setRequiredExpertData }) {
   const [selectedDays, setSelectedDays] = useState([]);
-  console.log(selectedDays);
 
   useEffect(() => {
     setRequiredExpertData({
       ...requiredExpertData,
       daysOfWork: selectedDays,
     });
-  }, [selectedDays]);
+  }, [requiredExpertData, selectedDays, setRequiredExpertData]);
 
   return (
     <div className="w-[48%] h-full">

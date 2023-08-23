@@ -1,12 +1,13 @@
 "use client";
-import { Card } from "components";
-import { useState, useCallback, useEffect } from "react";
+import { Card, Spinner } from "components";
+import { useState } from "react";
 import Cropper from "react-easy-crop";
 
 const CropImage = (props) => {
   const [selectedImage, setSelectedImage] = useState("");
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+
   const formData = new FormData();
 
   const file = props.Image;
@@ -93,7 +94,7 @@ const CropImage = (props) => {
               image={selectedImage}
               crop={crop}
               zoom={zoom}
-              aspect={props.imageType === "profileImage"? 3 / 3 : 6 / 3}
+              aspect={props.imageType === "profileImage" ? 3 / 3 : 6 / 3}
               onCropChange={setCrop}
               onZoomChange={setZoom}
               onCropComplete={onCropComplete}
@@ -105,7 +106,7 @@ const CropImage = (props) => {
         className="bg-indigo-500 -mt-10 px-2 py-1 text-white text-lg rounded-sm"
         onClick={confirmHandler}
       >
-        Confirm
+        {props.imageLoading ? <Spinner /> : "Confirm"}
       </button>
     </div>
   );
