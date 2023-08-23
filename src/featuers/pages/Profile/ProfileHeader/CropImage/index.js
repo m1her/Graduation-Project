@@ -106,7 +106,7 @@ const CropImage = (props) => {
         className="bg-indigo-500 -mt-10 px-2 py-1 text-white text-lg rounded-sm"
         onClick={confirmHandler}
       >
-        {imageLoading ? <Spinner /> : "Confirm"}
+        {props.imageLoading ? <Spinner /> : "Confirm"}
       </button>
     </div>
   );
